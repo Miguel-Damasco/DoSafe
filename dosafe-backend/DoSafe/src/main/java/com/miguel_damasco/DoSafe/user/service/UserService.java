@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import com.miguel_damasco.DoSafe.security.jwt.JwtUtil;
 import com.miguel_damasco.DoSafe.security.refresh.RefreshTokenModel;
 import com.miguel_damasco.DoSafe.security.refresh.RefreshTokenService;
+import com.miguel_damasco.DoSafe.security.refresh.dto.RefreshRequestDTO;
+import com.miguel_damasco.DoSafe.security.refresh.dto.RefreshResponseDTO;
 import com.miguel_damasco.DoSafe.user.domain.RoleEnum;
 import com.miguel_damasco.DoSafe.user.domain.UserModel;
 import com.miguel_damasco.DoSafe.user.dto.request.LoginRequestDTO;
@@ -111,5 +113,22 @@ public class UserService {
         return new LoginResponseDTO(refreshToken.getToken(), token);
     }
 
-    
+    public RefreshResponseDTO refresh(RefreshRequestDTO pRequest) {
+
+        RefreshTokenModel oldToken = this.refreshTokenService.validate(pRequest.refreshToken());
+
+        this.refreshTokenService.revoke(oldToken);
+
+        RefreshTokenModel newToken = this.refreshTokenService.create(oldToken.getUser());
+
+        String newAccessToken = this.jwtUtil.generateToken(oldToken.getUser().getUsername());
+
+        return new RefreshResponseDTO(newAccessToken, newToken.getToken());
+    }
+
+    public void logout(RefreshRequestDTO pRequest) {
+
+        RefreshTokenModel myToken = this.refreshTokenService.validate(pRequest.refreshToken());
+        this.refreshTokenService.revoke(myToken);
+    }
 }
