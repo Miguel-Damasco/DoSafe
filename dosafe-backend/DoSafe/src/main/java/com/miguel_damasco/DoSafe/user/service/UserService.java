@@ -2,13 +2,21 @@ package com.miguel_damasco.DoSafe.user.service;
 
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.miguel_damasco.DoSafe.security.jwt.JwtUtil;
+import com.miguel_damasco.DoSafe.security.refresh.RefreshTokenModel;
+import com.miguel_damasco.DoSafe.security.refresh.RefreshTokenService;
 import com.miguel_damasco.DoSafe.user.domain.RoleEnum;
 import com.miguel_damasco.DoSafe.user.domain.UserModel;
+import com.miguel_damasco.DoSafe.user.dto.request.LoginRequestDTO;
 import com.miguel_damasco.DoSafe.user.dto.request.RegisterRequestDTO;
+import com.miguel_damasco.DoSafe.user.dto.response.LoginResponseDTO;
 import com.miguel_damasco.DoSafe.user.dto.response.RegisterResponseDTO;
 import com.miguel_damasco.DoSafe.user.repository.UserRepository;
 
@@ -19,9 +27,21 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository pUserRepository, PasswordEncoder passwordEncoder) {
+    private final JwtUtil jwtUtil;
+
+    private final AuthenticationManager authenticationManager;
+
+    private final RefreshTokenService refreshTokenService;
+
+    public UserService(UserRepository pUserRepository, PasswordEncoder passwordEncoder,
+         JwtUtil pJwtUtil, 
+         AuthenticationManager pAuthenticationManager,
+        RefreshTokenService pRefreshTokenService) {
         this.userRepository = pUserRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = pJwtUtil;
+        this.authenticationManager = pAuthenticationManager;
+        this.refreshTokenService = pRefreshTokenService;
     }
 
     public UserModel findUserById(long pId) {
@@ -74,4 +94,22 @@ public class UserService {
             throw new RuntimeException("User already exists!");
         }
     }
+
+
+    public LoginResponseDTO login(LoginRequestDTO pRequest) {
+
+        Authentication authentication = this.authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(pRequest.identifier(), pRequest.password())
+        );
+
+        UserModel user = this.userRepository.findByUsername(authentication.getName());
+
+        String token = this.jwtUtil.generateToken(authentication.getName());
+
+        RefreshTokenModel refreshToken = this.refreshTokenService.create(user);
+
+        return new LoginResponseDTO(refreshToken.getToken(), token);
+    }
+
+    
 }

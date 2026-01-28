@@ -6,8 +6,11 @@ import org.springframework.stereotype.Repository;
 import com.miguel_damasco.DoSafe.user.domain.UserModel;
 
 
+
 @Repository
 public interface UserRepository extends JpaRepository<UserModel, Long> {
     
     UserModel findByUsername(String username);
+
+    UserModel findByEmail(String email);
 }

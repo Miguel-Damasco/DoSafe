@@ -1,5 +1,8 @@
 package com.miguel_damasco.DoSafe.security;
 
+import java.util.Optional;
+
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,12 +21,13 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String pIdentifier) throws UsernameNotFoundException {
         
-        UserModel user = this.userRepository.findByUsername(username);
+        Optional<UserModel> user = Optional.of(this.userRepository.findByUsername(pIdentifier))
+                                            .or(() -> Optional.of(this.userRepository.findByEmail(pIdentifier)));
 
-        if(user != null) {
-            return new MyUserDetails(user);
+        if(user.isPresent()) {
+            return new MyUserDetails(user.get());
         }
 
         throw new UsernameNotFoundException("User not found!");
