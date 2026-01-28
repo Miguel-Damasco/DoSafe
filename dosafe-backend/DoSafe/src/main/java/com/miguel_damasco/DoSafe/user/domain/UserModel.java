@@ -1,6 +1,9 @@
 package com.miguel_damasco.DoSafe.user.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,12 +25,26 @@ public class UserModel {
 
     private String password;
 
+    private String email;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private RoleEnum role;
+
     public void setUsername(String pUsername) {
         this.username = pUsername;
     }
 
     public void setPassword(String pPassword) {
         this.password = pPassword;
+    }
+
+    public void setEmail(String pEmail) {
+        this.password = pEmail;
+    }
+
+    public void setRole(RoleEnum pRoleEnum) {
+        this.role = pRoleEnum;
     }
 
 
