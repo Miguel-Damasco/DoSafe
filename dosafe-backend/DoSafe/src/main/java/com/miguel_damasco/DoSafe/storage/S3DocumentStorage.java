@@ -32,19 +32,22 @@ public class S3DocumentStorage implements DocumentStorage {
         this.s3Presigner = s3Presigner;
     }
 
-
     @Override
-    public void upload(String pKey, InputStream pContent, long pSize, String pContentType) {
+    public String upload(long userId, String pDocumentId, InputStream pContent, long pSize, String pContentType) {
+
+        String key = generateKey(userId, pDocumentId);
 
         PutObjectRequest request = PutObjectRequest.builder()
                                                     .bucket(bucketName)
-                                                    .key(pKey)
+                                                    .key(key)
                                                     .contentType(pContentType)
                                                     .build();
 
         PutObjectResponse response = this.s3Client.putObject(request, RequestBody.fromInputStream(pContent, pSize));
 
         System.out.println(String.format("Metadata [%s]", response.responseMetadata()));
+
+        return key;
     }
 
     @Override
@@ -79,4 +82,8 @@ public class S3DocumentStorage implements DocumentStorage {
         this.s3Client.deleteObject(request);
     }
     
+    public String generateKey(long userId, String pDocumentId) {
+
+        return String.format("users/%s/%s", userId, pDocumentId);
+    }
 }

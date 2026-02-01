@@ -54,6 +54,11 @@ public class UserService {
 
     }
 
+    public UserModel findUserByUsername(String pUsername) {
+
+        return this.userRepository.findByUsername(pUsername);
+    }
+
     public void checkUserExists(String pUsername) {
 
         UserModel user = this.userRepository.findByUsername(pUsername);
@@ -130,5 +135,9 @@ public class UserService {
 
         RefreshTokenModel myToken = this.refreshTokenService.validate(pRequest.refreshToken());
         this.refreshTokenService.revoke(myToken);
+    }
+
+    public UserModel update(UserModel pUser) {
+        return this.userRepository.save(pUser);
     }
 }
