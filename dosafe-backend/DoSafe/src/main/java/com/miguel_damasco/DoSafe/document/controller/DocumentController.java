@@ -35,7 +35,7 @@ public class DocumentController {
 
     System.out.println("LLega!");
 
-    DocumentUploadResponseDTO response = this.documentUploadService.testUpload(pUserDetails.getUsername(),pFile.getInputStream(),pFile.getSize(), pFile.getOriginalFilename());
+    DocumentUploadResponseDTO response = this.documentUploadService.upload(pUserDetails.getUsername(),pFile.getInputStream(),pFile.getSize(), pFile.getOriginalFilename());
 
     return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponses.success(response, 201, "Resource created succesfully!"));
 
