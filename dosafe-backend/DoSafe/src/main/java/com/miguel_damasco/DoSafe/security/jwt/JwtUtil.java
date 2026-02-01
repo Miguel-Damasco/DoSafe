@@ -1,15 +1,13 @@
 package com.miguel_damasco.DoSafe.security.jwt;
 
-import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -23,19 +21,10 @@ import java.security.Key;
 @Service
 public class JwtUtil {
     
-     private final String secretKey;
+    private final String secretKey;
 
-    {
-        try {
-
-            KeyGenerator keyGenerator = KeyGenerator.getInstance("HmacSHA256");
-            SecretKey sk = keyGenerator.generateKey();
-            secretKey = Base64.getEncoder().encodeToString(sk.getEncoded());
-
-        } catch(NoSuchAlgorithmException e) {
-
-            throw new RuntimeException(e);
-        }
+    public JwtUtil(@Value("${jwt.secret}") String pSecretKey) {
+        this.secretKey = pSecretKey;
     }
     
     public String generateToken(String pUsername) {
@@ -47,7 +36,7 @@ public class JwtUtil {
                             .add(claims)
                             .subject(pUsername)
                             .issuedAt(new Date(System.currentTimeMillis()))
-                            .expiration(new Date(System.currentTimeMillis() + 60 * 60 * 30))
+                            .expiration(new Date(System.currentTimeMillis() + 60 * 60 * 60 * 30))
                             .and()
                             .signWith(getKey())
                             .compact();

@@ -6,7 +6,7 @@ import java.time.Duration;
 
 public interface DocumentStorage {
     
-    void upload(String pKey, InputStream pContent, long pSize, String pContentType);
+    String upload(long userId, String pDocumentId, InputStream pContent, long pSize, String pContentType);
 
     URL generateDownloadUrl(String pKey, Duration pTtl);
 
