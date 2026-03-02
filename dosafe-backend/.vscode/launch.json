@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-DoSafeApplication<DoSafe>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.miguel_damasco.DoSafe.DoSafeApplication",
+            "projectName": "DoSafe",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

@@ -15,6 +15,7 @@ public class DocumentFactory {
         document.setCreatedAt(Instant.now());
         document.setExpireAt(pDate);
         document.setOriginalFilename(pOriginalFilename);
+        document.markProcessing();
 
         return document;
 

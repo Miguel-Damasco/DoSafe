@@ -28,6 +28,8 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<LoginResponseDTO>> login(@RequestBody LoginRequestDTO pRequest) {
 
+        System.out.println("ENTRA LOGIN!");
+
         LoginResponseDTO response = this.userService.login(pRequest);
 
         return ResponseEntity.ok().body(ApiResponses.success(response, 200, "Login successfully!"));

@@ -34,6 +34,10 @@ public class DocumentModel {
     @Column(nullable = false)
     private DocumentTypeEnum type;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private DocumentStatus status;
+
     private Instant createdAt;
 
     private LocalDate expireAt;
@@ -72,6 +76,18 @@ public class DocumentModel {
 
     public void setUser(UserModel pUser) {
         this.user = pUser;
+    }
+
+    public void markProcessing() {
+        this.status = DocumentStatus.PROCESSING;
+    }
+
+    public void markProcessed() {
+        this.status = DocumentStatus.PROCESSED;
+    }
+
+    public void markFailed() {
+        this.status = DocumentStatus.FAILED;
     }
 
 }

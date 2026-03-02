@@ -15,6 +15,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
+
 import java.security.Key;
 
 
@@ -24,9 +26,19 @@ public class JwtUtil {
     private final String secretKey;
 
     public JwtUtil(@Value("${jwt.secret}") String pSecretKey) {
+        System.out.println("JWT UTIL CREATED");
         this.secretKey = pSecretKey;
     }
     
+    @PostConstruct
+    public void debugSecret() {
+        System.out.println("RAW SECRET VALUE: [" + secretKey + "]");
+        byte[] keyBytes = Decoders.BASE64.decode(secretKey.trim());
+        System.out.println("DECODED LENGTH: " + keyBytes.length);
+    }
+
+
+
     public String generateToken(String pUsername) {
 
         Map<String, Object> claims = new HashMap<>();

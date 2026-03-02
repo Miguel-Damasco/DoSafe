@@ -84,6 +84,6 @@ public class S3DocumentStorage implements DocumentStorage {
     
     public String generateKey(long userId, String pDocumentId) {
 
-        return String.format("users/%s/%s", userId, pDocumentId);
+        return String.format("users/%s/%s.pdf", userId, pDocumentId);
     }
 }
