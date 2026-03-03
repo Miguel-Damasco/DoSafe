@@ -26,7 +26,11 @@ public class ProcessTextractResultService {
 
     private final GeneralDocumentClasifier generalDocumentClasifier;
 
+    private final ExpirationDateExtractorSelector expirationDateExtractorSelector;
+
     public void execute(DocumentId pId, String pJobId) {
+
+        System.out.println("Id checkeada: " + pId.value());
 
         DocumentModel document = this.documentRepository.findById(pId.value()).orElseThrow();
 
@@ -38,7 +42,11 @@ public class ProcessTextractResultService {
 
             document.setDocumentType(documentType);
 
-            document.setExpireAt(LocalDate.now()); // Just testing
+            var expirationExtractor = this.expirationDateExtractorSelector.selectExtractor(document);
+
+            LocalDate extractedDate = expirationExtractor.extract(result);
+
+            document.setExpireAt(extractedDate); // Just testing
 
             document.markProcessed();
 

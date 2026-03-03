@@ -102,7 +102,7 @@ public class TextractQueueConsumer {
         System.out.println("RawId: " + rawId);
         System.out.println();
 
-        return new DocumentId(UUID.randomUUID());
+        return new DocumentId(UUID.fromString(rawId));
     }
 
 

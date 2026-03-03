@@ -38,7 +38,7 @@ public class DocumentUploadService {
 
         UserModel user = this.userService.findUserByUsername(pUsername);
 
-        DocumentModel newDocument = DocumentFactory.createPassport(user, pOriginalFilename,null);
+        DocumentModel newDocument = DocumentFactory.create(user, pOriginalFilename,null);
 
         DocumentModel savedDocuemnt = this.documentRepository.save(newDocument);
 
