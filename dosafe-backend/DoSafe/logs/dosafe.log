@@ -1,0 +1,124 @@
+2026-03-07 18:39:20 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplication - Starting DoSafeApplication using Java 17.0.0.1 with PID 11048 (C:\dosafe\DoSafe\dosafe-backend\DoSafe\target\classes started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
+2026-03-07 18:39:20 [main] DEBUG [] com.miguel_damasco.DoSafe.DoSafeApplication - Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-03-07 18:39:20 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplication - No active profile set, falling back to 1 default profile: "default"
+2026-03-07 18:39:25 [main] DEBUG [] com.miguel_damasco.DoSafe.security.jwt.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-03-07 18:39:25 [main] DEBUG [] com.miguel_damasco.DoSafe.security.correlationId.CorrelationIdFilter - Filter 'correlationIdFilter' configured for use
+2026-03-07 18:39:37 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplication - Started DoSafeApplication in 20.521 seconds (process running for 22.407)
+2026-03-07 18:39:37 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 18:39:54 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 18:40:09 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 18:40:25 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 18:40:40 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 18:40:55 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 18:41:10 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 18:41:26 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 18:41:43 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 18:41:48 [http-nio-8080-exec-5] INFO  [51e9dffb-c69c-4c9d-8125-9a22902e361d] com.miguel_damasco.DoSafe.storage.S3DocumentStorage - Starting upload documentId=4bb7518d-9bf5-4f97-b9cf-e2d5f0ec12b4 userId=7
+2026-03-07 18:41:48 [http-nio-8080-exec-5] INFO  [51e9dffb-c69c-4c9d-8125-9a22902e361d] com.miguel_damasco.DoSafe.storage.S3DocumentStorage - Generation key started documentId=4bb7518d-9bf5-4f97-b9cf-e2d5f0ec12b4 userId=7
+2026-03-07 18:41:48 [http-nio-8080-exec-5] INFO  [51e9dffb-c69c-4c9d-8125-9a22902e361d] com.miguel_damasco.DoSafe.storage.S3DocumentStorage - Generation key finsih documentId=4bb7518d-9bf5-4f97-b9cf-e2d5f0ec12b4 userId=7 key=users/7/4bb7518d-9bf5-4f97-b9cf-e2d5f0ec12b4.pdf
+2026-03-07 18:41:59 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 18:42:18 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 18:42:41 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 18:42:57 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 18:43:05 [http-nio-8080-exec-5] INFO  [51e9dffb-c69c-4c9d-8125-9a22902e361d] com.miguel_damasco.DoSafe.storage.S3DocumentStorage - Upload finish documentId=4bb7518d-9bf5-4f97-b9cf-e2d5f0ec12b4 userId=7
+2026-03-07 18:43:16 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 18:43:17 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Proccessing OCR message
+2026-03-07 18:43:24 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 18:43:39 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 18:57:19 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplication - Starting DoSafeApplication using Java 17.0.0.1 with PID 29868 (C:\dosafe\DoSafe\dosafe-backend\DoSafe\target\classes started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
+2026-03-07 18:57:19 [main] DEBUG [] com.miguel_damasco.DoSafe.DoSafeApplication - Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-03-07 18:57:19 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplication - No active profile set, falling back to 1 default profile: "default"
+2026-03-07 18:57:23 [main] DEBUG [] com.miguel_damasco.DoSafe.security.jwt.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-03-07 18:57:23 [main] DEBUG [] com.miguel_damasco.DoSafe.security.correlationId.CorrelationIdFilter - Filter 'correlationIdFilter' configured for use
+2026-03-07 18:57:30 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplication - Started DoSafeApplication in 12.405 seconds (process running for 13.965)
+2026-03-07 18:57:30 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 18:57:46 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 18:58:02 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 18:58:09 [http-nio-8080-exec-2] INFO  [a373679e-038c-4eb6-b313-203fbf9e5866] com.miguel_damasco.DoSafe.storage.S3DocumentStorage - Starting upload documentId=8e2fc8fd-e888-450a-b9cf-30bbd62efa90 userId=7
+2026-03-07 18:58:09 [http-nio-8080-exec-2] INFO  [a373679e-038c-4eb6-b313-203fbf9e5866] com.miguel_damasco.DoSafe.storage.S3DocumentStorage - Generation key started documentId=8e2fc8fd-e888-450a-b9cf-30bbd62efa90 userId=7
+2026-03-07 18:58:09 [http-nio-8080-exec-2] INFO  [a373679e-038c-4eb6-b313-203fbf9e5866] com.miguel_damasco.DoSafe.storage.S3DocumentStorage - Generation key finsih documentId=8e2fc8fd-e888-450a-b9cf-30bbd62efa90 userId=7 key=users/7/8e2fc8fd-e888-450a-b9cf-30bbd62efa90.pdf
+2026-03-07 18:58:11 [http-nio-8080-exec-2] INFO  [a373679e-038c-4eb6-b313-203fbf9e5866] com.miguel_damasco.DoSafe.storage.S3DocumentStorage - Upload finish documentId=8e2fc8fd-e888-450a-b9cf-30bbd62efa90 userId=7
+2026-03-07 18:58:17 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 18:58:18 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Proccessing OCR message
+2026-03-07 18:58:19 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.domain.extraction.IdentityCardDateExtractor - Expiration date extracted documentId=8e2fc8fd-e888-450a-b9cf-30bbd62efa90 userId=7 date=2025-04-28
+2026-03-07 18:58:19 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Sarting message deletion
+2026-03-07 18:58:19 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - finish message deletion
+2026-03-07 18:58:24 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 18:58:40 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 19:02:36 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplication - Starting DoSafeApplication using Java 17.0.0.1 with PID 22592 (C:\dosafe\DoSafe\dosafe-backend\DoSafe\target\classes started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
+2026-03-07 19:02:36 [main] DEBUG [] com.miguel_damasco.DoSafe.DoSafeApplication - Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-03-07 19:02:36 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplication - No active profile set, falling back to 1 default profile: "default"
+2026-03-07 19:02:39 [main] DEBUG [] com.miguel_damasco.DoSafe.security.jwt.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-03-07 19:02:39 [main] DEBUG [] com.miguel_damasco.DoSafe.security.correlationId.CorrelationIdFilter - Filter 'correlationIdFilter' configured for use
+2026-03-07 19:02:47 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplication - Started DoSafeApplication in 12.442 seconds (process running for 13.511)
+2026-03-07 19:02:47 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 19:02:57 [http-nio-8080-exec-1] INFO  [23cd3e99-ec55-4b66-b931-cfc5c5a75732] com.miguel_damasco.DoSafe.storage.S3DocumentStorage - Starting upload documentId=1dec1560-7f72-4873-9740-1b762cb9cb59 userId=7
+2026-03-07 19:02:57 [http-nio-8080-exec-1] INFO  [23cd3e99-ec55-4b66-b931-cfc5c5a75732] com.miguel_damasco.DoSafe.storage.S3DocumentStorage - Generation key started documentId=1dec1560-7f72-4873-9740-1b762cb9cb59 userId=7
+2026-03-07 19:02:57 [http-nio-8080-exec-1] INFO  [23cd3e99-ec55-4b66-b931-cfc5c5a75732] com.miguel_damasco.DoSafe.storage.S3DocumentStorage - Generation key finsih documentId=1dec1560-7f72-4873-9740-1b762cb9cb59 userId=7 key=users/7/1dec1560-7f72-4873-9740-1b762cb9cb59.pdf
+2026-03-07 19:02:59 [http-nio-8080-exec-1] INFO  [23cd3e99-ec55-4b66-b931-cfc5c5a75732] com.miguel_damasco.DoSafe.storage.S3DocumentStorage - Upload finish documentId=1dec1560-7f72-4873-9740-1b762cb9cb59 userId=7
+2026-03-07 19:03:03 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 19:03:06 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Proccessing OCR message
+2026-03-07 19:03:07 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.domain.extraction.IdentityCardDateExtractor - Expiration date extracted documentId=1dec1560-7f72-4873-9740-1b762cb9cb59 userId=7 date=2025-04-28
+2026-03-07 19:03:07 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Sarting message deletion
+2026-03-07 19:03:07 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - finish message deletion
+2026-03-07 19:03:12 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 19:03:27 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 19:03:42 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 19:04:35 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplication - Starting DoSafeApplication using Java 17.0.0.1 with PID 24836 (C:\dosafe\DoSafe\dosafe-backend\DoSafe\target\classes started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
+2026-03-07 19:04:35 [main] DEBUG [] com.miguel_damasco.DoSafe.DoSafeApplication - Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-03-07 19:04:35 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplication - No active profile set, falling back to 1 default profile: "default"
+2026-03-07 19:04:39 [main] DEBUG [] com.miguel_damasco.DoSafe.security.jwt.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-03-07 19:04:39 [main] DEBUG [] com.miguel_damasco.DoSafe.security.correlationId.CorrelationIdFilter - Filter 'correlationIdFilter' configured for use
+2026-03-07 19:04:46 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplication - Started DoSafeApplication in 12.186 seconds (process running for 13.022)
+2026-03-07 19:04:46 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 19:04:57 [http-nio-8080-exec-2] INFO  [782d39c1-c680-4b9b-8b59-19b8959dba9e] com.miguel_damasco.DoSafe.storage.S3DocumentStorage - Starting upload documentId=c54436d3-2b16-4ad4-8efb-30e0ced30624 userId=7
+2026-03-07 19:04:57 [http-nio-8080-exec-2] INFO  [782d39c1-c680-4b9b-8b59-19b8959dba9e] com.miguel_damasco.DoSafe.storage.S3DocumentStorage - Generation key started documentId=c54436d3-2b16-4ad4-8efb-30e0ced30624 userId=7
+2026-03-07 19:04:57 [http-nio-8080-exec-2] INFO  [782d39c1-c680-4b9b-8b59-19b8959dba9e] com.miguel_damasco.DoSafe.storage.S3DocumentStorage - Generation key finsih documentId=c54436d3-2b16-4ad4-8efb-30e0ced30624 userId=7 key=users/7/c54436d3-2b16-4ad4-8efb-30e0ced30624.pdf
+2026-03-07 19:04:59 [http-nio-8080-exec-2] INFO  [782d39c1-c680-4b9b-8b59-19b8959dba9e] com.miguel_damasco.DoSafe.storage.S3DocumentStorage - Upload finish documentId=c54436d3-2b16-4ad4-8efb-30e0ced30624 userId=7
+2026-03-07 19:05:03 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 19:05:08 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Proccessing OCR message
+2026-03-07 19:05:09 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.domain.extraction.IdentityCardDateExtractor - Expiration date extracted documentId=c54436d3-2b16-4ad4-8efb-30e0ced30624 userId=7 date=2025-04-28
+2026-03-07 19:05:09 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Sarting message deletion
+2026-03-07 19:05:09 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - finish message deletion
+2026-03-07 19:05:14 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 20:31:29 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplication - Starting DoSafeApplication using Java 17.0.0.1 with PID 30200 (C:\dosafe\DoSafe\dosafe-backend\DoSafe\target\classes started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
+2026-03-07 20:31:29 [main] DEBUG [] com.miguel_damasco.DoSafe.DoSafeApplication - Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-03-07 20:31:29 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplication - No active profile set, falling back to 1 default profile: "default"
+2026-03-07 20:31:32 [main] DEBUG [] com.miguel_damasco.DoSafe.security.jwt.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-03-07 20:31:32 [main] DEBUG [] com.miguel_damasco.DoSafe.security.correlationId.CorrelationIdFilter - Filter 'correlationIdFilter' configured for use
+2026-03-07 20:31:43 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplication - Started DoSafeApplication in 15.586 seconds (process running for 16.72)
+2026-03-07 20:31:43 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 20:32:01 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 20:32:18 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 20:32:22 [http-nio-8080-exec-2] INFO  [a6c9474b-3005-476e-b978-efde892e0ac5] com.miguel_damasco.DoSafe.storage.S3DocumentStorage - Starting upload documentId=f557d285-fb3e-4b4b-847d-a9e914bc6a59 userId=7
+2026-03-07 20:32:22 [http-nio-8080-exec-2] INFO  [a6c9474b-3005-476e-b978-efde892e0ac5] com.miguel_damasco.DoSafe.storage.S3DocumentStorage - Generation key started documentId=f557d285-fb3e-4b4b-847d-a9e914bc6a59 userId=7
+2026-03-07 20:32:22 [http-nio-8080-exec-2] INFO  [a6c9474b-3005-476e-b978-efde892e0ac5] com.miguel_damasco.DoSafe.storage.S3DocumentStorage - Generation key finsih documentId=f557d285-fb3e-4b4b-847d-a9e914bc6a59 userId=7 key=users/7/f557d285-fb3e-4b4b-847d-a9e914bc6a59.pdf
+2026-03-07 20:32:33 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 20:32:59 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 20:33:18 [http-nio-8080-exec-2] INFO  [a6c9474b-3005-476e-b978-efde892e0ac5] com.miguel_damasco.DoSafe.storage.S3DocumentStorage - Upload finish documentId=f557d285-fb3e-4b4b-847d-a9e914bc6a59 userId=7
+2026-03-07 20:33:20 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 20:33:26 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Proccessing OCR message
+2026-03-07 20:33:39 [scheduling-1] INFO  [a6c9474b-3005-476e-b978-efde892e0ac5] com.miguel_damasco.DoSafe.document.domain.extraction.IdentityCardDateExtractor - Expiration date extracted documentId=f557d285-fb3e-4b4b-847d-a9e914bc6a59 userId=7 date=2025-04-28
+2026-03-07 20:33:40 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Sarting message deletion
+2026-03-07 20:33:41 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - finish message deletion
+2026-03-07 20:33:46 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 20:36:30 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplication - Starting DoSafeApplication using Java 17.0.0.1 with PID 19628 (C:\dosafe\DoSafe\dosafe-backend\DoSafe\target\classes started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
+2026-03-07 20:36:30 [main] DEBUG [] com.miguel_damasco.DoSafe.DoSafeApplication - Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-03-07 20:36:30 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplication - No active profile set, falling back to 1 default profile: "default"
+2026-03-07 20:36:34 [main] DEBUG [] com.miguel_damasco.DoSafe.security.jwt.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-03-07 20:36:34 [main] DEBUG [] com.miguel_damasco.DoSafe.security.correlationId.CorrelationIdFilter - Filter 'correlationIdFilter' configured for use
+2026-03-07 20:36:44 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplication - Started DoSafeApplication in 14.493 seconds (process running for 15.618)
+2026-03-07 20:36:44 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 20:37:00 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 20:37:01 [http-nio-8080-exec-1] INFO  [293f186e-c97b-4cd5-b042-dc34c83beca6] com.miguel_damasco.DoSafe.storage.S3DocumentStorage - Starting upload documentId=16d218a6-fe0b-4d88-af22-7287c59f450d userId=7
+2026-03-07 20:37:01 [http-nio-8080-exec-1] INFO  [293f186e-c97b-4cd5-b042-dc34c83beca6] com.miguel_damasco.DoSafe.storage.S3DocumentStorage - Generation key started documentId=16d218a6-fe0b-4d88-af22-7287c59f450d userId=7
+2026-03-07 20:37:01 [http-nio-8080-exec-1] INFO  [293f186e-c97b-4cd5-b042-dc34c83beca6] com.miguel_damasco.DoSafe.storage.S3DocumentStorage - Generation key finsih documentId=16d218a6-fe0b-4d88-af22-7287c59f450d userId=7 key=users/7/16d218a6-fe0b-4d88-af22-7287c59f450d.pdf
+2026-03-07 20:37:04 [http-nio-8080-exec-1] INFO  [293f186e-c97b-4cd5-b042-dc34c83beca6] com.miguel_damasco.DoSafe.storage.S3DocumentStorage - Upload finish documentId=16d218a6-fe0b-4d88-af22-7287c59f450d userId=7
+2026-03-07 20:37:15 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 20:37:15 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Proccessing OCR message
+2026-03-07 20:37:16 [scheduling-1] INFO  [293f186e-c97b-4cd5-b042-dc34c83beca6] com.miguel_damasco.DoSafe.document.domain.extraction.IdentityCardDateExtractor - Expiration date extracted documentId=16d218a6-fe0b-4d88-af22-7287c59f450d userId=7 date=2025-04-28
+2026-03-07 20:37:16 [scheduling-1] INFO  [293f186e-c97b-4cd5-b042-dc34c83beca6] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Sarting message deletion
+2026-03-07 20:37:17 [scheduling-1] INFO  [293f186e-c97b-4cd5-b042-dc34c83beca6] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - finish message deletion
+2026-03-07 20:37:22 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 20:37:37 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-07 20:37:52 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll

@@ -19,6 +19,7 @@ public class GeneralDocumentClasifier implements DocumentClasifier {
             result = switch(line) {
 
                 case "Documento de Identidad" -> DocumentTypeEnum.IDENTITY_CARD;
+                case "PASAPORTE/" -> DocumentTypeEnum.PASSPORT;
                 default -> DocumentTypeEnum.OTHER;
             };
 

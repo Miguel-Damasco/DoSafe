@@ -3,10 +3,14 @@ package com.miguel_damasco.DoSafe.storage;
 import java.io.InputStream;
 import java.net.URL;
 import java.time.Duration;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdHolder;
+
+import lombok.extern.slf4j.Slf4j;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
@@ -17,6 +21,7 @@ import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
 import software.amazon.awssdk.services.s3.presigner.model.PresignedGetObjectRequest;
 
+@Slf4j
 @Component
 public class S3DocumentStorage implements DocumentStorage {
 
@@ -35,17 +40,22 @@ public class S3DocumentStorage implements DocumentStorage {
     @Override
     public String upload(long userId, String pDocumentId, InputStream pContent, long pSize, String pContentType) {
 
+        log.info("Starting upload documentId={} userId={}", pDocumentId, userId);
+
         String key = generateKey(userId, pDocumentId);
+
+         String correlationId = CorrelationIdHolder.get();
 
         PutObjectRequest request = PutObjectRequest.builder()
                                                     .bucket(bucketName)
                                                     .key(key)
                                                     .contentType(pContentType)
+                                                    .metadata(Map.of("correlation-id", correlationId))
                                                     .build();
 
         PutObjectResponse response = this.s3Client.putObject(request, RequestBody.fromInputStream(pContent, pSize));
 
-        System.out.println(String.format("Metadata [%s]", response.responseMetadata()));
+        log.info("Upload finish documentId={} userId={}", pDocumentId, userId);
 
         return key;
     }
@@ -82,8 +92,16 @@ public class S3DocumentStorage implements DocumentStorage {
         this.s3Client.deleteObject(request);
     }
     
-    public String generateKey(long userId, String pDocumentId) {
+    public String generateKey(long pUserId, String pDocumentId) {
 
-        return String.format("users/%s/%s.pdf", userId, pDocumentId);
+        log.info("Generation key started documentId={} userId={}", pDocumentId, pUserId);
+
+        String key = String.format("users/%s/%s.pdf", pUserId, pDocumentId);
+
+        log.info("Generation key finsih documentId={} userId={} key={}", pDocumentId, pUserId, key);
+
+        return key;
+
+
     }
 }

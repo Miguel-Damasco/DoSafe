@@ -18,6 +18,9 @@ public class TextractNotificationMessage {
     @JsonProperty("API")
     private String api;
 
+    @JsonProperty("JobTag")
+    private String jobTag;
+
     @JsonProperty("DocumentLocation")
     private DocumentLocation documentLocation;
 

@@ -44,7 +44,7 @@ public class ProcessTextractResultService {
 
             var expirationExtractor = this.expirationDateExtractorSelector.selectExtractor(document);
 
-            LocalDate extractedDate = expirationExtractor.extract(result);
+            LocalDate extractedDate = expirationExtractor.extract(result, document.getId(), document.getUser().getId());
 
             document.setExpireAt(extractedDate); // Just testing
 
