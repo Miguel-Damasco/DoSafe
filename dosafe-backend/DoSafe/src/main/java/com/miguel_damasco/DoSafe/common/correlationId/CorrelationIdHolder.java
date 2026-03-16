@@ -15,6 +15,6 @@ public class CorrelationIdHolder {
     }
 
     public static void clear() {
-        MDC.clear();
+        MDC.remove(CORRELATION_ID);
     }
 }

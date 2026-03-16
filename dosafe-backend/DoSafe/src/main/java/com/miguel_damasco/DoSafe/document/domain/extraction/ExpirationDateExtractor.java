@@ -10,5 +10,6 @@ public interface ExpirationDateExtractor {
 
     boolean supports(DocumentTypeEnum type);
 
+    // Returns null if the date cannot be extracted — the user will provide it manually.
     LocalDate extract(List<String> pLines, UUID pDocumentId, long pIdUser);
 }

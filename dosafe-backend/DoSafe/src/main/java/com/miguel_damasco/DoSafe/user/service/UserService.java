@@ -5,9 +5,11 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.miguel_damasco.DoSafe.common.exception.UserAlreadyExistsException;
+import com.miguel_damasco.DoSafe.common.exception.UserNotFoundException;
 
 import com.miguel_damasco.DoSafe.security.jwt.JwtUtil;
 import com.miguel_damasco.DoSafe.security.refresh.RefreshTokenModel;
@@ -49,8 +51,8 @@ public class UserService {
     public UserModel findUserById(long pId) {
 
         return this.userRepository.findById(pId)
-                                            .orElseThrow(() -> 
-                                            new UsernameNotFoundException("Username not found!"));
+                                            .orElseThrow(() ->
+                                            new UserNotFoundException(String.valueOf(pId)));
 
     }
 
@@ -64,7 +66,7 @@ public class UserService {
         UserModel user = this.userRepository.findByUsername(pUsername);
 
         if(user != null) {
-            throw new RuntimeException("Userename already exists!");
+            throw new UserAlreadyExistsException(pUsername);
         }
     }
 
@@ -98,7 +100,7 @@ public class UserService {
 
         } catch (DataIntegrityViolationException e) {
 
-            throw new RuntimeException("User already exists!");
+            throw new UserAlreadyExistsException(pRequest.username());
         }
     }
 

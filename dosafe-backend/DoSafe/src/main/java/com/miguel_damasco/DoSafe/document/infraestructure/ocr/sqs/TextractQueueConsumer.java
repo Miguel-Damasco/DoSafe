@@ -53,48 +53,51 @@ public class TextractQueueConsumer {
         List<Message> messages = sqsClient.receiveMessage(request).messages();
 
         for (Message message : messages) {
-            process(message);
-            delete(message);
+            try {
+                process(message);
+                delete(message);
+            } finally {
+                CorrelationIdHolder.clear();
+            }
         }
     }
 
     private void process(Message sqsMessage) throws JsonMappingException, JsonProcessingException {
 
-
         try {
-                log.info("Proccessing OCR message");
+            log.info("Proccessing OCR message");
 
-                SnsNotification sns =
-                        objectMapper.readValue(
-                                sqsMessage.body(),
-                                SnsNotification.class
-                        );
+            SnsNotification sns =
+                    objectMapper.readValue(
+                            sqsMessage.body(),
+                            SnsNotification.class
+                    );
 
-                TextractNotificationMessage textract =
-                        objectMapper.readValue(
-                                sns.getMessage(),
-                                TextractNotificationMessage.class
-                        );
+            TextractNotificationMessage textract =
+                    objectMapper.readValue(
+                            sns.getMessage(),
+                            TextractNotificationMessage.class
+                    );
 
-                if (!"SUCCEEDED".equals(textract.getStatus())) {
+            if (!"SUCCEEDED".equals(textract.getStatus())) {
                 return;
-                }
+            }
 
-                String correlationId = textract.getJobTag();
+            String correlationId = textract.getJobTag();
 
-                System.out.println();
-                System.out.println("Job tag: " + correlationId);
-                System.out.println();
+            if (correlationId != null) {
+                CorrelationIdHolder.set(correlationId);
+                log.info("Correlation ID set from Textract jobTag correlationId={}", correlationId);
+            } else {
+                log.warn("Textract jobTag is null, processing without correlationId");
+            }
 
-                if(correlationId != null) CorrelationIdHolder.set(correlationId);
+            DocumentId documentId = extractDocumentId(textract.getDocumentLocation().getS3ObjectName());
 
-                DocumentId documentId = extractDocumentId(textract.getDocumentLocation().getS3ObjectName());
-
-                processService.execute(documentId, textract.getJobId());
+            processService.execute(documentId, textract.getJobId());
 
         } catch (Exception e) {
-
-               log.warn("Can't procces SQS message");
+            log.warn("Can't procces SQS message", e);
         }
     }
 
@@ -128,7 +131,5 @@ public class TextractQueueConsumer {
         );
 
         log.info("finish message deletion");
-
-        CorrelationIdHolder.clear();
     }
 }

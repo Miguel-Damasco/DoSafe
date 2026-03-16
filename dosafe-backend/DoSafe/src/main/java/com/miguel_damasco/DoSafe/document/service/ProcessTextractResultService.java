@@ -15,7 +15,9 @@ import com.miguel_damasco.DoSafe.document.infraestructure.ocr.textract.TextractC
 import com.miguel_damasco.DoSafe.document.repository.DocumentRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class ProcessTextractResultService {
@@ -30,15 +32,25 @@ public class ProcessTextractResultService {
 
     public void execute(DocumentId pId, String pJobId) {
 
-        System.out.println("Id checkeada: " + pId.value());
+        log.info("Processing Textract result documentId={} jobId={}", pId.value(), pJobId);
 
-        DocumentModel document = this.documentRepository.findById(pId.value()).orElseThrow();
+        DocumentModel document = this.documentRepository.findById(pId.value())
+                .orElseThrow(() -> new IllegalStateException("Document not found documentId=" + pId.value()));
 
-            if(document.getStatus() == DocumentStatus.PROCESSED) return;
+        if(document.getStatus() == DocumentStatus.PROCESSED) {
+            log.info("Document already processed, skipping documentId={}", pId.value());
+            return;
+        }
+
+        try {
 
             List<String> result = this.textractClientAdapter.getLines(pJobId);
 
+            log.info("OCR lines retrieved documentId={} lineCount={}", pId.value(), result.size());
+
             DocumentTypeEnum documentType = this.generalDocumentClasifier.classify(result);
+
+            log.info("Document classified documentId={} type={}", pId.value(), documentType);
 
             document.setDocumentType(documentType);
 
@@ -46,17 +58,20 @@ public class ProcessTextractResultService {
 
             LocalDate extractedDate = expirationExtractor.extract(result, document.getId(), document.getUser().getId());
 
-            document.setExpireAt(extractedDate); // Just testing
+            log.info("Expiration date extracted documentId={} date={}", pId.value(), extractedDate);
+
+            document.setExpireAt(extractedDate);
 
             document.markProcessed();
 
             this.documentRepository.save(document);
 
-            System.out.println();
-            System.out.println("Documento Actualizado con exito!");
-            System.out.println("Id: " + document.getId() + " y: " + pId.value());
-            System.out.println();
+            log.info("Document updated successfully documentId={}", pId.value());
 
-            return;
+        } catch (Exception e) {
+            log.error("Failed to process document, marking as FAILED documentId={}", pId.value(), e);
+            document.markFailed();
+            this.documentRepository.save(document);
+        }
     }
 }
