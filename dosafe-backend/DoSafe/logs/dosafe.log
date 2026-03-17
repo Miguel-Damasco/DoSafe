@@ -65,3 +65,34 @@
 2026-03-16 12:21:12 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - Started DoSafeApplicationTests in 10.101 seconds (process running for 12.256)
 2026-03-16 12:21:12 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
 2026-03-16 12:21:23 [scheduling-1] DEBUG [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - No messages in queue
+2026-03-17 11:10:23 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Starting AuthenticationControllerTest using Java 17.0.0.1 with PID 28988 (started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
+2026-03-17 11:10:23 [main] DEBUG [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-03-17 11:10:23 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - No active profile set, falling back to 1 default profile: "default"
+2026-03-17 11:10:30 [main] DEBUG [] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - Filter 'correlationIdFilter' configured for use
+2026-03-17 11:10:30 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Started AuthenticationControllerTest in 8.346 seconds (process running for 11.48)
+2026-03-17 11:12:56 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Starting AuthenticationControllerTest using Java 17.0.0.1 with PID 21780 (started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
+2026-03-17 11:12:56 [main] DEBUG [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-03-17 11:12:56 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - No active profile set, falling back to 1 default profile: "default"
+2026-03-17 11:13:01 [main] DEBUG [] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - Filter 'correlationIdFilter' configured for use
+2026-03-17 11:13:01 [main] DEBUG [] com.miguel_damasco.DoSafe.security.jwt.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-03-17 11:13:01 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Started AuthenticationControllerTest in 6.974 seconds (process running for 10.244)
+2026-03-17 11:13:59 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Starting AuthenticationControllerTest using Java 17.0.0.1 with PID 29640 (started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
+2026-03-17 11:13:59 [main] DEBUG [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-03-17 11:13:59 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - No active profile set, falling back to 1 default profile: "default"
+2026-03-17 11:14:05 [main] DEBUG [] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - Filter 'correlationIdFilter' configured for use
+2026-03-17 11:14:05 [main] DEBUG [] com.miguel_damasco.DoSafe.security.jwt.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-03-17 11:14:05 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Started AuthenticationControllerTest in 7.029 seconds (process running for 9.702)
+2026-03-17 11:14:05 [main] WARN  [58a2d7d5-5d0c-4585-9a73-0e696979dacc] com.miguel_damasco.DoSafe.common.exception.GlobalExceptionHandler - Application error errorCode=USER_ALREADY_EXISTS message=Username 'miguel' is already taken
+2026-03-17 12:20:06 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - Starting DoSafeApplicationTests using Java 17.0.0.1 with PID 28236 (started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
+2026-03-17 12:20:06 [main] DEBUG [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-03-17 12:20:06 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2026-03-17 12:20:21 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - Started DoSafeApplicationTests in 16.258 seconds (process running for 21.49)
+2026-03-17 12:20:21 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-17 12:20:33 [scheduling-1] DEBUG [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - No messages in queue
+2026-03-17 12:20:33 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Starting AuthenticationControllerTest using Java 17.0.0.1 with PID 28236 (started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
+2026-03-17 12:20:33 [main] DEBUG [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-03-17 12:20:33 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - No active profile set, falling back to 1 default profile: "default"
+2026-03-17 12:20:33 [main] DEBUG [] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - Filter 'correlationIdFilter' configured for use
+2026-03-17 12:20:33 [main] DEBUG [] com.miguel_damasco.DoSafe.security.jwt.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-03-17 12:20:33 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Started AuthenticationControllerTest in 0.858 seconds (process running for 33.599)
+2026-03-17 12:20:34 [main] WARN  [df18a2d0-f991-43bd-8ac2-e63d9306d026] com.miguel_damasco.DoSafe.common.exception.GlobalExceptionHandler - Application error errorCode=USER_ALREADY_EXISTS message=Username 'miguel' is already taken
