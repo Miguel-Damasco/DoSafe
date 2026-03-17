@@ -59,3 +59,9 @@
 2026-03-16 09:53:07 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
 2026-03-16 09:53:26 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
 2026-03-16 09:53:42 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-16 12:21:03 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - Starting DoSafeApplicationTests using Java 17.0.0.1 with PID 12628 (started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
+2026-03-16 12:21:03 [main] DEBUG [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-03-16 12:21:03 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2026-03-16 12:21:12 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - Started DoSafeApplicationTests in 10.101 seconds (process running for 12.256)
+2026-03-16 12:21:12 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-03-16 12:21:23 [scheduling-1] DEBUG [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - No messages in queue

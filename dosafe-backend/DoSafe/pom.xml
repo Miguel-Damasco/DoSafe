@@ -156,6 +156,12 @@
 					</excludes>
 				</configuration>
 			</plugin>
+		<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<verboseOutput>true</verboseOutput>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 

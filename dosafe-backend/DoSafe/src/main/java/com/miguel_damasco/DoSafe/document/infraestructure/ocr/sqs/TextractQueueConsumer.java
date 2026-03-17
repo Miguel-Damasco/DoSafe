@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdHolder;
 import com.miguel_damasco.DoSafe.document.domain.DocumentId;
