@@ -34,8 +34,17 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.csrf(crfs -> crfs.disable())
-            .authorizeHttpRequests(auth -> auth.requestMatchers("/authentication/login", "/authentication/register", "/document/poll")
-                                                        .permitAll().anyRequest().authenticated())
+            .authorizeHttpRequests(auth -> auth
+                                                        .requestMatchers(
+                                                            "/authentication/login",
+                                                            "/authentication/register",
+                                                            "/document/poll",
+                                                            // Swagger UI and OpenAPI spec — public so anyone can browse the API docs.
+                                                            "/swagger-ui.html",
+                                                            "/swagger-ui/**",
+                                                            "/v3/api-docs/**"
+                                                        ).permitAll()
+                                                        .anyRequest().authenticated())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
