@@ -27,12 +27,12 @@ public class SesEmailSender implements EmailSender {
     @Override
     public void send(AlertModel pAlert) {
 
-        String recipientEmail = pAlert.getUser().getEmail();
+        String recipientEmail = pAlert.getUser().getEmail().strip();
         String subject = buildSubject(pAlert);
         String body = buildBody(pAlert);
 
         SendEmailRequest request = SendEmailRequest.builder()
-                .source(senderEmail)
+                .source(senderEmail.strip())
                 .destination(Destination.builder()
                         .toAddresses(recipientEmail)
                         .build())

@@ -44,23 +44,23 @@ public class AlertService {
                 DocumentStatus.PROCESSED
         );
 
-        if (expiringDocuments.isEmpty()) {
-            log.info("No expiring documents found");
-            return;
+        if (!expiringDocuments.isEmpty()) {
+            log.info("Found expiring documents count={}", expiringDocuments.size());
+
+            // Step 2 — create an alert record for each document found.
+            List<AlertModel> newAlerts = expiringDocuments.stream()
+                    .map(this::buildAlert)
+                    .toList();
+
+            alertRepository.saveAll(newAlerts);
+
+            log.info("Alerts created count={}", newAlerts.size());
+        } else {
+            log.info("No new expiring documents found");
         }
 
-        log.info("Found expiring documents count={}", expiringDocuments.size());
-
-        // Step 2 — create an alert record for each document found.
-        List<AlertModel> newAlerts = expiringDocuments.stream()
-                .map(this::buildAlert)
-                .toList();
-
-        alertRepository.saveAll(newAlerts);
-
-        log.info("Alerts created count={}", newAlerts.size());
-
-        // Step 3 — send emails for all unsent alerts (includes any that may have failed previously).
+        // Step 3 — always send pending alerts, even if no new documents were found.
+        // This retries any alerts that failed to send in a previous run (sentAt = null).
         sendPendingAlerts();
     }
 
