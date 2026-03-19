@@ -26,7 +26,7 @@ import com.miguel_damasco.DoSafe.user.repository.UserRepository;
 
 @Service
 public class UserService {
-    
+
     private final UserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
@@ -37,15 +37,19 @@ public class UserService {
 
     private final RefreshTokenService refreshTokenService;
 
+    private final EmailVerificationService emailVerificationService;
+
     public UserService(UserRepository pUserRepository, PasswordEncoder passwordEncoder,
-         JwtUtil pJwtUtil, 
+         JwtUtil pJwtUtil,
          AuthenticationManager pAuthenticationManager,
-        RefreshTokenService pRefreshTokenService) {
+         RefreshTokenService pRefreshTokenService,
+         EmailVerificationService pEmailVerificationService) {
         this.userRepository = pUserRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtil = pJwtUtil;
         this.authenticationManager = pAuthenticationManager;
         this.refreshTokenService = pRefreshTokenService;
+        this.emailVerificationService = pEmailVerificationService;
     }
 
     public UserModel findUserById(long pId) {
@@ -92,16 +96,20 @@ public class UserService {
         newUser.setUsername(pRequest.username());
         newUser.setRole(pRole);
 
+        UserModel userSaved;
+
         try {
-
-            UserModel userSaved = this.userRepository.save(newUser);
-
-            return new RegisterResponseDTO(userSaved.getId(), userSaved.getUsername());
-
+            userSaved = this.userRepository.save(newUser);
         } catch (DataIntegrityViolationException e) {
-
             throw new UserAlreadyExistsException(pRequest.username());
         }
+
+        // Fire verification email after the user is saved — outside the catch block
+        // so any DB errors here don't get misclassified as UserAlreadyExistsException.
+        // Email is sent asynchronously; registration response is not delayed.
+        emailVerificationService.sendVerificationEmail(userSaved);
+
+        return new RegisterResponseDTO(userSaved.getId(), userSaved.getUsername());
     }
 
 

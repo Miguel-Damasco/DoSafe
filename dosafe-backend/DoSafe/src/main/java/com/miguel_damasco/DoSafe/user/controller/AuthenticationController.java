@@ -2,9 +2,11 @@ package com.miguel_damasco.DoSafe.user.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.miguel_damasco.DoSafe.common.apiResponse.ApiResponse;
@@ -12,8 +14,11 @@ import com.miguel_damasco.DoSafe.common.apiResponse.ApiResponses;
 import com.miguel_damasco.DoSafe.user.domain.RoleEnum;
 import com.miguel_damasco.DoSafe.user.dto.request.LoginRequestDTO;
 import com.miguel_damasco.DoSafe.user.dto.request.RegisterRequestDTO;
+import com.miguel_damasco.DoSafe.user.dto.request.ResendVerificationRequestDTO;
 import com.miguel_damasco.DoSafe.user.dto.response.LoginResponseDTO;
 import com.miguel_damasco.DoSafe.user.dto.response.RegisterResponseDTO;
+import com.miguel_damasco.DoSafe.user.dto.response.VerifyEmailResponseDTO;
+import com.miguel_damasco.DoSafe.user.service.EmailVerificationService;
 import com.miguel_damasco.DoSafe.user.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,6 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 public class AuthenticationController {
 
     private final UserService userService;
+    private final EmailVerificationService emailVerificationService;
 
     @Operation(summary = "Login", description = "Authenticates a user and returns a JWT access token and a refresh token.")
     @io.swagger.v3.oas.annotations.responses.ApiResponses({
@@ -66,5 +72,40 @@ public class AuthenticationController {
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(ApiResponses.success(response, 201, "User registered successfully!"));
+    }
+
+    @Operation(summary = "Verify email", description = "Validates a verification token and marks the user's email as verified.")
+    @io.swagger.v3.oas.annotations.responses.ApiResponses({
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Email verified successfully"),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Token is invalid, expired, or already used")
+    })
+    @GetMapping("/verify-email")
+    public ResponseEntity<ApiResponse<VerifyEmailResponseDTO>> verifyEmail(
+            @RequestParam String token) {
+
+        log.info("Email verification attempt token={}", token);
+
+        emailVerificationService.verifyToken(token);
+
+        log.info("Email verified successfully token={}", token);
+
+        return ResponseEntity.ok()
+                .body(ApiResponses.success(null, 200, "Email verified successfully!"));
+    }
+
+    @Operation(summary = "Resend verification email", description = "Sends a new verification email. Returns 200 regardless of whether the email exists to prevent email enumeration.")
+    @io.swagger.v3.oas.annotations.responses.ApiResponses({
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Verification email sent if the address is registered and unverified")
+    })
+    @PostMapping("/resend-verification")
+    public ResponseEntity<ApiResponse<Void>> resendVerification(
+            @RequestBody ResendVerificationRequestDTO pRequest) {
+
+        log.info("Resend verification requested email={}", pRequest.email());
+
+        emailVerificationService.resendVerificationEmail(pRequest.email());
+
+        return ResponseEntity.ok()
+                .body(ApiResponses.success(null, 200, "If your email is registered and unverified, a new verification email has been sent."));
     }
 }

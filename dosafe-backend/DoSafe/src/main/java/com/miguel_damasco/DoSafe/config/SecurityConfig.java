@@ -38,6 +38,8 @@ public class SecurityConfig {
                                                         .requestMatchers(
                                                             "/authentication/login",
                                                             "/authentication/register",
+                                                            "/authentication/verify-email",
+                                                            "/authentication/resend-verification",
                                                             "/document/poll",
                                                             // Swagger UI and OpenAPI spec — public so anyone can browse the API docs.
                                                             "/swagger-ui.html",

@@ -38,6 +38,9 @@ public class UserModel {
     @Column(nullable = false)
     private RoleEnum role;
 
+    // false until the user clicks the verification link sent to their email after registration.
+    private boolean emailVerified = false;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DocumentModel> documents = new ArrayList<>();
 
@@ -71,5 +74,7 @@ public class UserModel {
         this.role = pRoleEnum;
     }
 
-
+    public void verifyEmail() {
+        this.emailVerified = true;
+    }
 }
