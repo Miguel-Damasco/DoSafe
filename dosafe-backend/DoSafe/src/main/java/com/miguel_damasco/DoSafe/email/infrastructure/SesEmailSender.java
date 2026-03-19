@@ -1,9 +1,7 @@
-package com.miguel_damasco.DoSafe.alert.infrastructure;
+package com.miguel_damasco.DoSafe.email.infrastructure;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import com.miguel_damasco.DoSafe.alert.domain.AlertModel;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +15,9 @@ import software.amazon.awssdk.services.ses.model.SendEmailRequest;
 @Slf4j
 @RequiredArgsConstructor
 @Component
+// AWS SES implementation of EmailSender.
+// To switch to another provider (SendGrid, Mailgun, etc.), create a new @Component
+// implementing EmailSender and remove @Component from this class — callers need zero changes.
 public class SesEmailSender implements EmailSender {
 
     private final SesClient sesClient;
@@ -25,25 +26,21 @@ public class SesEmailSender implements EmailSender {
     private String senderEmail;
 
     @Override
-    public void send(AlertModel pAlert) {
-
-        String recipientEmail = pAlert.getUser().getEmail().strip();
-        String subject = buildSubject(pAlert);
-        String body = buildBody(pAlert);
+    public void send(String pTo, String pSubject, String pBody) {
 
         SendEmailRequest request = SendEmailRequest.builder()
                 .source(senderEmail.strip())
                 .destination(Destination.builder()
-                        .toAddresses(recipientEmail)
+                        .toAddresses(pTo.strip())
                         .build())
                 .message(Message.builder()
                         .subject(Content.builder()
-                                .data(subject)
+                                .data(pSubject)
                                 .charset("UTF-8")
                                 .build())
                         .body(Body.builder()
                                 .text(Content.builder()
-                                        .data(body)
+                                        .data(pBody)
                                         .charset("UTF-8")
                                         .build())
                                 .build())
@@ -52,29 +49,6 @@ public class SesEmailSender implements EmailSender {
 
         sesClient.sendEmail(request);
 
-        log.info("Expiration alert email sent to={} documentId={}",
-                recipientEmail,
-                pAlert.getDocument().getId());
-    }
-
-    private String buildSubject(AlertModel pAlert) {
-        return String.format("Your %s expires on %s",
-                pAlert.getDocument().getType(),
-                pAlert.getDocument().getExpireAt());
-    }
-
-    private String buildBody(AlertModel pAlert) {
-        return String.format("""
-                Hi %s,
-
-                This is a reminder that your %s expires on %s.
-
-                Please renew it before the expiration date to avoid any issues.
-
-                DoSafe Team
-                """,
-                pAlert.getUser().getUsername(),
-                pAlert.getDocument().getType(),
-                pAlert.getDocument().getExpireAt());
+        log.info("Email sent to={}", pTo.strip());
     }
 }

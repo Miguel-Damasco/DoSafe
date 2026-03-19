@@ -13,6 +13,7 @@ import com.miguel_damasco.DoSafe.alert.repository.AlertRepository;
 import com.miguel_damasco.DoSafe.document.domain.DocumentModel;
 import com.miguel_damasco.DoSafe.document.domain.DocumentStatus;
 import com.miguel_damasco.DoSafe.document.repository.DocumentRepository;
+import com.miguel_damasco.DoSafe.email.service.EmailService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,8 +31,7 @@ public class AlertService {
     @Value("${alert.expiration-threshold-days:30}")
     private int expirationThresholdDays;
 
-    // TEMPORARY — runs every minute for testing. Change back to "0 0 8 * * *" after testing.
-    @Scheduled(cron = "0 * * * * *")
+    @Scheduled(cron = "0 0 8 * * *")
     public void checkExpiringDocuments() {
 
         log.info("Starting daily expiration alert check thresholdDays={}", expirationThresholdDays);
@@ -65,16 +65,34 @@ public class AlertService {
     }
 
     // Dispatches emails for all alerts with sentAt = null.
-    // Each send is async — this method returns immediately after firing all tasks.
-    // markSent() and error handling live inside EmailService, in the async thread.
+    // EmailService.send() is @Async — each call returns a CompletableFuture immediately.
+    // Post-send logic (markSent + save) is chained via thenRun() so it runs inside the
+    // email-worker thread AFTER the send succeeds, not before.
     private void sendPendingAlerts() {
 
         List<AlertModel> pendingAlerts = alertRepository.findAllBySentAtIsNull();
 
         log.info("Dispatching pending alerts count={}", pendingAlerts.size());
 
-        // Each call returns immediately — Spring fires the email in an alert-worker thread.
-        pendingAlerts.forEach(emailService::sendExpirationAlert);
+        pendingAlerts.forEach(alert -> {
+            String to = alert.getUser().getEmail();
+            String subject = buildSubject(alert);
+            String body = buildBody(alert);
+
+            emailService.send(to, subject, body)
+                    .thenRun(() -> {
+                        alert.markSent();
+                        alertRepository.save(alert);
+                        log.info("Alert sent and marked alertId={}", alert.getId());
+                    })
+                    .exceptionally(ex -> {
+                        // Log the failure but do not rethrow — the alert stays with sentAt = null
+                        // and will be retried on the next daily run.
+                        log.error("Failed to send alert alertId={} — will retry on next run",
+                                alert.getId(), ex);
+                        return null;
+                    });
+        });
     }
 
     private AlertModel buildAlert(DocumentModel pDocument) {
@@ -83,5 +101,26 @@ public class AlertService {
         alert.setDocument(pDocument);
         alert.setCreatedAt(Instant.now());
         return alert;
+    }
+
+    private String buildSubject(AlertModel pAlert) {
+        return String.format("Your %s expires on %s",
+                pAlert.getDocument().getType(),
+                pAlert.getDocument().getExpireAt());
+    }
+
+    private String buildBody(AlertModel pAlert) {
+        return String.format("""
+                Hi %s,
+
+                This is a reminder that your %s expires on %s.
+
+                Please renew it before the expiration date to avoid any issues.
+
+                DoSafe Team
+                """,
+                pAlert.getUser().getUsername(),
+                pAlert.getDocument().getType(),
+                pAlert.getDocument().getExpireAt());
     }
 }

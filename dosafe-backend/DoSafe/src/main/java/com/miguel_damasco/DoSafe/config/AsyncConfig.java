@@ -22,12 +22,12 @@ public class AsyncConfig {
 
     // Maximum concurrent email sends. Large enough to handle bulk alert batches
     // without overwhelming AWS SES rate limits.
-    private static final int ALERT_EMAIL_WORKER_COUNT = 10;
+    private static final int EMAIL_WORKER_COUNT = 10;
 
     // Maximum tasks allowed to wait in the queue before CallerRunsPolicy kicks in.
     // If the queue fills up, the scheduler thread executes the task itself,
     // creating natural backpressure instead of dropping tasks.
-    private static final int ALERT_QUEUE_CAPACITY = 500;
+    private static final int EMAIL_QUEUE_CAPACITY = 500;
 
     @Bean
     public ExecutorService textractExecutor() {
@@ -50,18 +50,18 @@ public class AsyncConfig {
     }
 
     // ThreadPoolTaskExecutor is Spring's task executor — required for @Async.
-    // The bean name "alertExecutor" matches the value in @Async("alertExecutor"),
-    // telling Spring which pool to use for alert email sends.
+    // The bean name "emailExecutor" matches the value in @Async("emailExecutor"),
+    // telling Spring which pool to use for all async email sends across any module.
     @Bean
-    public ThreadPoolTaskExecutor alertExecutor() {
+    public ThreadPoolTaskExecutor emailExecutor() {
 
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(ALERT_EMAIL_WORKER_COUNT);
-        executor.setMaxPoolSize(ALERT_EMAIL_WORKER_COUNT);
-        executor.setThreadNamePrefix("alert-worker-");
+        executor.setCorePoolSize(EMAIL_WORKER_COUNT);
+        executor.setMaxPoolSize(EMAIL_WORKER_COUNT);
+        executor.setThreadNamePrefix("email-worker-");
 
-        // Bounded queue — prevents unbounded memory growth if alerts arrive faster than workers process them.
-        executor.setQueueCapacity(ALERT_QUEUE_CAPACITY);
+        // Bounded queue — prevents unbounded memory growth if emails arrive faster than workers process them.
+        executor.setQueueCapacity(EMAIL_QUEUE_CAPACITY);
 
         // CallerRunsPolicy — when the queue is full, the calling thread (scheduler) executes
         // the task itself instead of rejecting it. This creates natural backpressure:
