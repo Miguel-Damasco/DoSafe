@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
@@ -26,6 +27,7 @@ import com.miguel_damasco.DoSafe.security.jwt.JwtUtil;
 import com.miguel_damasco.DoSafe.security.refresh.RefreshTokenModel;
 import com.miguel_damasco.DoSafe.security.refresh.RefreshTokenService;
 import com.miguel_damasco.DoSafe.user.domain.RoleEnum;
+import com.miguel_damasco.DoSafe.user.service.EmailVerificationService;
 import com.miguel_damasco.DoSafe.user.domain.UserModel;
 import com.miguel_damasco.DoSafe.user.dto.request.LoginRequestDTO;
 import com.miguel_damasco.DoSafe.user.dto.request.RegisterRequestDTO;
@@ -54,6 +56,9 @@ class UserServiceTest {
 
     @Mock
     private RefreshTokenService refreshTokenService;
+
+    @Mock
+    private EmailVerificationService emailVerificationService;
 
     // @InjectMocks creates a real UserService and injects all @Mock fields into it.
     @InjectMocks
@@ -85,6 +90,9 @@ class UserServiceTest {
         // Then
         assertThat(result.id()).isEqualTo(1L);
         assertThat(result.username()).isEqualTo("miguel");
+
+        // Verification email must be dispatched after the user is saved.
+        verify(emailVerificationService).sendVerificationEmail(savedUser);
     }
 
     @Test

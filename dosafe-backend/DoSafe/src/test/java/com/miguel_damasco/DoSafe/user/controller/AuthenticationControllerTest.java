@@ -21,6 +21,7 @@ import com.miguel_damasco.DoSafe.security.CustomUserDetailsService;
 import com.miguel_damasco.DoSafe.security.jwt.JwtUtil;
 import com.miguel_damasco.DoSafe.user.dto.response.LoginResponseDTO;
 import com.miguel_damasco.DoSafe.user.dto.response.RegisterResponseDTO;
+import com.miguel_damasco.DoSafe.user.service.EmailVerificationService;
 import com.miguel_damasco.DoSafe.user.service.UserService;
 
 // @WebMvcTest loads only the web layer: controllers, filters, and JSON serialization.
@@ -42,6 +43,9 @@ class AuthenticationControllerTest {
     // Without this, Spring would try to load UserService with all its dependencies (DB, AWS, etc.)
     @MockitoBean
     private UserService userService;
+
+    @MockitoBean
+    private EmailVerificationService emailVerificationService;
 
     // JwtUtil reads ${jwt.secret} from application.properties — we mock it to avoid
     // needing a real secret key in the test environment.
@@ -76,11 +80,11 @@ class AuthenticationControllerTest {
                                 """))
                 // Then — verify HTTP status and JSON response fields
                 // jsonPath navigates the JSON like a tree: $ is the root
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.data.id").value(1))
                 .andExpect(jsonPath("$.data.username").value("miguel"))
                 .andExpect(jsonPath("$.meta.success").value(true))
-                .andExpect(jsonPath("$.meta.statusCode").value(200));
+                .andExpect(jsonPath("$.meta.statusCode").value(201));
     }
 
     @Test
