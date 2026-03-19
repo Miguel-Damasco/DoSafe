@@ -12,7 +12,7 @@ public class GeneralDocumentClasifier implements DocumentClasifier {
     @Override
     public DocumentTypeEnum classify(List<String> pLines) {
         
-        DocumentTypeEnum result = null;
+        DocumentTypeEnum result = DocumentTypeEnum.OTHER;
 
         for(String line : pLines) {
 

@@ -27,8 +27,6 @@ public class PassportDateExtractor implements ExpirationDateExtractor {
 
         LocalDate localDate = null;
 
-        try {
-
         for(int i = 0; i < pLines.size(); i++) {
 
 			// Expects Uruguayan passport OCR format:
@@ -71,6 +69,8 @@ public class PassportDateExtractor implements ExpirationDateExtractor {
 	        		default -> new byte[] {0,0};
         		};
 
+                // Unrecognized month is a legitimate "cannot extract" case — return null
+                // so the user can enter the date manually.
         		if(monthSelector[0] == 0 && monthSelector[1] == 0) {
                     log.warn("Unrecognized month abbreviation documentId={} raw={}", pDocumentId, sb);
                     return null;
@@ -99,12 +99,10 @@ public class PassportDateExtractor implements ExpirationDateExtractor {
         		localDate = LocalDate.parse(finalDate, formater);
 
         	}
-        } } catch(Exception e) {
-            log.warn("Expiration date not found documentId={} userId={}", pDocumentId, pUserId);
-			return null;
         }
 
-        log.info("Expiration date extracted documentId={} userId={} date={}", pDocumentId, pUserId, localDate);
+        if(localDate == null) log.warn("Expiration date not found documentId={} userId={}", pDocumentId, pUserId);
+        else log.info("Expiration date extracted documentId={} userId={} date={}", pDocumentId, pUserId, localDate);
 
         return localDate;
     }

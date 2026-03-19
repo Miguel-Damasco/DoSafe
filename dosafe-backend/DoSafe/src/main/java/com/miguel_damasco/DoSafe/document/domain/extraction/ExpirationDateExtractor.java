@@ -10,6 +10,9 @@ public interface ExpirationDateExtractor {
 
     boolean supports(DocumentTypeEnum type);
 
-    // Returns null if the date cannot be extracted — the user will provide it manually.
+    // Returns null in two valid scenarios:
+    //   1. The document type is recognized but the OCR output doesn't contain a parseable date.
+    //   2. The document type is unrecognized (OTHER) — no extraction strategy exists.
+    // In both cases the user will be prompted to enter the expiration date manually.
     LocalDate extract(List<String> pLines, UUID pDocumentId, long pIdUser);
 }
