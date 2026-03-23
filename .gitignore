@@ -1,0 +1,18 @@
+# Environment variables — never commit secrets
+.env
+
+# Maven build output
+dosafe-backend/DoSafe/target/
+
+# Logs
+dosafe-backend/DoSafe/logs/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.cursor/
+
+# OS
+.DS_Store
+Thumbs.db

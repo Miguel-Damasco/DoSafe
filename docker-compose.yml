@@ -1,0 +1,71 @@
+services:
+
+  # ─── MySQL ────────────────────────────────────────────────────────────────
+  mysql:
+    image: mysql:8.0
+    container_name: dosafe-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: dosafe
+    ports:
+      # host:container — exposes MySQL on localhost:3306 for local DB tools (DBeaver, etc.)
+      - "3306:3306"
+    volumes:
+      # Named volume: persists the database data between container restarts.
+      # Without this, all data is lost every time the container stops.
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      # Verifies that MySQL is ready AND the dosafe database exists.
+      # mysqladmin ping can succeed before the database is fully initialized,
+      # so we check the specific database to avoid connection failures on app startup.
+      test: ["CMD", "mysql", "-h", "localhost", "-u", "root", "-p${DB_PASSWORD}", "-e", "USE dosafe"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 40s
+    networks:
+      - dosafe-network
+
+  # ─── Spring Boot App ──────────────────────────────────────────────────────
+  app:
+    build:
+      context: ./dosafe-backend/DoSafe
+      dockerfile: Dockerfile
+    container_name: dosafe-app
+    ports:
+      - "8080:8080"
+    environment:
+      # Database — points to the mysql service by its service name, not localhost.
+      # Docker resolves service names as hostnames within the same network.
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USERNAME: root
+      DB_PASSWORD: ${DB_PASSWORD}
+
+      # JWT
+      JWT_SECRET: ${JWT_SECRET}
+
+      # AWS
+      AWS_REGION: ${AWS_REGION}
+      AWS_S3_BUCKET: ${AWS_S3_BUCKET}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_SQS_QUEUE_URL: ${AWS_SQS_QUEUE_URL}
+      AWS_SES_SENDER_EMAIL: ${AWS_SES_SENDER_EMAIL}
+    depends_on:
+      mysql:
+        # App only starts after MySQL passes its healthcheck.
+        condition: service_healthy
+    networks:
+      - dosafe-network
+
+# Named volumes are managed by Docker and persist between restarts.
+volumes:
+  mysql_data:
+
+# Explicit network so both containers can communicate using service names as hostnames.
+# Without this, Docker Compose creates a default network but service name resolution
+# can be unreliable in some Docker Desktop versions.
+networks:
+  dosafe-network:
+    driver: bridge

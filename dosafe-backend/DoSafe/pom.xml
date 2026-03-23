@@ -141,6 +141,18 @@
 			<version>2.42.14</version>
 		</dependency>
 
+		<!-- Flyway — database migration. The starter includes the auto-configuration
+		     wiring that ensures Flyway runs before Hibernate validates the schema. -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-flyway</artifactId>
+		</dependency>
+		<!-- flyway-mysql is required separately for MySQL 8 support. -->
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-mysql</artifactId>
+		</dependency>
+
 	</dependencies>
 
 
