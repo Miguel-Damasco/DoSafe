@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,7 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.miguel_damasco.DoSafe.common.apiResponse.ApiResponse;
 import com.miguel_damasco.DoSafe.common.apiResponse.ApiResponses;
+import com.miguel_damasco.DoSafe.document.dto.response.DocumentPageResponseDTO;
 import com.miguel_damasco.DoSafe.document.dto.response.DocumentUploadResponseDTO;
+import com.miguel_damasco.DoSafe.document.service.DocumentQueryService;
 import com.miguel_damasco.DoSafe.document.service.DocumentUploadService;
 import com.miguel_damasco.DoSafe.security.MyUserDetails;
 
@@ -33,6 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 public class DocumentController {
 
     private final DocumentUploadService documentUploadService;
+    private final DocumentQueryService documentQueryService;
 
     @Operation(
         summary = "Upload document",
@@ -66,5 +70,28 @@ public class DocumentController {
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(ApiResponses.success(response, 201, "Resource created successfully!"));
+    }
+
+    @Operation(
+        summary = "List my documents",
+        description = "Returns a paginated, newest-first list of documents uploaded by the authenticated user. " +
+                      "Use 'page' (0-based) and 'size' (max 50) to navigate pages."
+    )
+    @io.swagger.v3.oas.annotations.responses.ApiResponses({
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Page of documents returned"),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Missing or invalid JWT token")
+    })
+    @SecurityRequirement(name = "bearerAuth")
+    @GetMapping("/my-documents")
+    public ResponseEntity<ApiResponse<DocumentPageResponseDTO>> listMyDocuments(
+            @AuthenticationPrincipal MyUserDetails pUserDetails,
+            @RequestParam(defaultValue = "0") int pPage,
+            @RequestParam(defaultValue = "10") int pSize) {
+
+        log.info("List documents request username={} page={} size={}", pUserDetails.getUsername(), pPage, pSize);
+
+        DocumentPageResponseDTO response = documentQueryService.listByUser(pUserDetails.getUsername(), pPage, pSize);
+
+        return ResponseEntity.ok(ApiResponses.success(response, 200, "Documents retrieved successfully!"));
     }
 }
