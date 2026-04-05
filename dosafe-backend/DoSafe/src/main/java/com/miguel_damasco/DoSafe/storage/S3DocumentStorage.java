@@ -62,7 +62,7 @@ public class S3DocumentStorage implements DocumentStorage {
 
     @Override
     public URL generateDownloadUrl(String pKey, Duration pTtl) {
-       
+
         GetObjectRequest objectRequest = GetObjectRequest.builder()
                                                             .bucket(bucketName)
                                                             .key(pKey)
@@ -75,8 +75,10 @@ public class S3DocumentStorage implements DocumentStorage {
 
         PresignedGetObjectRequest presignedRequest = this.s3Presigner.presignGetObject(objectPresignRequest);
 
-        System.out.println(String.format("Presigned URL [%s]", presignedRequest.url().toString()));
-        System.out.println(String.format("HTTP method [%s]", presignedRequest.httpRequest().method()));
+        // The full presigned URL is not logged because it contains AWS credentials
+        // in the query string. Logging it would expose those credentials in any
+        // log aggregation system.
+        log.info("Presigned URL generated key={} ttl={}", pKey, pTtl);
 
         return presignedRequest.url();
     }
@@ -92,16 +94,7 @@ public class S3DocumentStorage implements DocumentStorage {
         this.s3Client.deleteObject(request);
     }
     
-    public String generateKey(long pUserId, String pDocumentId) {
-
-        log.info("Generation key started documentId={} userId={}", pDocumentId, pUserId);
-
-        String key = String.format("users/%s/%s.pdf", pUserId, pDocumentId);
-
-        log.info("Generation key finsih documentId={} userId={} key={}", pDocumentId, pUserId, key);
-
-        return key;
-
-
+    private String generateKey(long pUserId, String pDocumentId) {
+        return String.format("users/%s/%s.pdf", pUserId, pDocumentId);
     }
 }
