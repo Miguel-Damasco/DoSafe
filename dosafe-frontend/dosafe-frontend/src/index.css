@@ -1,0 +1,951 @@
+@import "tailwindcss";
+
+/* ─── Design tokens ─────────────────────────────────────────────────── */
+:root {
+  --bg:           #070b11;
+  --surface:      #0d1420;
+  --border:       #182030;
+  --accent:       #c8a055;
+  --accent-dim:   #8a6d38;
+  --accent-glow:  rgba(200, 160, 85, 0.12);
+  --text:         #dde3ec;
+  --text-muted:   #455569;
+  --error:        #e05c4b;
+  --error-bg:     rgba(224, 92, 75, 0.07);
+  --error-border: rgba(224, 92, 75, 0.22);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Animated grid background ──────────────────────────────────────── */
+.grid-bg {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 52px 52px;
+  animation: grid-pulse 9s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes grid-pulse {
+  0%, 100% { opacity: 0.35; }
+  50%       { opacity: 0.65; }
+}
+
+/* ─── Scanlines overlay ─────────────────────────────────────────────── */
+.scanlines {
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.06) 2px,
+    rgba(0, 0, 0, 0.06) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ─── Ambient top-right glow ────────────────────────────────────────── */
+.corner-glow {
+  position: fixed;
+  top: -220px;
+  right: -220px;
+  width: 640px;
+  height: 640px;
+  background: radial-gradient(circle, rgba(200, 160, 85, 0.055) 0%, transparent 68%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── Language toggle ───────────────────────────────────────────────── */
+.lang-toggle {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 50;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  background: transparent;
+  padding: 0.3rem 0.75rem;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.lang-toggle:hover {
+  color: var(--accent);
+  border-color: var(--accent-dim);
+}
+
+/* Same style but inside the sticky header (not fixed-positioned) */
+.lang-flag-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  letter-spacing: 0.1em;
+}
+
+/* ─── Login root ────────────────────────────────────────────────────── */
+.login-root {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 2rem;
+}
+
+/* ─── Login card ────────────────────────────────────────────────────── */
+.login-card {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 400px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 3rem 2.5rem 2rem;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.02) inset,
+    0 40px 100px rgba(0, 0, 0, 0.7),
+    0 0 1px rgba(200, 160, 85, 0.12);
+  animation: card-in 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Amber accent line across the top of the card */
+.card-accent-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--accent) 40%, var(--accent) 60%, transparent 100%);
+}
+
+/* ─── Wordmark ──────────────────────────────────────────────────────── */
+.wordmark {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 2.1rem;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  margin-bottom: 0.6rem;
+  animation: fade-up 0.5s 0.15s ease both;
+}
+
+/* ─── Divider row ───────────────────────────────────────────────────── */
+.divider-row {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 2.5rem;
+  animation: fade-up 0.5s 0.25s ease both;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.system-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.52rem;
+  letter-spacing: 0.22em;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* ─── Shared fade-up keyframe ───────────────────────────────────────── */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Form fields ───────────────────────────────────────────────────── */
+.field-group {
+  margin-bottom: 1.6rem;
+  animation: fade-up 0.5s ease both;
+}
+
+.field-group:nth-child(1) { animation-delay: 0.32s; }
+.field-group:nth-child(2) { animation-delay: 0.40s; }
+
+.field-group label {
+  display: block;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.55rem;
+}
+
+.field-group input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  padding: 0.45rem 0;
+  outline: none;
+  transition: border-color 0.2s;
+  caret-color: var(--accent);
+}
+
+.field-group input:focus {
+  border-bottom-color: var(--accent);
+}
+
+.field-error {
+  display: block;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--error);
+  margin-top: 0.4rem;
+  letter-spacing: 0.04em;
+}
+
+/* ─── API error banner ──────────────────────────────────────────────── */
+.api-error {
+  background: var(--error-bg);
+  border: 1px solid var(--error-border);
+  color: var(--error);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  padding: 0.65rem 0.9rem;
+  margin-bottom: 1.25rem;
+  animation: fade-up 0.3s ease both;
+}
+
+/* ─── Submit button ─────────────────────────────────────────────────── */
+.submit-btn {
+  width: 100%;
+  background: var(--accent);
+  color: #060a0f;
+  border: none;
+  padding: 0.88rem;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, opacity 0.2s;
+  margin-top: 0.5rem;
+  animation: fade-up 0.5s 0.5s ease both;
+}
+
+.submit-btn:hover:not(:disabled) {
+  background: #d4aa60;
+}
+
+.submit-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ─── Card footer ───────────────────────────────────────────────────── */
+.card-footer {
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: center;
+  animation: fade-up 0.5s 0.6s ease both;
+}
+
+.secure-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.52rem;
+  letter-spacing: 0.22em;
+  color: var(--text-muted);
+}
+
+/* ─── Dashboard layout ──────────────────────────────────────────────── */
+.dashboard-root {
+  min-height: 100vh;
+  background: var(--bg);
+  position: relative;
+}
+
+.dashboard-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(7, 11, 17, 0.88);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 1.5rem;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-wordmark {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 1.1rem;
+  letter-spacing: 0.06em;
+  color: var(--text);
+}
+
+.header-wordmark span {
+  color: var(--accent);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-btn {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid var(--border);
+  padding: 0.28rem 0.65rem;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.header-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent-dim);
+}
+
+.dashboard-content {
+  position: relative;
+  z-index: 10;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+/* ─── Dashboard page title row ──────────────────────────────────────── */
+.page-title-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.page-title {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 1.4rem;
+  color: var(--text);
+  margin: 0;
+}
+
+.page-count {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+}
+
+.upload-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--accent);
+  color: #060a0f;
+  border: none;
+  padding: 0.7rem 1.3rem;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.upload-btn:hover {
+  background: #d4aa60;
+}
+
+/* ─── PDF thumbnail ─────────────────────────────────────────────────── */
+.pdf-thumb {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: #f4f4f4; /* white-ish so the PDF page looks natural */
+  border-bottom: 1px solid var(--border);
+}
+
+/* Wrapper that scales the large iframe down to fit the card */
+.pdf-iframe-wrapper {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none; /* clicks fall through to the card's download link */
+}
+
+.pdf-iframe-wrapper iframe {
+  border: none;
+  display: block;
+  /* transform and transform-origin are set inline via JS (ResizeObserver)
+     so the scale is always exact regardless of card width. */
+}
+
+/* Skeleton shimmer while the iframe loads */
+.pdf-thumb__skeleton {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    #0d1420 25%,
+    #182030 50%,
+    #0d1420 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease infinite;
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Placeholder when still PROCESSING */
+.pdf-thumb--pending,
+.pdf-thumb--error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--border);
+  background: #060c16;
+}
+
+.pdf-thumb--pending {
+  animation: pdf-pending-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes pdf-pending-pulse {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 0.8; }
+}
+
+/* ─── Document cards grid ───────────────────────────────────────────── */
+.docs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.doc-card {
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  transition: background 0.15s;
+}
+
+.doc-card:hover {
+  background: #101929;
+}
+
+/* Padding lives on the body, not the card, so the thumbnail bleeds edge-to-edge */
+.doc-card-body {
+  padding: 1.2rem 1.4rem 1.3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  flex: 1;
+}
+
+.doc-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.doc-filename {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--text);
+  word-break: break-all;
+  line-height: 1.45;
+}
+
+/* Status badge */
+.status-badge {
+  flex-shrink: 0;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  padding: 0.25rem 0.6rem;
+  border: 1px solid;
+}
+
+.status-badge.processing {
+  color: var(--accent);
+  border-color: var(--accent-dim);
+  animation: badge-pulse 2s ease-in-out infinite;
+}
+
+@keyframes badge-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.45; }
+}
+
+.status-badge.processed {
+  color: #5ec47a;
+  border-color: rgba(94, 196, 122, 0.3);
+}
+
+.status-badge.failed {
+  color: var(--error);
+  border-color: var(--error-border);
+}
+
+/* Type pill */
+.type-pill {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+}
+
+/* Meta row (expires, uploaded) */
+.doc-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.meta-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+}
+
+.meta-value {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text);
+}
+
+.meta-value.expired {
+  color: var(--error);
+}
+
+.meta-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 0.1rem 0;
+}
+
+/* ─── Expiration date inline editor ─────────────────────────────────── */
+.expire-display-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.expire-edit-btn {
+  background: transparent;
+  border: none;
+  padding: 0.15rem;
+  cursor: pointer;
+  color: var(--text-muted);
+  line-height: 0;
+  transition: color 0.15s;
+  opacity: 0;
+}
+
+/* Show the pencil only on card hover to keep the UI uncluttered */
+.doc-card:hover .expire-edit-btn {
+  opacity: 1;
+}
+
+.expire-edit-btn:hover {
+  color: var(--accent);
+}
+
+.expire-success {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.65rem;
+  color: #5ec47a;
+}
+
+.expire-edit-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.expire-edit-row {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.expire-field-error {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.58rem;
+  color: var(--error);
+  letter-spacing: 0.04em;
+}
+
+.expire-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--accent-dim);
+  color: var(--text);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.72rem;
+  padding: 0.1rem 0;
+  outline: none;
+  caret-color: var(--accent);
+  width: 110px;
+  /* Override browser date-picker default white background */
+  color-scheme: dark;
+}
+
+.expire-input:focus {
+  border-bottom-color: var(--accent);
+}
+
+.expire-action-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 0.65rem;
+  line-height: 1;
+  padding: 0.15rem 0.25rem;
+  transition: color 0.15s;
+}
+
+.expire-action-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.expire-save {
+  color: #5ec47a;
+}
+
+.expire-save:hover:not(:disabled) {
+  color: #7de09a;
+}
+
+.expire-cancel {
+  color: var(--text-muted);
+}
+
+.expire-cancel:hover:not(:disabled) {
+  color: var(--error);
+}
+
+/* Download link */
+.download-link {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: color 0.15s;
+  align-self: flex-start;
+}
+
+.download-link:hover {
+  color: #d4aa60;
+}
+
+/* ─── Empty state ───────────────────────────────────────────────────── */
+.empty-state {
+  grid-column: 1 / -1;
+  padding: 5rem 2rem;
+  text-align: center;
+  background: var(--surface);
+}
+
+.empty-icon {
+  color: var(--border);
+  margin: 0 auto 1.5rem;
+  display: block;
+}
+
+.empty-title {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0 0 0.4rem;
+}
+
+.empty-sub {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  opacity: 0.6;
+}
+
+/* ─── Loading state ─────────────────────────────────────────────────── */
+.loading-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 4rem;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+}
+
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─── Pagination ────────────────────────────────────────────────────── */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.pagination-info {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+}
+
+.pagination-btns {
+  display: flex;
+  gap: 1px;
+  background: var(--border);
+}
+
+.page-btn {
+  background: var(--surface);
+  border: none;
+  color: var(--text-muted);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s;
+}
+
+.page-btn:hover:not(:disabled) {
+  background: #101929;
+  color: var(--accent);
+}
+
+.page-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* ─── Upload modal ──────────────────────────────────────────────────── */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 7, 12, 0.82);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  animation: backdrop-in 0.2s ease both;
+}
+
+@keyframes backdrop-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.modal-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  width: 100%;
+  max-width: 440px;
+  padding: 2rem 2rem 1.5rem;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+  animation: card-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+  position: relative;
+}
+
+.modal-title {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  color: var(--text);
+  margin: 0 0 0.3rem;
+}
+
+.modal-sub {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.drop-zone {
+  border: 1px dashed var(--border);
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  position: relative;
+}
+
+.drop-zone:hover,
+.drop-zone.drag-over {
+  border-color: var(--accent-dim);
+  background: var(--accent-glow);
+}
+
+.drop-zone input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.drop-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.drop-selected {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem;
+  color: var(--accent);
+  margin-top: 0.5rem;
+  pointer-events: none;
+}
+
+.modal-error {
+  background: var(--error-bg);
+  border: 1px solid var(--error-border);
+  color: var(--error);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  padding: 0.55rem 0.8rem;
+  margin-top: 1rem;
+}
+
+.modal-success {
+  background: rgba(94, 196, 122, 0.06);
+  border: 1px solid rgba(94, 196, 122, 0.25);
+  color: #5ec47a;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  padding: 0.55rem 0.8rem;
+  margin-top: 1rem;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 1px;
+  margin-top: 1.25rem;
+  background: var(--border);
+}
+
+.modal-actions button {
+  flex: 1;
+  padding: 0.75rem;
+  border: none;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.modal-cancel {
+  background: var(--surface);
+  color: var(--text-muted);
+}
+
+.modal-cancel:hover {
+  background: #101929;
+  color: var(--text);
+}
+
+.modal-confirm {
+  background: var(--accent);
+  color: #060a0f;
+}
+
+.modal-confirm:hover:not(:disabled) {
+  background: #d4aa60;
+}
+
+.modal-confirm:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}

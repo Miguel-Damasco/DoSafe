@@ -16,3 +16,7 @@ dosafe-backend/DoSafe/logs/
 # OS
 .DS_Store
 Thumbs.db
+
+# Claude
+CLAUDE.md
+.claude/

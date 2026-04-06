@@ -7,7 +7,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,9 +18,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.miguel_damasco.DoSafe.common.apiResponse.ApiResponse;
 import com.miguel_damasco.DoSafe.common.apiResponse.ApiResponses;
+import com.miguel_damasco.DoSafe.document.dto.request.UpdateExpirationDateRequestDTO;
 import com.miguel_damasco.DoSafe.document.dto.response.DocumentPageResponseDTO;
+import com.miguel_damasco.DoSafe.document.dto.response.DocumentSummaryResponseDTO;
 import com.miguel_damasco.DoSafe.document.dto.response.DocumentUploadResponseDTO;
 import com.miguel_damasco.DoSafe.document.service.DocumentQueryService;
+import com.miguel_damasco.DoSafe.document.service.DocumentUpdateService;
 import com.miguel_damasco.DoSafe.document.service.DocumentUploadService;
 import com.miguel_damasco.DoSafe.security.MyUserDetails;
 
@@ -37,6 +43,7 @@ public class DocumentController {
 
     private final DocumentUploadService documentUploadService;
     private final DocumentQueryService documentQueryService;
+    private final DocumentUpdateService documentUpdateService;
 
     @Operation(
         summary = "Upload document",
@@ -93,5 +100,31 @@ public class DocumentController {
         DocumentPageResponseDTO response = documentQueryService.listByUser(pUserDetails.getUsername(), pPage, pSize);
 
         return ResponseEntity.ok(ApiResponses.success(response, 200, "Documents retrieved successfully!"));
+    }
+
+    @Operation(
+        summary = "Update expiration date",
+        description = "Allows the authenticated user to manually set or correct the expiration date of one of their documents."
+    )
+    @io.swagger.v3.oas.annotations.responses.ApiResponses({
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Expiration date updated"),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403", description = "Document belongs to another user"),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Document not found")
+    })
+    @SecurityRequirement(name = "bearerAuth")
+    @PatchMapping("/{id}/expiration-date")
+    public ResponseEntity<ApiResponse<DocumentSummaryResponseDTO>> updateExpirationDate(
+            @PathVariable("id") String pId,
+            @RequestBody UpdateExpirationDateRequestDTO pRequest,
+            @AuthenticationPrincipal MyUserDetails pUserDetails) {
+
+        log.info("Update expiration date request documentId={} username={}", pId, pUserDetails.getUsername());
+
+        DocumentSummaryResponseDTO response = documentUpdateService.updateExpirationDate(
+                pUserDetails.getUsername(),
+                pId,
+                pRequest.expireAt());
+
+        return ResponseEntity.ok(ApiResponses.success(response, 200, "Expiration date updated successfully!"));
     }
 }
