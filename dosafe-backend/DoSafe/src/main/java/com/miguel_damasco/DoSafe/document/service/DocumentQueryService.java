@@ -45,28 +45,39 @@ public class DocumentQueryService {
     // arbitrarily large result set.
     public DocumentPageResponseDTO listByUser(String pUsername, int pPage, int pSize) {
 
+        // Clamp the requested size to a safe range: minimum 1, maximum MAX_PAGE_SIZE.
+        // Math.max ensures size is never 0 or negative (PageRequest throws on size < 1).
+        // Math.min ensures no caller can request an arbitrarily large result set.
         int safeSize = Math.min(Math.max(pSize, 1), MAX_PAGE_SIZE);
 
         log.debug("Listing documents username={} page={} size={}", pUsername, pPage, safeSize);
 
+        // Resolve the authenticated username to the full UserModel entity so we can
+        // pass it to the repository as the owner filter.
         UserModel user = userService.findUserByUsername(pUsername);
 
+        // PageRequest encapsulates the page number, size, and sort order into a single
+        // object that Spring Data JPA translates into SQL LIMIT / OFFSET / ORDER BY.
         Pageable pageable = PageRequest.of(pPage, safeSize, Sort.by("createdAt").descending());
 
         Page<DocumentModel> page = documentRepository.findByUser(user, pageable);
 
         log.debug("Found {} documents (total={}) for username={}", page.getNumberOfElements(), page.getTotalElements(), pUsername);
 
+        // Build the TTL Duration once and reuse it across all documents in the page.
         Duration ttl = Duration.ofMinutes(downloadUrlTtlMinutes);
 
-        // A document that is still PROCESSING may not have an s3Key yet.
-        // In that case we return null for the URL — the client should poll
-        // until status = PROCESSED before trying to display the file.
-        return DocumentResponseMapper.toPageDto(page, doc -> {
-            if (doc.getS3Key() == null) {
-                return null;
-            }
-            return documentStorage.generateDownloadUrl(doc.getS3Key(), ttl).toString();
-        });
+        // toPageDto maps each DocumentModel to its DTO. The second argument is a
+        // function (lambda) that the mapper calls per document to get the download URL.
+        return DocumentResponseMapper.toPageDto(page, doc -> resolveDownloadUrl(doc, ttl));
+    }
+
+    // Returns null while the document is still PROCESSING — s3Key is not set until
+    // the upload to S3 completes. The client should poll until status = PROCESSED.
+    private String resolveDownloadUrl(DocumentModel pDoc, Duration pTtl) {
+        if (pDoc.getS3Key() == null) {
+            return null;
+        }
+        return documentStorage.generateDownloadUrl(pDoc.getS3Key(), pTtl).toString();
     }
 }
