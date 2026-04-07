@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import com.miguel_damasco.DoSafe.document.domain.DocumentModel;
 import com.miguel_damasco.DoSafe.document.domain.DocumentStatus;
+import com.miguel_damasco.DoSafe.document.domain.DocumentTypeEnum;
 import com.miguel_damasco.DoSafe.user.domain.UserModel;
 
 @Repository
@@ -41,6 +42,28 @@ public interface DocumentRepository extends JpaRepository<DocumentModel, UUID> {
     // Returns a paginated slice of documents belonging to a user, ordered by the
     // Pageable sort (typically createdAt DESC so newest documents appear first).
     Page<DocumentModel> findByUser(UserModel user, Pageable pageable);
+
+    // Returns a paginated slice of documents belonging to a user filtered by type.
+    // Spring Data derives the query from the method name — no @Query needed.
+    Page<DocumentModel> findByUserAndType(UserModel user, DocumentTypeEnum type, Pageable pageable);
+
+    // Returns expired documents for a user: status PROCESSED, expireAt known and
+    // strictly before today. Only PROCESSED documents have a real expiration date
+    // extracted by OCR, so filtering by status avoids returning stale PROCESSING rows.
+    // Sorting is delegated to the Pageable (typically expireAt ASC).
+    @Query("""
+        SELECT d FROM DocumentModel d
+        WHERE d.user = :user
+          AND d.status = :status
+          AND d.expireAt IS NOT NULL
+          AND d.expireAt < :today
+    """)
+    Page<DocumentModel> findExpiredByUser(
+        @Param("user") UserModel user,
+        @Param("status") DocumentStatus status,
+        @Param("today") LocalDate today,
+        Pageable pageable
+    );
 
     // Counts how many documents a specific user uploaded within a time window.
     // Used to enforce the per-user daily upload limit.

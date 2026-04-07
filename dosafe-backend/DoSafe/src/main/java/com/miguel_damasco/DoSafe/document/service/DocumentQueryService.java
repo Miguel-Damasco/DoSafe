@@ -1,6 +1,7 @@
 package com.miguel_damasco.DoSafe.document.service;
 
 import java.time.Duration;
+import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -10,6 +11,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.miguel_damasco.DoSafe.document.domain.DocumentModel;
+import com.miguel_damasco.DoSafe.document.domain.DocumentStatus;
+import com.miguel_damasco.DoSafe.document.domain.DocumentTypeEnum;
 import com.miguel_damasco.DoSafe.document.dto.mapper.DocumentResponseMapper;
 import com.miguel_damasco.DoSafe.document.dto.response.DocumentPageResponseDTO;
 import com.miguel_damasco.DoSafe.document.repository.DocumentRepository;
@@ -69,6 +72,54 @@ public class DocumentQueryService {
 
         // toPageDto maps each DocumentModel to its DTO. The second argument is a
         // function (lambda) that the mapper calls per document to get the download URL.
+        return DocumentResponseMapper.toPageDto(page, doc -> resolveDownloadUrl(doc, ttl));
+    }
+
+    // Returns a paginated, newest-first list of documents owned by pUsername
+    // filtered by document type (IDENTITY_CARD, PASSPORT, DRIVER_LICENCE, OTHER).
+    // Useful for a client that wants to view only a specific category of documents.
+    public DocumentPageResponseDTO listByUserAndType(String pUsername, DocumentTypeEnum pType, int pPage, int pSize) {
+
+        int safeSize = Math.min(Math.max(pSize, 1), MAX_PAGE_SIZE);
+
+        log.debug("Listing documents by type username={} type={} page={} size={}", pUsername, pType, pPage, safeSize);
+
+        UserModel user = userService.findUserByUsername(pUsername);
+
+        Pageable pageable = PageRequest.of(pPage, safeSize, Sort.by("createdAt").descending());
+
+        Page<DocumentModel> page = documentRepository.findByUserAndType(user, pType, pageable);
+
+        log.debug("Found {} documents (total={}) for username={} type={}", page.getNumberOfElements(), page.getTotalElements(), pUsername, pType);
+
+        Duration ttl = Duration.ofMinutes(downloadUrlTtlMinutes);
+
+        return DocumentResponseMapper.toPageDto(page, doc -> resolveDownloadUrl(doc, ttl));
+    }
+
+    // Returns a paginated list of expired documents owned by pUsername, ordered
+    // by expiration date ascending (documents that expired longest ago appear first).
+    // Only PROCESSED documents are included — PROCESSING documents have no expireAt
+    // yet, so they cannot be classified as expired.
+    public DocumentPageResponseDTO listExpiredByUser(String pUsername, int pPage, int pSize) {
+
+        int safeSize = Math.min(Math.max(pSize, 1), MAX_PAGE_SIZE);
+
+        log.debug("Listing expired documents username={} page={} size={}", pUsername, pPage, safeSize);
+
+        UserModel user = userService.findUserByUsername(pUsername);
+
+        // expireAt ASC: documents that expired longest ago appear first.
+        Pageable pageable = PageRequest.of(pPage, safeSize, Sort.by("expireAt").ascending());
+
+        // LocalDate.now() is the exclusive upper bound — a document expiring today
+        // is still valid today, so it does not appear in this list.
+        Page<DocumentModel> page = documentRepository.findExpiredByUser(user, DocumentStatus.PROCESSED, LocalDate.now(), pageable);
+
+        log.debug("Found {} expired documents (total={}) for username={}", page.getNumberOfElements(), page.getTotalElements(), pUsername);
+
+        Duration ttl = Duration.ofMinutes(downloadUrlTtlMinutes);
+
         return DocumentResponseMapper.toPageDto(page, doc -> resolveDownloadUrl(doc, ttl));
     }
 

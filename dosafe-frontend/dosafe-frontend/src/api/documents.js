@@ -38,6 +38,72 @@ export async function getMyDocuments(page = 0, size = 10) {
 }
 
 /**
+ * Returns a page of the authenticated user's documents filtered by type.
+ * @param {string} type  IDENTITY_CARD | PASSPORT | DRIVER_LICENCE | OTHER
+ * @param {number} page  0-based page index
+ * @param {number} size  Max 50
+ * @returns {Promise<{content, page, size, totalElements, totalPages, last}>}
+ */
+export async function getMyDocumentsByType(type, page = 0, size = 10) {
+  let response
+
+  try {
+    response = await fetch(
+      `${BASE_URL}/document/my-documents/by-type?type=${type}&page=${page}&size=${size}`,
+      { headers: authHeaders() }
+    )
+  } catch {
+    const err = new Error('NETWORK_ERROR')
+    err.code = 'NETWORK_ERROR'
+    throw err
+  }
+
+  const body = await response.json()
+
+  if (!body.meta?.success) {
+    const code = body.error?.code || 'DEFAULT'
+    const err = new Error(code)
+    err.code = code
+    throw err
+  }
+
+  return body.data
+}
+
+/**
+ * Returns a page of the authenticated user's expired documents,
+ * ordered by expiration date ascending (oldest-expired first).
+ * @param {number} page  0-based page index
+ * @param {number} size  Max 50
+ * @returns {Promise<{content, page, size, totalElements, totalPages, last}>}
+ */
+export async function getMyExpiredDocuments(page = 0, size = 10) {
+  let response
+
+  try {
+    response = await fetch(
+      `${BASE_URL}/document/my-documents/expired?page=${page}&size=${size}`,
+      { headers: authHeaders() }
+    )
+  } catch {
+    const err = new Error('NETWORK_ERROR')
+    err.code = 'NETWORK_ERROR'
+    throw err
+  }
+
+  const body = await response.json()
+
+  if (!body.meta?.success) {
+    const code = body.error?.code || 'DEFAULT'
+    const err = new Error(code)
+    err.code = code
+    throw err
+  }
+
+  return body.data
+}
+
+/**
  * Updates the expiration date of a document.
  * @param {string} documentId  UUID
  * @param {string} expireAt    ISO date string "YYYY-MM-DD"

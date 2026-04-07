@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getMyDocuments, uploadDocument, updateExpirationDate } from '../api/documents'
+import { getMyDocuments, getMyDocumentsByType, getMyExpiredDocuments, uploadDocument, updateExpirationDate } from '../api/documents'
 import { useLanguage } from '../context/LanguageContext'
 import { FlagES, FlagUK } from '../components/FlagIcon'
 
@@ -216,8 +216,17 @@ function DocCard({ doc, t }) {
   const [localDoc, setLocalDoc] = useState(doc)
   const typeLabel = localDoc.type ? (t.typeLabels[localDoc.type] ?? t.unknownType) : '—'
 
+  const typeClass = {
+    IDENTITY_CARD:  'doc-card--identity',
+    PASSPORT:       'doc-card--passport',
+    DRIVER_LICENCE: 'doc-card--licence',
+    OTHER:          'doc-card--other',
+  }[localDoc.type] ?? 'doc-card--other'
+
+  const expiredClass = isExpired(localDoc.expireAt) ? 'doc-card--expired' : ''
+
   return (
-    <article className="doc-card">
+    <article className={`doc-card ${typeClass} ${expiredClass}`}>
       <PdfThumbnail downloadUrl={localDoc.downloadUrl} />
 
       <div className="doc-card-body">
@@ -362,29 +371,42 @@ export default function DashboardPage() {
   const { lang, toggle, t } = useLanguage()
   const navigate = useNavigate()
 
+  // activeFilter: 'ALL' | 'IDENTITY_CARD' | 'PASSPORT' | 'DRIVER_LICENCE' | 'OTHER' | 'EXPIRED'
+  const [activeFilter, setActiveFilter] = useState('ALL')
   const [docsPage, setDocsPage] = useState({ content: [], page: 0, totalPages: 0, totalElements: 0, last: true })
   const [currentPage, setCurrentPage] = useState(0)
   const [loading, setLoading]         = useState(true)
   const [showUpload, setShowUpload]   = useState(false)
 
-  async function loadDocuments(page = 0) {
+  const loadDocuments = useCallback(async (page = 0) => {
     setLoading(true)
     try {
-      const data = await getMyDocuments(page, 9)
+      let data
+      if (activeFilter === 'ALL') {
+        data = await getMyDocuments(page, 9)
+      } else if (activeFilter === 'EXPIRED') {
+        data = await getMyExpiredDocuments(page, 9)
+      } else {
+        data = await getMyDocumentsByType(activeFilter, page, 9)
+      }
       setDocsPage(data)
     } catch (err) {
-      // If unauthorized, redirect to login
       if (err.code === 'UNAUTHORIZED' || err.code === 'NETWORK_ERROR') {
         navigate('/login')
       }
     } finally {
       setLoading(false)
     }
-  }
+  }, [activeFilter, navigate])
 
   useEffect(() => {
     loadDocuments(currentPage)
-  }, [currentPage])
+  }, [currentPage, loadDocuments])
+
+  function handleFilterChange(filter) {
+    setActiveFilter(filter)
+    setCurrentPage(0)
+  }
 
   function handleLogout() {
     localStorage.removeItem('dosafe_token')
@@ -427,10 +449,25 @@ export default function DashboardPage() {
               </p>
             )}
           </div>
-          <button className="upload-btn" onClick={() => setShowUpload(true)}>
-            <PlusIcon />
-            {t.uploadDocument}
-          </button>
+          <div className="title-row-actions">
+            <select
+              className="filter-select"
+              value={activeFilter}
+              onChange={e => handleFilterChange(e.target.value)}
+              aria-label="Filter documents"
+            >
+              <option value="ALL">{t.filterAll}</option>
+              <option value="IDENTITY_CARD">{t.typeLabels.IDENTITY_CARD}</option>
+              <option value="PASSPORT">{t.typeLabels.PASSPORT}</option>
+              <option value="DRIVER_LICENCE">{t.typeLabels.DRIVER_LICENCE}</option>
+              <option value="OTHER">{t.typeLabels.OTHER}</option>
+              <option value="EXPIRED">{t.filterExpired}</option>
+            </select>
+            <button className="upload-btn" onClick={() => setShowUpload(true)}>
+              <PlusIcon />
+              {t.uploadDocument}
+            </button>
+          </div>
         </div>
 
         {/* ── Documents grid ── */}
@@ -488,7 +525,7 @@ export default function DashboardPage() {
         <UploadModal
           t={t}
           onClose={() => setShowUpload(false)}
-          onSuccess={() => loadDocuments(0).then(() => setCurrentPage(0))}
+          onSuccess={() => { setCurrentPage(0); loadDocuments(0) }}
         />
       )}
     </div>

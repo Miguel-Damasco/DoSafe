@@ -16,14 +16,16 @@ public class GeneralDocumentClasifier implements DocumentClasifier {
 
         for(String line : pLines) {
 
-            result = switch(line) {
-
+            DocumentTypeEnum matched = switch(line) {
                 case "Documento de Identidad" -> DocumentTypeEnum.IDENTITY_CARD;
-                case "PASAPORTE/" -> DocumentTypeEnum.PASSPORT;
-                default -> DocumentTypeEnum.OTHER;
+                case "PASAPORTE/"             -> DocumentTypeEnum.PASSPORT;
+                default                       -> null;
             };
 
-            if(result != DocumentTypeEnum.OTHER) break;
+            if(matched != null) {
+                result = matched;
+                break;
+            }
         }
 
         return result;

@@ -33,9 +33,13 @@ const translations = {
     typeLabels: {
       IDENTITY_CARD:  'DNI',
       PASSPORT:       'Pasaporte',
-      DRIVER_LICENSE: 'Licencia',
+      DRIVER_LICENCE: 'Licencia',
       OTHER:          'Otro',
     },
+
+    // Filters
+    filterAll:     'Todos',
+    filterExpired: 'Vencidos',
 
     // Expiration date edit
     editExpireAt:     'Editar fecha',
@@ -97,9 +101,13 @@ const translations = {
     typeLabels: {
       IDENTITY_CARD:  'ID Card',
       PASSPORT:       'Passport',
-      DRIVER_LICENSE: 'Driver\'s License',
+      DRIVER_LICENCE: 'Driver\'s License',
       OTHER:          'Other',
     },
+
+    // Filters
+    filterAll:     'All',
+    filterExpired: 'Expired',
 
     // Expiration date edit
     editExpireAt:     'Edit date',

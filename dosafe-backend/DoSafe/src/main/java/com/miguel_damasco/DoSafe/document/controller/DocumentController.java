@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.miguel_damasco.DoSafe.common.apiResponse.ApiResponse;
 import com.miguel_damasco.DoSafe.common.apiResponse.ApiResponses;
+import com.miguel_damasco.DoSafe.document.domain.DocumentTypeEnum;
 import com.miguel_damasco.DoSafe.document.dto.request.UpdateExpirationDateRequestDTO;
 import com.miguel_damasco.DoSafe.document.dto.response.DocumentPageResponseDTO;
 import com.miguel_damasco.DoSafe.document.dto.response.DocumentSummaryResponseDTO;
@@ -100,6 +101,55 @@ public class DocumentController {
         DocumentPageResponseDTO response = documentQueryService.listByUser(pUserDetails.getUsername(), pPage, pSize);
 
         return ResponseEntity.ok(ApiResponses.success(response, 200, "Documents retrieved successfully!"));
+    }
+
+    @Operation(
+        summary = "List my documents by type",
+        description = "Returns a paginated, newest-first list of documents uploaded by the authenticated user " +
+                      "filtered by document type. Valid values: IDENTITY_CARD, PASSPORT, DRIVER_LICENCE, OTHER."
+    )
+    @io.swagger.v3.oas.annotations.responses.ApiResponses({
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Page of documents returned"),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Invalid document type value"),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Missing or invalid JWT token")
+    })
+    @SecurityRequirement(name = "bearerAuth")
+    @GetMapping("/my-documents/by-type")
+    public ResponseEntity<ApiResponse<DocumentPageResponseDTO>> listMyDocumentsByType(
+            @AuthenticationPrincipal MyUserDetails pUserDetails,
+            @RequestParam("type") DocumentTypeEnum pType,
+            @RequestParam(defaultValue = "0") int pPage,
+            @RequestParam(defaultValue = "10") int pSize) {
+
+        log.info("List documents by type request username={} type={} page={} size={}", pUserDetails.getUsername(), pType, pPage, pSize);
+
+        DocumentPageResponseDTO response = documentQueryService.listByUserAndType(pUserDetails.getUsername(), pType, pPage, pSize);
+
+        return ResponseEntity.ok(ApiResponses.success(response, 200, "Documents retrieved successfully!"));
+    }
+
+    @Operation(
+        summary = "List my expired documents",
+        description = "Returns a paginated list of expired documents uploaded by the authenticated user, " +
+                      "ordered by expiration date ascending (oldest-expired first). " +
+                      "Only fully processed documents are included."
+    )
+    @io.swagger.v3.oas.annotations.responses.ApiResponses({
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Page of expired documents returned"),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Missing or invalid JWT token")
+    })
+    @SecurityRequirement(name = "bearerAuth")
+    @GetMapping("/my-documents/expired")
+    public ResponseEntity<ApiResponse<DocumentPageResponseDTO>> listMyExpiredDocuments(
+            @AuthenticationPrincipal MyUserDetails pUserDetails,
+            @RequestParam(defaultValue = "0") int pPage,
+            @RequestParam(defaultValue = "10") int pSize) {
+
+        log.info("List expired documents request username={} page={} size={}", pUserDetails.getUsername(), pPage, pSize);
+
+        DocumentPageResponseDTO response = documentQueryService.listExpiredByUser(pUserDetails.getUsername(), pPage, pSize);
+
+        return ResponseEntity.ok(ApiResponses.success(response, 200, "Expired documents retrieved successfully!"));
     }
 
     @Operation(
