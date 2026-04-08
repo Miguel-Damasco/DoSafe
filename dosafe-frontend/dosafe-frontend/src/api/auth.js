@@ -33,5 +33,67 @@ export async function login(identifier, password) {
     throw err
   }
 
+  localStorage.setItem('dosafe_email_verified', String(body.data.emailVerified))
+  localStorage.setItem('dosafe_email', body.data.email ?? '')
   return body.data
+}
+
+/**
+ * Verifies an email address using the token from the verification link.
+ * @param {string} token
+ */
+export async function verifyEmail(token) {
+  let response
+
+  try {
+    response = await fetch(
+      `${BASE_URL}/authentication/verify-email?token=${encodeURIComponent(token)}`
+    )
+  } catch {
+    const err = new Error('NETWORK_ERROR')
+    err.code = 'NETWORK_ERROR'
+    throw err
+  }
+
+  const body = await response.json()
+
+  if (!body.meta?.success) {
+    const code = body.error?.code || 'DEFAULT'
+    const err = new Error(code)
+    err.code = code
+    throw err
+  }
+
+  // Mark email as verified in localStorage so the banner disappears immediately.
+  localStorage.setItem('dosafe_email_verified', 'true')
+}
+
+/**
+ * Sends a new verification email to the given address.
+ * Always returns 200 on the backend (anti-enumeration) — never throws on 200.
+ * @param {string} email
+ */
+export async function resendVerification(email) {
+  let response
+
+  try {
+    response = await fetch(`${BASE_URL}/authentication/resend-verification`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    })
+  } catch {
+    const err = new Error('NETWORK_ERROR')
+    err.code = 'NETWORK_ERROR'
+    throw err
+  }
+
+  const body = await response.json()
+
+  if (!body.meta?.success) {
+    const code = body.error?.code || 'DEFAULT'
+    const err = new Error(code)
+    err.code = code
+    throw err
+  }
 }

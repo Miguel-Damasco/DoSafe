@@ -58,6 +58,24 @@ const translations = {
     uploadCancel:     'Cancelar',
     uploadSuccess:    'Documento subido. El OCR comenzará en segundos.',
 
+    // Email verification banner
+    emailNotVerified:    'Tu correo electrónico no está verificado.',
+    emailNotVerifiedSub: 'Revisá tu bandeja de entrada y hacé clic en el enlace de verificación.',
+    resendEmail:         'Reenviar correo',
+    resendingEmail:      'Enviando...',
+    resendSuccess:       'Correo enviado. Revisá tu bandeja.',
+
+    // VerifyEmailPage
+    verifyLoading:      'Verificando tu correo...',
+    verifySuccess:      '¡Correo verificado exitosamente!',
+    verifyRedirecting:  'Redirigiendo...',
+    verifyGoToLogin:    'Ir al inicio de sesión',
+    verifyErrors: {
+      INVALID_VERIFICATION_TOKEN: 'El enlace de verificación es inválido o ya fue usado.',
+      NETWORK_ERROR:              'Error de conexión. Intente nuevamente.',
+      DEFAULT:                    'Algo salió mal. Solicitá un nuevo enlace.',
+    },
+
     errors: {
       USER_NOT_FOUND:             'Usuario no encontrado.',
       INVALID_CREDENTIALS:        'Credenciales incorrectas.',
@@ -125,6 +143,24 @@ const translations = {
     uploadConfirm:    'Upload',
     uploadCancel:     'Cancel',
     uploadSuccess:    'Document uploaded. OCR will start in seconds.',
+
+    // Email verification banner
+    emailNotVerified:    'Your email address is not verified.',
+    emailNotVerifiedSub: 'Check your inbox and click the verification link.',
+    resendEmail:         'Resend email',
+    resendingEmail:      'Sending...',
+    resendSuccess:       'Email sent. Check your inbox.',
+
+    // VerifyEmailPage
+    verifyLoading:      'Verifying your email...',
+    verifySuccess:      'Email verified successfully!',
+    verifyRedirecting:  'Redirecting...',
+    verifyGoToLogin:    'Go to login',
+    verifyErrors: {
+      INVALID_VERIFICATION_TOKEN: 'The verification link is invalid or has already been used.',
+      NETWORK_ERROR:              'Connection error. Please try again.',
+      DEFAULT:                    'Something went wrong. Request a new link.',
+    },
 
     errors: {
       USER_NOT_FOUND:             'User not found.',

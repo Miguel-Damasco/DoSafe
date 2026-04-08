@@ -27,8 +27,8 @@ public class EmailVerificationService {
     private final UserRepository userRepository;
     private final EmailService emailService;
 
-    @Value("${app.base-url}")
-    private String baseUrl;
+    @Value("${app.frontend-url}")
+    private String frontendUrl;
 
     private static final long TOKEN_VALIDITY_HOURS = 24;
 
@@ -37,7 +37,7 @@ public class EmailVerificationService {
 
         EmailVerificationToken token = createToken(pUser);
 
-        String link = baseUrl + "/authentication/verify-email?token=" + token.getToken();
+        String link = frontendUrl + "/verify-email?token=" + token.getToken();
 
         emailService.send(
                 pUser.getEmail(),

@@ -118,7 +118,7 @@ class AuthenticationControllerTest {
     void login_shouldReturn200_whenCredentialsAreValid() throws Exception {
         // Given
         when(userService.login(any()))
-                .thenReturn(new LoginResponseDTO("refresh-token", "jwt-token"));
+                .thenReturn(new LoginResponseDTO("refresh-token", "jwt-token", true, "miguel@test.com"));
 
         // When
         mockMvc.perform(post("/authentication/login")

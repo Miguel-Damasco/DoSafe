@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getMyDocuments, getMyDocumentsByType, getMyExpiredDocuments, uploadDocument, updateExpirationDate } from '../api/documents'
+import { resendVerification } from '../api/auth'
 import { useLanguage } from '../context/LanguageContext'
+import { useTheme } from '../context/ThemeContext'
 import { FlagES, FlagUK } from '../components/FlagIcon'
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -365,10 +367,84 @@ function UploadModal({ onClose, onSuccess, t }) {
   )
 }
 
+// ─── Email verification banner ────────────────────────────────────────────────
+
+function EmailVerificationBanner({ t }) {
+  const [dismissed, setDismissed]   = useState(false)
+  const [verified, setVerified]     = useState(
+    () => localStorage.getItem('dosafe_email_verified') === 'true'
+  )
+  const [loading, setLoading]       = useState(false)
+  const [success, setSuccess]       = useState(false)
+  const [error, setError]           = useState(null)
+
+  // Listen for localStorage changes from other tabs (e.g. user verifies email
+  // in the tab that opened from the verification link).
+  useEffect(() => {
+    function handleStorage(e) {
+      if (e.key === 'dosafe_email_verified' && e.newValue === 'true') {
+        setVerified(true)
+      }
+    }
+    window.addEventListener('storage', handleStorage)
+    return () => window.removeEventListener('storage', handleStorage)
+  }, [])
+
+  if (verified || dismissed) return null
+
+  async function handleResend() {
+    const email = localStorage.getItem('dosafe_email') || ''
+    setLoading(true)
+    setError(null)
+    setSuccess(false)
+    try {
+      await resendVerification(email)
+      setSuccess(true)
+    } catch (err) {
+      const code = err.code || 'DEFAULT'
+      setError(t.errors[code] ?? t.errors.DEFAULT)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <div className="verification-banner">
+      <div className="verification-banner__body">
+        <WarningIcon />
+        <div className="verification-banner__text">
+          <span className="verification-banner__title">{t.emailNotVerified}</span>
+          <span className="verification-banner__sub">{t.emailNotVerifiedSub}</span>
+        </div>
+        {success ? (
+          <span className="verification-banner__success">{t.resendSuccess}</span>
+        ) : (
+          <button
+            className="verification-banner__btn"
+            onClick={handleResend}
+            disabled={loading}
+          >
+            {loading ? t.resendingEmail : t.resendEmail}
+          </button>
+        )}
+        {error && <span className="verification-banner__error">{error}</span>}
+      </div>
+      <button
+        className="verification-banner__close"
+        onClick={() => setDismissed(true)}
+        aria-label="Dismiss"
+      >
+        ✕
+      </button>
+    </div>
+  )
+}
+
 // ─── Dashboard page ────────────────────────────────────────────────────────────
 
 export default function DashboardPage() {
   const { lang, toggle, t } = useLanguage()
+  const { theme, toggle: toggleTheme } = useTheme()
   const navigate = useNavigate()
 
   // activeFilter: 'ALL' | 'IDENTITY_CARD' | 'PASSPORT' | 'DRIVER_LICENCE' | 'OTHER' | 'EXPIRED'
@@ -410,12 +486,30 @@ export default function DashboardPage() {
 
   function handleLogout() {
     localStorage.removeItem('dosafe_token')
+    localStorage.removeItem('dosafe_email_verified')
+    localStorage.removeItem('dosafe_email')
     navigate('/login')
   }
 
   function goToPage(page) {
     setCurrentPage(page)
     window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  // Returns a mixed array of 0-based page indices and null (= ellipsis).
+  // Always shows first, last, current, and one neighbour on each side.
+  function pageWindows(current, total) {
+    if (total <= 7) return Array.from({ length: total }, (_, i) => i)
+    const visible = new Set([0, total - 1, current])
+    if (current > 0) visible.add(current - 1)
+    if (current < total - 1) visible.add(current + 1)
+    const sorted = [...visible].sort((a, b) => a - b)
+    const result = []
+    for (let i = 0; i < sorted.length; i++) {
+      if (i > 0 && sorted[i] - sorted[i - 1] > 1) result.push(null)
+      result.push(sorted[i])
+    }
+    return result
   }
 
   return (
@@ -429,6 +523,9 @@ export default function DashboardPage() {
           Do<span>Safe</span>
         </div>
         <div className="header-right">
+          <button className="header-btn theme-toggle-btn" onClick={toggleTheme} aria-label="Toggle theme">
+            {theme === 'dark' ? <MoonIcon /> : <SunIcon />}
+          </button>
           <button className="header-btn lang-flag-btn" onClick={toggle} aria-label="Toggle language">
             {lang === 'es' ? <><FlagES /> ES</> : <><FlagUK /> EN</>}
           </button>
@@ -437,6 +534,8 @@ export default function DashboardPage() {
           </button>
         </div>
       </header>
+
+      <EmailVerificationBanner t={t} />
 
       {/* ── Content ── */}
       <main className="dashboard-content">
@@ -493,29 +592,37 @@ export default function DashboardPage() {
             </div>
 
             {/* ── Pagination ── */}
-            {docsPage.totalPages > 1 && (
-              <nav className="pagination" aria-label="Pagination">
-                <span className="pagination-info">
-                  {t.page} {docsPage.page + 1} {t.of} {docsPage.totalPages}
-                </span>
-                <div className="pagination-btns">
-                  <button
-                    className="page-btn"
-                    disabled={docsPage.page === 0}
-                    onClick={() => goToPage(currentPage - 1)}
-                  >
-                    ← {t.previous}
-                  </button>
-                  <button
-                    className="page-btn"
-                    disabled={docsPage.last}
-                    onClick={() => goToPage(currentPage + 1)}
-                  >
-                    {t.next} →
-                  </button>
-                </div>
-              </nav>
-            )}
+            {docsPage.totalElements > 0 && <nav className="pagination" aria-label="Pagination">
+              <button
+                className="page-btn"
+                disabled={docsPage.page === 0}
+                onClick={() => goToPage(currentPage - 1)}
+              >
+                ←
+              </button>
+
+              <div className="pagination-pages">
+                {pageWindows(currentPage, Math.max(1, docsPage.totalPages)).map((p, i) =>
+                  p === null
+                    ? <span key={`dots-${i}`} className="pagination-dots">…</span>
+                    : <button
+                        key={p}
+                        className={`page-num ${p === currentPage ? 'active' : ''}`}
+                        onClick={() => goToPage(p)}
+                      >
+                        {p + 1}
+                      </button>
+                )}
+              </div>
+
+              <button
+                className="page-btn"
+                disabled={docsPage.last}
+                onClick={() => goToPage(currentPage + 1)}
+              >
+                →
+              </button>
+            </nav>}
           </>
         )}
       </main>
@@ -533,6 +640,16 @@ export default function DashboardPage() {
 }
 
 // ─── Icons ────────────────────────────────────────────────────────────────────
+
+function WarningIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
+      <path d="M8 2L14.5 13.5H1.5L8 2Z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round"/>
+      <line x1="8" y1="7" x2="8" y2="10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
+      <circle cx="8" cy="12" r="0.6" fill="currentColor"/>
+    </svg>
+  )
+}
 
 function PlusIcon() {
   return (
@@ -598,6 +715,31 @@ function DocIcon() {
       <path d="M8 4h14l8 8v20a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"
         stroke="currentColor" strokeWidth="1.4"/>
       <path d="M22 4v8h8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+    </svg>
+  )
+}
+
+function MoonIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+      <path d="M12.5 9A6 6 0 0 1 5 1.5a6 6 0 1 0 7.5 7.5Z"
+        stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+}
+
+function SunIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+      <circle cx="7" cy="7" r="2.8" stroke="currentColor" strokeWidth="1.2"/>
+      <line x1="7" y1="0.5" x2="7" y2="2"   stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+      <line x1="7" y1="12" x2="7" y2="13.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+      <line x1="0.5" y1="7" x2="2"   y2="7" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+      <line x1="12"  y1="7" x2="13.5" y2="7" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+      <line x1="2.4" y1="2.4" x2="3.4" y2="3.4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+      <line x1="10.6" y1="10.6" x2="11.6" y2="11.6" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+      <line x1="11.6" y1="2.4" x2="10.6" y2="3.4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+      <line x1="3.4"  y1="10.6" x2="2.4" y2="11.6" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
     </svg>
   )
 }

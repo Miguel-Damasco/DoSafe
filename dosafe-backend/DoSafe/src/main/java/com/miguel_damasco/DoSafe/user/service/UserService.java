@@ -125,7 +125,7 @@ public class UserService {
 
         RefreshTokenModel refreshToken = this.refreshTokenService.create(user);
 
-        return new LoginResponseDTO(refreshToken.getToken(), token);
+        return new LoginResponseDTO(refreshToken.getToken(), token, user.isEmailVerified(), user.getEmail());
     }
 
     public RefreshResponseDTO refresh(RefreshRequestDTO pRequest) {
