@@ -1,0 +1,2 @@
+ALTER TABLE alerts
+    ADD COLUMN read_at DATETIME(6) NULL;

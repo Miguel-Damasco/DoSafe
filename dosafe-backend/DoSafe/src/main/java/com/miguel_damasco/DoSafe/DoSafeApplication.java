@@ -13,7 +13,7 @@ public class DoSafeApplication {
 	
 	public static void main(String[] args) {
 
-		log.info("HOLA MUNDO!");
+		log.info("Iniciando dosafe api!");
 		SpringApplication.run(DoSafeApplication.class, args);
 	}
 

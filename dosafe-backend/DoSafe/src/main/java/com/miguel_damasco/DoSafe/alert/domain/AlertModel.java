@@ -46,12 +46,24 @@ public class AlertModel {
     // The scheduler uses this to avoid sending duplicate notifications.
     private Instant sentAt;
 
+    // Null = the user has not read/acknowledged this alert yet.
+    // Non-null = the user opened the alerts panel and dismissed it.
+    private Instant readAt;
+
     public void markSent() {
         this.sentAt = Instant.now();
     }
 
     public boolean isSent() {
         return this.sentAt != null;
+    }
+
+    public void markRead() {
+        this.readAt = Instant.now();
+    }
+
+    public boolean isRead() {
+        return this.readAt != null;
     }
 
     public void setUser(UserModel pUser) {
