@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getMyDocuments, getMyDocumentsByType, getMyExpiredDocuments, uploadDocument, updateExpirationDate } from '../api/documents'
+import { getMyDocuments, getMyDocumentsByType, getMyExpiredDocuments, uploadDocument, updateExpirationDate, deleteDocument } from '../api/documents'
 import { resendVerification } from '../api/auth'
 import { useLanguage } from '../context/LanguageContext'
 import { useTheme } from '../context/ThemeContext'
@@ -210,12 +210,63 @@ function ExpirationDateField({ doc, t, onUpdated }) {
   )
 }
 
+// ─── Delete confirm modal ──────────────────────────────────────────────────────
+
+function DeleteConfirmModal({ filename, docId, t, onConfirmed, onClose }) {
+  const [deleting, setDeleting] = useState(false)
+  const [error, setError]       = useState(null)
+
+  async function handleConfirm() {
+    setDeleting(true)
+    setError(null)
+    try {
+      await deleteDocument(docId)
+      onConfirmed()
+    } catch (err) {
+      const code = err.code || 'DEFAULT'
+      setError(t.errors[code] ?? t.errors.DEFAULT)
+      setDeleting(false)
+    }
+  }
+
+  function handleBackdropClick(e) {
+    if (e.target === e.currentTarget && !deleting) onClose()
+  }
+
+  return (
+    <div className="modal-backdrop" onClick={handleBackdropClick} role="dialog" aria-modal="true">
+      <div className="modal-box delete-modal-box">
+        <div className="card-accent-line card-accent-line--error" />
+
+        <p className="modal-title">{t.deleteConfirm}</p>
+        <p className="delete-modal-filename">{filename}</p>
+
+        {error && <div className="modal-error" role="alert">{error}</div>}
+
+        <div className="modal-actions">
+          <button className="modal-cancel" onClick={onClose} disabled={deleting}>
+            {t.cancelEdit}
+          </button>
+          <button
+            className="modal-confirm modal-confirm--danger"
+            onClick={handleConfirm}
+            disabled={deleting}
+          >
+            {deleting ? t.deleting : t.deleteDocument}
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 // ─── Document card ─────────────────────────────────────────────────────────────
 
-function DocCard({ doc, t }) {
+function DocCard({ doc, t, onDeleted }) {
   // Local copy of the doc so we can update it after a successful date edit
   // without waiting for a full page reload.
   const [localDoc, setLocalDoc] = useState(doc)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
   const typeLabel = localDoc.type ? (t.typeLabels[localDoc.type] ?? t.unknownType) : '—'
 
   const typeClass = {
@@ -234,8 +285,28 @@ function DocCard({ doc, t }) {
       <div className="doc-card-body">
         <div className="doc-card-header">
           <p className="doc-filename">{localDoc.originalFilename}</p>
-          <StatusBadge status={localDoc.status} t={t} />
+          <div className="doc-card-header-right">
+            <StatusBadge status={localDoc.status} t={t} />
+            <button
+              className="delete-btn"
+              onClick={() => setShowDeleteModal(true)}
+              title={t.deleteDocument}
+              aria-label={t.deleteDocument}
+            >
+              <TrashIcon />
+            </button>
+          </div>
         </div>
+
+        {showDeleteModal && (
+          <DeleteConfirmModal
+            filename={localDoc.originalFilename}
+            docId={localDoc.id}
+            t={t}
+            onConfirmed={onDeleted}
+            onClose={() => setShowDeleteModal(false)}
+          />
+        )}
 
         <span className="type-pill">{typeLabel}</span>
 
@@ -586,7 +657,7 @@ export default function DashboardPage() {
                 </div>
               ) : (
                 docsPage.content.map(doc => (
-                  <DocCard key={doc.id} doc={doc} t={t} />
+                  <DocCard key={doc.id} doc={doc} t={t} onDeleted={() => loadDocuments(currentPage)} />
                 ))
               )}
             </div>
@@ -705,6 +776,14 @@ function PencilIcon() {
     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
       <path d="M7 1.5l1.5 1.5-5 5L2 8.5l.5-1.5 4.5-5.5z"
         stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+}
+
+function TrashIcon() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 11 11" fill="none" aria-hidden="true">
+      <path d="M1.5 3h8M4 3V2h3v1M2.5 3l.5 6h5l.5-6" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   )
 }

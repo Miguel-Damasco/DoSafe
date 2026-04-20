@@ -1,0 +1,75 @@
+A los desarrolladores que más utilizan la IA les está ocurriendo algo preocupante: la "psicosis" de la IA
+Los desarrolladores que usan agentes de IA en modo intensivo empiezan a mostrar patrones de conducta similares a los de la adicción: insomnio, compulsión y ansiedad por los tokens
+
+Andrej Karpathy, cofundador de OpenAI y quien acuñó el término vibe coding, lleva desde diciembre en lo que él mismo describe como un estado de "psicosis de IA". Trabaja 16 horas diarias dirigiendo enjambres de agentes de código. Y reconoce que se siente "extremadamente nervioso" cuando le quedan tokens sin consumir a final de mes. Así lo ha admitido en una entrevista con Sarah Guo.
+
+No es un caso aislado sino el patrón que empieza a repetirse entre los desarrolladores que más partido sacan de este tipo agentes.
+
+Por qué es importante. La narrativa dominante sobre la IA ha sido la de la productividad sin límite y el famoso "10x". Lo que empieza a documentarse es su reverso tenebroso: los usuarios más intensivos son también los que muestran las señales más preocupantes de deterioro conductual. Y no son perfiles anecdóticos. Garry Tan, CEO de toda una Y Combinator, ha llamado a su propia experiencia "cyber psychosis". Un CTO recogido por Axios dice necesitar una medicación recetada para poder dormir.
+
+Si las herramientas más productivas de la historia generan en sus usuarios más intensivos los mismos patrones que los juegos de azar, el debate sobre el impacto de la IA en el trabajo entra en otra dimensión.
+
+Entre líneas. El nerviosismo de Karpathy ante los tokens que se le quedan sin usar es la firma conductual de alguien que ha interiorizado la escasez como una amenaza, exactamente el mismo mecanismo que mantiene a un ludópata enganchado a una tragaperras.
+
+El desarrollador Armin Ronacher habló de esto en enero: "Muchos caímos en la adicción al código con agentes. Apenas dormíamos, construíamos cosas increíbles."
+
+El contexto. Los agentes como Claude Code o Codex de OpenAI no funcionan como un chatbot al que se le hace una pregunta. Operan de forma autónoma durante horas, escribiendo, probando y desplegando código mientras el desarrollador supervisa, corrige y vuelve a delegar.
+
+La promesa es enorme y el coste cognitivo, también: el cerebro humano no está diseñado para supervisar procesos que avanzan a velocidad de máquina durante jornadas de 16 horas.
+
+Sí, pero. Los programadores siempre han tenido fama de trabajar en maratones de concentración. Las noches sin dormir antes de un lanzamiento forman parte del folclore del sector.
+
+Lo que distingue este fenómeno es su carácter compulsivo y su continuidad: no es la presión puntual de un deadline, sino una activación que no se apaga cuando el trabajo termina, porque con un agente que puede seguir corriendo, el trabajo nunca termina del todo.
+
+
+
+
+
+Capítulo 1 test
+
+1: D, E
+2: C, D, E
+3: A, E
+4: B, E, G
+5: A, D, F
+6: F
+7: C, D
+8: B, D, E, H
+9: A, E x -> E
+10: A, E, F
+11: E
+12: A, C, D
+13: A x -> A, B, C
+14: A, B, D, E
+15: C, E, F
+16: B, D, F x -> A, D
+17: C, F, G x -> D, F, G (confusión/miss click)
+18: C, F x -> B, C, F
+19: A, D
+20: E x -> C
+21: D
+22: C, F, G
+23: A, D
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

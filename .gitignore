@@ -20,3 +20,6 @@ Thumbs.db
 # Claude
 CLAUDE.md
 .claude/
+
+# Claude memory (auto-generated, not for version control)
+C:/Users/User/.claude/projects/

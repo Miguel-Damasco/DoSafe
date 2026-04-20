@@ -48,6 +48,11 @@ const translations = {
     savingExpireAt:   'Guardando...',
     editSuccess:      'Fecha actualizada.',
 
+    // Delete document
+    deleteDocument:   'Eliminar',
+    deleteConfirm:    '¿Eliminar?',
+    deleting:         'Eliminando...',
+
     // Upload modal
     uploadTitle:      'Subir documento',
     uploadSub:        'JPG, PNG o PDF · Máx. 10 MB',
@@ -133,6 +138,11 @@ const translations = {
     cancelEdit:       'Cancel',
     savingExpireAt:   'Saving...',
     editSuccess:      'Date updated.',
+
+    // Delete document
+    deleteDocument:   'Delete',
+    deleteConfirm:    'Delete?',
+    deleting:         'Deleting...',
 
     // Upload modal
     uploadTitle:      'Upload document',

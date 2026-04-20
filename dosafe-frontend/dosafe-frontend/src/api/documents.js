@@ -137,6 +137,38 @@ export async function updateExpirationDate(documentId, expireAt) {
 }
 
 /**
+ * Permanently deletes a document and its file from S3.
+ * @param {string} documentId  UUID
+ * @returns {Promise<void>}
+ */
+export async function deleteDocument(documentId) {
+  let response
+
+  try {
+    response = await fetch(`${BASE_URL}/document/${documentId}`, {
+      method: 'DELETE',
+      headers: authHeaders(),
+    })
+  } catch {
+    const err = new Error('NETWORK_ERROR')
+    err.code = 'NETWORK_ERROR'
+    throw err
+  }
+
+  // 204 No Content — success with no body
+  if (!response.ok) {
+    let code = 'DEFAULT'
+    try {
+      const body = await response.json()
+      code = body.error?.code || 'DEFAULT'
+    } catch { /* ignore parse errors */ }
+    const err = new Error(code)
+    err.code = code
+    throw err
+  }
+}
+
+/**
  * Uploads an identity document file (JPG, PNG, or PDF).
  * @param {File} file
  * @returns {Promise<{id, status, originalFilename, type, expireAt, createdAt}>}

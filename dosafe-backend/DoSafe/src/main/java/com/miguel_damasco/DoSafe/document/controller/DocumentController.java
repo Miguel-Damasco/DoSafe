@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,7 @@ import com.miguel_damasco.DoSafe.document.dto.request.UpdateExpirationDateReques
 import com.miguel_damasco.DoSafe.document.dto.response.DocumentPageResponseDTO;
 import com.miguel_damasco.DoSafe.document.dto.response.DocumentSummaryResponseDTO;
 import com.miguel_damasco.DoSafe.document.dto.response.DocumentUploadResponseDTO;
+import com.miguel_damasco.DoSafe.document.service.DocumentDeleteService;
 import com.miguel_damasco.DoSafe.document.service.DocumentQueryService;
 import com.miguel_damasco.DoSafe.document.service.DocumentUpdateService;
 import com.miguel_damasco.DoSafe.document.service.DocumentUploadService;
@@ -45,6 +47,7 @@ public class DocumentController {
     private final DocumentUploadService documentUploadService;
     private final DocumentQueryService documentQueryService;
     private final DocumentUpdateService documentUpdateService;
+    private final DocumentDeleteService documentDeleteService;
 
     @Operation(
         summary = "Upload document",
@@ -176,5 +179,29 @@ public class DocumentController {
                 pRequest.expireAt());
 
         return ResponseEntity.ok(ApiResponses.success(response, 200, "Expiration date updated successfully!"));
+    }
+
+    @Operation(
+        summary = "Delete document",
+        description = "Permanently deletes a document and its associated file from S3. Only the owner can delete their own documents."
+    )
+    @io.swagger.v3.oas.annotations.responses.ApiResponses({
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "204", description = "Document deleted"),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403", description = "Document belongs to another user"),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Document not found")
+    })
+    @SecurityRequirement(name = "bearerAuth")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(
+            @PathVariable("id") String pId,
+            @AuthenticationPrincipal MyUserDetails pUserDetails) {
+
+        log.info("Delete document request documentId={} username={}", pId, pUserDetails.getUsername());
+
+        documentDeleteService.delete(pUserDetails.getUsername(), pId);
+
+        log.info("Document deleted successfully documentId={} username={}", pId, pUserDetails.getUsername());
+
+        return ResponseEntity.noContent().build();
     }
 }
