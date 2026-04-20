@@ -3,7 +3,9 @@ package com.miguel_damasco.DoSafe.document.service;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.miguel_damasco.DoSafe.alert.repository.AlertRepository;
 import com.miguel_damasco.DoSafe.common.exception.DocumentNotFoundException;
 import com.miguel_damasco.DoSafe.common.exception.DocumentOwnershipException;
 import com.miguel_damasco.DoSafe.document.domain.DocumentModel;
@@ -23,7 +25,9 @@ public class DocumentDeleteService {
     private final DocumentRepository documentRepository;
     private final DocumentStorage documentStorage;
     private final UserService userService;
+    private final AlertRepository alertRepository;
 
+    @Transactional
     public void delete(String pUsername, String pDocumentId) {
 
         UserModel user = userService.findUserByUsername(pUsername);
@@ -45,6 +49,10 @@ public class DocumentDeleteService {
             documentStorage.delete(document.getS3Key());
             log.info("S3 object deleted documentId={} s3Key={}", pDocumentId, document.getS3Key());
         }
+
+        // Remove alerts before the document to satisfy the FK constraint.
+        alertRepository.deleteByDocumentId(id);
+        log.info("Alerts deleted for documentId={}", pDocumentId);
 
         documentRepository.delete(document);
 

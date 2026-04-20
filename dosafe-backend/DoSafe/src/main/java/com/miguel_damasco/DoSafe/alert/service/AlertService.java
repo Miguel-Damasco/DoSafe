@@ -31,7 +31,7 @@ public class AlertService {
     @Value("${alert.expiration-threshold-days:30}")
     private int expirationThresholdDays;
 
-    @Scheduled(cron = "0 0 8 * * *")
+    @Scheduled(cron = "0 */1 * * * *")
     public void checkExpiringDocuments() {
 
         log.info("Starting daily expiration alert check thresholdDays={}", expirationThresholdDays);

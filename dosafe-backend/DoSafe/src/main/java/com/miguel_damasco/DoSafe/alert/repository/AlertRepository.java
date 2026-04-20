@@ -2,6 +2,7 @@ package com.miguel_damasco.DoSafe.alert.repository;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -38,4 +39,8 @@ public interface AlertRepository extends JpaRepository<AlertModel, String> {
     @Query("UPDATE AlertModel a SET a.readAt = :now " +
            "WHERE a.user.username = :username AND a.sentAt IS NOT NULL AND a.readAt IS NULL")
     int markAllReadByUsername(@Param("username") String pUsername, @Param("now") Instant pNow);
+
+    // Deletes all alerts linked to a document — called before the document itself is deleted
+    // to avoid FK constraint violations.
+    void deleteByDocumentId(UUID pDocumentId);
 }
