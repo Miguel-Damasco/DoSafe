@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getMyDocuments, getMyDocumentsByType, getMyExpiredDocuments, uploadDocument, updateExpirationDate, deleteDocument } from '../api/documents'
+import { getAlertUnreadCount, getMyAlerts, markAllAlertsRead } from '../api/alerts'
 import { resendVerification } from '../api/auth'
 import { useLanguage } from '../context/LanguageContext'
 import { useTheme } from '../context/ThemeContext'
@@ -524,6 +525,19 @@ export default function DashboardPage() {
   const [currentPage, setCurrentPage] = useState(0)
   const [loading, setLoading]         = useState(true)
   const [showUpload, setShowUpload]   = useState(false)
+  const [showAlerts, setShowAlerts]   = useState(false)
+  const [expiredCount, setExpiredCount] = useState(0)
+
+  const loadExpiredCount = useCallback(async () => {
+    try {
+      const count = await getAlertUnreadCount()
+      setExpiredCount(count)
+    } catch { /* silently ignore — not critical */ }
+  }, [])
+
+  useEffect(() => {
+    loadExpiredCount()
+  }, [loadExpiredCount])
 
   const loadDocuments = useCallback(async (page = 0) => {
     setLoading(true)
@@ -594,6 +608,12 @@ export default function DashboardPage() {
           Do<span>Safe</span>
         </div>
         <div className="header-right">
+          <button className="header-btn alert-btn" onClick={() => setShowAlerts(true)} aria-label="Alertas">
+            <span className={`alert-count${expiredCount > 0 ? ' alert-count--active' : ''}`}>
+              {expiredCount}
+            </span>
+            <BellIcon />
+          </button>
           <button className="header-btn theme-toggle-btn" onClick={toggleTheme} aria-label="Toggle theme">
             {theme === 'dark' ? <MoonIcon /> : <SunIcon />}
           </button>
@@ -657,7 +677,7 @@ export default function DashboardPage() {
                 </div>
               ) : (
                 docsPage.content.map(doc => (
-                  <DocCard key={doc.id} doc={doc} t={t} onDeleted={() => loadDocuments(currentPage)} />
+                  <DocCard key={doc.id} doc={doc} t={t} onDeleted={() => { loadDocuments(currentPage); loadExpiredCount() }} />
                 ))
               )}
             </div>
@@ -703,9 +723,110 @@ export default function DashboardPage() {
         <UploadModal
           t={t}
           onClose={() => setShowUpload(false)}
-          onSuccess={() => { setCurrentPage(0); loadDocuments(0) }}
+          onSuccess={() => { setCurrentPage(0); loadDocuments(0); loadExpiredCount() }}
         />
       )}
+
+      {/* ── Alerts panel ── */}
+      {showAlerts && (
+        <AlertsPanel
+          t={t}
+          onClose={() => setShowAlerts(false)}
+          onRead={() => setExpiredCount(0)}
+        />
+      )}
+    </div>
+  )
+}
+
+// ─── Alerts panel ─────────────────────────────────────────────────────────────
+
+const TYPE_LABEL = {
+  IDENTITY_CARD:  'DNI',
+  PASSPORT:       'Pasaporte',
+  DRIVER_LICENCE: 'Licencia',
+  OTHER:          'Otro',
+}
+
+function AlertsPanel({ t, onClose, onRead }) {
+  const [alerts, setAlerts]   = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError]     = useState(null)
+
+  useEffect(() => {
+    async function loadAndRead() {
+      try {
+        const data = await getMyAlerts(0, 50)
+        setAlerts(data.content)
+        // Mark all as read and reset the bell counter in the parent
+        await markAllAlertsRead()
+        onRead()
+      } catch {
+        setError('No se pudieron cargar las alertas.')
+      } finally {
+        setLoading(false)
+      }
+    }
+    loadAndRead()
+  }, [onRead])
+
+  function handleBackdropClick(e) {
+    if (e.target === e.currentTarget) onClose()
+  }
+
+  return (
+    <div className="alerts-backdrop" onClick={handleBackdropClick}>
+      <aside className="alerts-panel">
+
+        {/* Header */}
+        <div className="alerts-panel-header">
+          <div className="alerts-panel-title">
+            <BellIcon />
+            <span>ALERTAS</span>
+          </div>
+          <button className="alerts-panel-close" onClick={onClose} aria-label="Cerrar">✕</button>
+        </div>
+
+        {/* Body */}
+        <div className="alerts-panel-body">
+          {loading ? (
+            <div className="loading-state">
+              <span className="spinner" />
+            </div>
+          ) : error ? (
+            <div className="alerts-empty">
+              <p className="alerts-empty-text">{error}</p>
+            </div>
+          ) : alerts.length === 0 ? (
+            <div className="alerts-empty">
+              <BellIcon />
+              <p className="alerts-empty-text">Sin alertas por ahora</p>
+              <p className="alerts-empty-sub">Te notificaremos cuando un documento esté por vencer.</p>
+            </div>
+          ) : (
+            <ul className="alerts-list">
+              {alerts.map(alert => (
+                <li key={alert.id} className={`alert-item${!alert.read ? ' alert-item--unread' : ''}`}>
+                  <div className="alert-item-type">
+                    {TYPE_LABEL[alert.documentType] ?? alert.documentType ?? '—'}
+                  </div>
+                  <div className="alert-item-body">
+                    <p className="alert-item-filename">{alert.documentFilename}</p>
+                    <p className="alert-item-meta">
+                      Vence {formatDate(alert.expireAt)}
+                    </p>
+                    <p className="alert-item-sent">
+                      Email enviado {formatDate(alert.sentAt)}
+                    </p>
+                  </div>
+                  {!alert.read && <span className="alert-item-dot" aria-hidden="true" />}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+      </aside>
     </div>
   )
 }
@@ -794,6 +915,19 @@ function DocIcon() {
       <path d="M8 4h14l8 8v20a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"
         stroke="currentColor" strokeWidth="1.4"/>
       <path d="M22 4v8h8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+    </svg>
+  )
+}
+
+function BellIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+      <line x1="7" y1="0.8" x2="7" y2="2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+      <path d="M3.5 9V5.5a3.5 3.5 0 0 1 7 0V9"
+        stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+      <line x1="2" y1="9" x2="12" y2="9" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+      <path d="M5.7 10a1.3 1.3 0 0 0 2.6 0"
+        stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
     </svg>
   )
 }

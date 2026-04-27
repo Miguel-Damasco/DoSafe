@@ -15,6 +15,7 @@ import com.miguel_damasco.DoSafe.document.domain.DocumentStatus;
 import com.miguel_damasco.DoSafe.document.repository.DocumentRepository;
 import com.miguel_damasco.DoSafe.email.service.EmailService;
 
+import io.micrometer.core.instrument.MeterRegistry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,6 +27,7 @@ public class AlertService {
     private final DocumentRepository documentRepository;
     private final AlertRepository alertRepository;
     private final EmailService emailService;
+    private final MeterRegistry meterRegistry;
 
     // How many days before expiration to trigger the alert — configurable via application.properties.
     @Value("${alert.expiration-threshold-days:30}")
@@ -83,11 +85,13 @@ public class AlertService {
                     .thenRun(() -> {
                         alert.markSent();
                         alertRepository.save(alert);
+                        meterRegistry.counter("dosafe.alerts.sent", "result", "success").increment();
                         log.info("Alert sent and marked alertId={}", alert.getId());
                     })
                     .exceptionally(ex -> {
                         // Log the failure but do not rethrow — the alert stays with sentAt = null
                         // and will be retried on the next daily run.
+                        meterRegistry.counter("dosafe.alerts.sent", "result", "failure").increment();
                         log.error("Failed to send alert alertId={} — will retry on next run",
                                 alert.getId(), ex);
                         return null;

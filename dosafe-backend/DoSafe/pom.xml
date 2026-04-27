@@ -141,6 +141,18 @@
 			<version>2.42.14</version>
 		</dependency>
 
+		<!-- Actuator — exposes /health, /info, /metrics, /loggers and /prometheus endpoints -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<!-- Micrometer Prometheus registry — enables /actuator/prometheus for scraping business metrics -->
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+		</dependency>
+
 		<!-- Flyway — database migration. The starter includes the auto-configuration
 		     wiring that ensures Flyway runs before Hibernate validates the schema. -->
 		<dependency>

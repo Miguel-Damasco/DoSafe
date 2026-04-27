@@ -1,11 +1,13 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { login } from '../api/auth'
 import { useLanguage } from '../context/LanguageContext'
+import { useTheme } from '../context/ThemeContext'
 import { FlagES, FlagUK } from '../components/FlagIcon'
 
 export default function LoginPage() {
   const { lang, toggle, t } = useLanguage()
+  const { theme, toggle: toggleTheme } = useTheme()
   const navigate = useNavigate()
 
   const [identifier, setIdentifier] = useState('')
@@ -54,10 +56,15 @@ export default function LoginPage() {
       <div className="scanlines"  aria-hidden="true" />
       <div className="corner-glow" aria-hidden="true" />
 
-      {/* Language toggle — fixed top-right */}
-      <button className="lang-toggle" onClick={toggle} aria-label="Toggle language">
-        {lang === 'es' ? <><FlagES /> ES</> : <><FlagUK /> EN</>}
-      </button>
+      {/* Top-right controls: theme + language */}
+      <div className="login-top-controls">
+        <button className="lang-toggle" onClick={toggleTheme} aria-label="Toggle theme">
+          {theme === 'dark' ? <MoonIcon /> : <SunIcon />}
+        </button>
+        <button className="lang-toggle" onClick={toggle} aria-label="Toggle language">
+          {lang === 'es' ? <><FlagES /> ES</> : <><FlagUK /> EN</>}
+        </button>
+      </div>
 
       {/* Main card */}
       <div className="login-card" role="main">
@@ -114,6 +121,10 @@ export default function LoginPage() {
           </button>
         </form>
 
+        <p className="card-nav-text">
+          {t.noAccount} <Link to="/register">{t.registerLink}</Link>
+        </p>
+
         {/* Footer */}
         <div className="card-footer">
           <span className="secure-badge">
@@ -123,6 +134,31 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+function MoonIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+      <path d="M12.5 9A6 6 0 0 1 5 1.5a6 6 0 1 0 7.5 7.5Z"
+        stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+}
+
+function SunIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+      <circle cx="7" cy="7" r="2.8" stroke="currentColor" strokeWidth="1.2"/>
+      <line x1="7" y1="0.5" x2="7" y2="2"    stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+      <line x1="7" y1="12"  x2="7" y2="13.5"  stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+      <line x1="0.5" y1="7" x2="2"   y2="7"   stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+      <line x1="12"  y1="7" x2="13.5" y2="7"  stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+      <line x1="2.4" y1="2.4"   x2="3.4" y2="3.4"   stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+      <line x1="10.6" y1="10.6" x2="11.6" y2="11.6" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+      <line x1="11.6" y1="2.4"  x2="10.6" y2="3.4"  stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+      <line x1="3.4"  y1="10.6" x2="2.4" y2="11.6"  stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+    </svg>
   )
 }
 

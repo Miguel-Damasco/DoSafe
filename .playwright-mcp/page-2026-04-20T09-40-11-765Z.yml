@@ -1,0 +1,55 @@
+- generic [ref=e30]:
+  - banner [ref=e31]:
+    - generic [ref=e32]: DoSafe
+    - generic [ref=e33]:
+      - button "Toggle theme" [ref=e34] [cursor=pointer]:
+        - img [ref=e35]
+      - button "Toggle language" [ref=e37] [cursor=pointer]:
+        - img [ref=e38]
+        - text: ES
+      - button "Salir" [ref=e42] [cursor=pointer]
+  - main [ref=e43]:
+    - generic [ref=e44]:
+      - generic [ref=e45]:
+        - heading "Mis documentos" [level=1] [ref=e46]
+        - paragraph [ref=e47]: 1 documento(s)
+      - generic [ref=e48]:
+        - combobox "Filter documents" [ref=e49] [cursor=pointer]:
+          - option "Todos" [selected]
+          - option "DNI"
+          - option "Pasaporte"
+          - option "Licencia"
+          - option "Otro"
+          - option "Vencidos"
+        - button "Subir documento" [ref=e50] [cursor=pointer]:
+          - img [ref=e51]
+          - text: Subir documento
+    - article [ref=e53]:
+      - iframe [ref=e56]:
+        
+      - generic [ref=e57]:
+        - generic [ref=e58]:
+          - paragraph [ref=e59]: prueba14.jpg
+          - generic [ref=e60]:
+            - generic [ref=e61]: Procesado
+            - button "Eliminar" [ref=e62] [cursor=pointer]:
+              - img [ref=e63]
+        - generic [ref=e65]: DNI
+        - generic [ref=e66]:
+          - generic [ref=e67]:
+            - generic [ref=e68]: Vence
+            - generic [ref=e69]:
+              - generic [ref=e70]: 27 abr 2025
+              - button "Editar fecha" [ref=e71] [cursor=pointer]:
+                - img [ref=e72]
+          - generic [ref=e75]:
+            - generic [ref=e76]: Subido
+            - generic [ref=e77]: 8 abr 2026
+        - link "Descargar" [ref=e78] [cursor=pointer]:
+          - /url: https://dosafe-documents.s3.us-east-2.amazonaws.com/users/1/e8652435-3295-4a4f-8c37-441b25d17420.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20260420T094010Z&X-Amz-SignedHeaders=host&X-Amz-Credential=AKIAYHJANFWWT2OTIPEX%2F20260420%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Expires=900&X-Amz-Signature=3640b5f6fe1029d1748607b80a3147519678a272d2935e59cfd89a085419ad1f
+          - img [ref=e79]
+          - text: Descargar
+    - navigation "Pagination" [ref=e81]:
+      - button "←" [disabled] [ref=e82]
+      - button "1" [ref=e84] [cursor=pointer]
+      - button "→" [disabled] [ref=e85]

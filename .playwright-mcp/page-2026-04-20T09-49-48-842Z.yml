@@ -1,0 +1,28 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]: DoSafe
+    - generic [ref=e6]:
+      - button "Alertas" [ref=e7] [cursor=pointer]:
+        - generic [ref=e8]: "0"
+        - img [ref=e9]
+      - button "Toggle theme" [ref=e12] [cursor=pointer]:
+        - img [ref=e13]
+      - button "Toggle language" [ref=e15] [cursor=pointer]:
+        - img [ref=e16]
+        - text: ES
+      - button "Salir" [ref=e20] [cursor=pointer]
+  - main [ref=e21]:
+    - generic [ref=e22]:
+      - heading "Mis documentos" [level=1] [ref=e24]
+      - generic [ref=e25]:
+        - combobox "Filter documents" [ref=e26] [cursor=pointer]:
+          - option "Todos" [selected]
+          - option "DNI"
+          - option "Pasaporte"
+          - option "Licencia"
+          - option "Otro"
+          - option "Vencidos"
+        - button "Subir documento" [ref=e27] [cursor=pointer]:
+          - img [ref=e28]
+          - text: Subir documento
+    - generic [ref=e29]: Cargando documentos...

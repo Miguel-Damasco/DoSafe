@@ -81,9 +81,34 @@ const translations = {
       DEFAULT:                    'Algo salió mal. Solicitá un nuevo enlace.',
     },
 
+    // Register page
+    register: {
+      systemLabel:     'CREAR CUENTA',
+      username:        'Nombre de usuario',
+      email:           'Correo electrónico',
+      password:        'Contraseña',
+      confirmPassword: 'Confirmar contraseña',
+      submit:          'Crear cuenta',
+      loading:         'Creando cuenta...',
+      successTitle:    '¡Cuenta creada!',
+      successSub:      'Te enviamos un correo de verificación. Revisá tu bandeja antes de iniciar sesión.',
+      goToLogin:       'Ir al inicio de sesión',
+      alreadyHaveAccount: '¿Ya tenés cuenta?',
+      signIn:          'Iniciá sesión',
+      usernameMin:     'Mínimo 3 caracteres.',
+      emailInvalid:    'Correo no válido.',
+      passwordMin:     'Mínimo 8 caracteres.',
+      passwordMismatch: 'Las contraseñas no coinciden.',
+    },
+
+    // Login page — register link
+    noAccount:    '¿No tenés cuenta?',
+    registerLink: 'Registrate',
+
     errors: {
       USER_NOT_FOUND:             'Usuario no encontrado.',
       INVALID_CREDENTIALS:        'Credenciales incorrectas.',
+      USER_ALREADY_EXISTS:        'Ese nombre de usuario o correo ya está en uso.',
       NETWORK_ERROR:              'Error de conexión. Intente nuevamente.',
       RATE_LIMIT_EXCEEDED:        'Límite de subidas diarias alcanzado.',
       DOCUMENT_PROCESSING_ERROR:  'No se pudo procesar el archivo.',
@@ -172,9 +197,34 @@ const translations = {
       DEFAULT:                    'Something went wrong. Request a new link.',
     },
 
+    // Register page
+    register: {
+      systemLabel:     'CREATE ACCOUNT',
+      username:        'Username',
+      email:           'Email address',
+      password:        'Password',
+      confirmPassword: 'Confirm password',
+      submit:          'Create account',
+      loading:         'Creating account...',
+      successTitle:    'Account created!',
+      successSub:      'We sent you a verification email. Check your inbox before signing in.',
+      goToLogin:       'Go to login',
+      alreadyHaveAccount: 'Already have an account?',
+      signIn:          'Sign in',
+      usernameMin:     'Minimum 3 characters.',
+      emailInvalid:    'Invalid email address.',
+      passwordMin:     'Minimum 8 characters.',
+      passwordMismatch: 'Passwords do not match.',
+    },
+
+    // Login page — register link
+    noAccount:    "Don't have an account?",
+    registerLink: 'Register',
+
     errors: {
       USER_NOT_FOUND:             'User not found.',
       INVALID_CREDENTIALS:        'Invalid credentials.',
+      USER_ALREADY_EXISTS:        'That username or email is already in use.',
       NETWORK_ERROR:              'Connection error. Please try again.',
       RATE_LIMIT_EXCEEDED:        'Daily upload limit reached.',
       DOCUMENT_PROCESSING_ERROR:  'Could not process the file.',

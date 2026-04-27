@@ -1,0 +1,21 @@
+- generic [ref=e3]:
+  - generic [ref=e42]:
+    - button "Toggle theme" [active] [ref=e4] [cursor=pointer]:
+      - img [ref=e43]
+    - button "Toggle language" [ref=e7] [cursor=pointer]:
+      - img [ref=e49]
+      - text: EN
+  - main [ref=e12]:
+    - generic [ref=e14]: DoSafe
+    - generic [ref=e17]: AUTHENTICATION SYSTEM
+    - generic [ref=e19]:
+      - generic [ref=e20]:
+        - generic [ref=e21]: Username or email
+        - textbox "Username or email" [ref=e39]
+      - generic [ref=e23]:
+        - generic [ref=e24]: Password
+        - textbox "Password" [ref=e40]
+      - button "Access" [ref=e41] [cursor=pointer]
+    - generic [ref=e28]:
+      - img [ref=e29]
+      - text: SECURE CONNECTION

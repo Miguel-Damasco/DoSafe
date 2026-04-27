@@ -7,6 +7,8 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.miguel_damasco.DoSafe.document.domain.DocumentId;
+import io.micrometer.core.instrument.MeterRegistry;
+import java.util.concurrent.TimeUnit;
 import com.miguel_damasco.DoSafe.document.domain.DocumentModel;
 import com.miguel_damasco.DoSafe.document.domain.DocumentStatus;
 import com.miguel_damasco.DoSafe.document.domain.DocumentTypeEnum;
@@ -30,6 +32,8 @@ public class ProcessTextractResultService {
 
     private final ExpirationDateExtractorSelector expirationDateExtractorSelector;
 
+    private final MeterRegistry meterRegistry;
+
     public void execute(DocumentId pId, String pJobId) {
 
         log.info("Processing Textract result documentId={} jobId={}", pId.value(), pJobId);
@@ -42,6 +46,7 @@ public class ProcessTextractResultService {
             return;
         }
 
+        long startTime = System.nanoTime();
         try {
 
             List<String> result = this.textractClientAdapter.getLines(pJobId);
@@ -66,9 +71,14 @@ public class ProcessTextractResultService {
 
             this.documentRepository.save(document);
 
+            meterRegistry.timer("dosafe.documents.ocr.duration", "result", "success")
+                    .record(System.nanoTime() - startTime, TimeUnit.NANOSECONDS);
+
             log.info("Document updated successfully documentId={}", pId.value());
 
         } catch (Exception e) {
+            meterRegistry.timer("dosafe.documents.ocr.duration", "result", "failure")
+                    .record(System.nanoTime() - startTime, TimeUnit.NANOSECONDS);
             log.error("Failed to process document, marking as FAILED documentId={}", pId.value(), e);
             document.markFailed();
             this.documentRepository.save(document);

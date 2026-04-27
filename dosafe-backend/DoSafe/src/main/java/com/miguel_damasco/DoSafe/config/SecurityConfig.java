@@ -48,7 +48,11 @@ public class SecurityConfig {
                                                             // Swagger UI and OpenAPI spec — public so anyone can browse the API docs.
                                                             "/swagger-ui.html",
                                                             "/swagger-ui/**",
-                                                            "/v3/api-docs/**"
+                                                            "/v3/api-docs/**",
+                                                            // Actuator — health and info are public for load balancers and uptime monitors.
+                                                            // All other actuator endpoints require authentication.
+                                                            "/actuator/health",
+                                                            "/actuator/info"
                                                         ).permitAll()
                                                         .anyRequest().authenticated())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.miguel_damasco.DoSafe.common.exception.RateLimitExceededException;
 import com.miguel_damasco.DoSafe.document.domain.DocumentFactory;
+import io.micrometer.core.instrument.MeterRegistry;
 import com.miguel_damasco.DoSafe.document.domain.DocumentModel;
 import com.miguel_damasco.DoSafe.document.dto.mapper.DocumentResponseMapper;
 import com.miguel_damasco.DoSafe.document.dto.response.DocumentUploadResponseDTO;
@@ -33,6 +34,7 @@ public class DocumentUploadService {
     private final DocumentStorage documentStorage;
     private final DocumentConverter documentConverter;
     private final UserService userService;
+    private final MeterRegistry meterRegistry;
 
     @Value("${ratelimit.upload.per-user-daily:3}")
     private int perUserDailyLimit;
@@ -57,6 +59,8 @@ public class DocumentUploadService {
         savedDocuemnt.setKey(key);
 
         this.documentRepository.save(savedDocuemnt);
+
+        meterRegistry.counter("dosafe.documents.uploaded", "result", "success").increment();
 
         return DocumentResponseMapper.toDto(savedDocuemnt);
     }

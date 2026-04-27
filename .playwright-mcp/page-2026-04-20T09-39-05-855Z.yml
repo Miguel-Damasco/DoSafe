@@ -1,0 +1,18 @@
+- generic [ref=e3]:
+  - button "Toggle language" [ref=e4] [cursor=pointer]:
+    - img [ref=e5]
+    - text: ES
+  - main [ref=e9]:
+    - generic [ref=e11]: DoSafe
+    - generic [ref=e14]: SISTEMA DE AUTENTICACIÓN
+    - generic [ref=e16]:
+      - generic [ref=e17]:
+        - generic [ref=e18]: Usuario o correo
+        - textbox "Usuario o correo" [active] [ref=e19]
+      - generic [ref=e20]:
+        - generic [ref=e21]: Contraseña
+        - textbox "Contraseña" [ref=e22]
+      - button "Acceder" [ref=e23] [cursor=pointer]
+    - generic [ref=e25]:
+      - img [ref=e26]
+      - text: CONEXIÓN SEGURA

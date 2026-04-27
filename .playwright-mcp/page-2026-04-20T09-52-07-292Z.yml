@@ -1,0 +1,33 @@
+- generic [ref=e30]:
+  - banner [ref=e31]:
+    - generic [ref=e32]: DoSafe
+    - generic [ref=e33]:
+      - button "Alertas" [ref=e34] [cursor=pointer]:
+        - generic [ref=e35]: "0"
+        - img [ref=e36]
+      - button "Toggle theme" [ref=e39] [cursor=pointer]:
+        - img [ref=e40]
+      - button "Toggle language" [ref=e42] [cursor=pointer]:
+        - img [ref=e43]
+        - text: ES
+      - button "Salir" [ref=e47] [cursor=pointer]
+  - main [ref=e48]:
+    - generic [ref=e49]:
+      - generic [ref=e50]:
+        - heading "Mis documentos" [level=1] [ref=e51]
+        - paragraph [ref=e52]: 0 documento(s)
+      - generic [ref=e53]:
+        - combobox "Filter documents" [ref=e54] [cursor=pointer]:
+          - option "Todos" [selected]
+          - option "DNI"
+          - option "Pasaporte"
+          - option "Licencia"
+          - option "Otro"
+          - option "Vencidos"
+        - button "Subir documento" [ref=e55] [cursor=pointer]:
+          - img [ref=e56]
+          - text: Subir documento
+    - generic [ref=e58]:
+      - img [ref=e59]
+      - paragraph [ref=e61]: No hay documentos registrados.
+      - paragraph [ref=e62]: Subí tu primer documento de identidad para comenzar.
