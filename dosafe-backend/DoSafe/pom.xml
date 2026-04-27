@@ -75,6 +75,14 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- H2 in-memory database — used by DoSafeApplicationTests to load the
+		     full Spring context without requiring a live MySQL instance. -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
+
 		<dependency>
     		<groupId>io.jsonwebtoken</groupId>
     		<artifactId>jjwt-api</artifactId>

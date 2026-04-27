@@ -1,21 +1,243 @@
-2026-04-06 13:14:04 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - Starting DoSafeApplicationTests using Java 17.0.0.1 with PID 32520 (started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
-2026-04-06 13:14:04 [main] DEBUG [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - Running with Spring Boot v4.0.2, Spring v7.0.3
-2026-04-06 13:14:04 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - No active profile set, falling back to 1 default profile: "default"
-2026-04-06 13:14:16 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Starting AuthenticationControllerTest using Java 17.0.0.1 with PID 32520 (started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
-2026-04-06 13:14:16 [main] DEBUG [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Running with Spring Boot v4.0.2, Spring v7.0.3
-2026-04-06 13:14:16 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - No active profile set, falling back to 1 default profile: "default"
-2026-04-06 13:14:21 [main] DEBUG [] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - Filter 'correlationIdFilter' configured for use
-2026-04-06 13:14:21 [main] DEBUG [] com.miguel_damasco.DoSafe.security.jwt.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
-2026-04-06 13:14:21 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Started AuthenticationControllerTest in 5.105 seconds (process running for 31.21)
-2026-04-06 13:14:21 [main] INFO  [2a7be3f4-ae1d-4c4a-89e2-98902d761467] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Register attempt username=miguel
-2026-04-06 13:14:21 [main] WARN  [2a7be3f4-ae1d-4c4a-89e2-98902d761467] com.miguel_damasco.DoSafe.common.exception.GlobalExceptionHandler - Application error errorCode=USER_ALREADY_EXISTS message=Username 'miguel' is already taken
-2026-04-06 13:14:22 [main] INFO  [cafd208d-f73e-4452-8ad9-9edff897d5aa] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Register attempt username=miguel
-2026-04-06 13:14:22 [main] INFO  [cafd208d-f73e-4452-8ad9-9edff897d5aa] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Register successful username=miguel
-2026-04-06 13:14:22 [main] INFO  [4cb70c6d-06b2-4905-b6d8-8e8264b83271] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Login attempt identifier=miguel
-2026-04-06 13:14:22 [main] INFO  [4cb70c6d-06b2-4905-b6d8-8e8264b83271] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Login successful identifier=miguel
-2026-04-06 13:14:22 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Resend verification skipped email=unknown@email.com (not found or already verified)
-2026-04-06 13:14:22 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Verification email dispatched userId=null
-2026-04-06 13:14:22 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Resend verification skipped email=miguel@email.com (not found or already verified)
-2026-04-06 13:14:22 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Email verified userId=0
-2026-04-06 13:14:22 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Verification email dispatched userId=null
-2026-04-06 13:14:22 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Verification email resent userId=null
+2026-04-27 19:42:19 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - Starting DoSafeApplicationTests using Java 17.0.0.1 with PID 14488 (started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
+2026-04-27 19:42:19 [main] DEBUG [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-04-27 19:42:19 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2026-04-27 19:42:25 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Starting AuthenticationControllerTest using Java 17.0.0.1 with PID 14488 (started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
+2026-04-27 19:42:25 [main] DEBUG [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-04-27 19:42:25 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - No active profile set, falling back to 1 default profile: "default"
+2026-04-27 19:42:27 [main] DEBUG [] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - Filter 'correlationIdFilter' configured for use
+2026-04-27 19:42:27 [main] DEBUG [] com.miguel_damasco.DoSafe.security.jwt.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-04-27 19:42:27 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Started AuthenticationControllerTest in 2.124 seconds (process running for 19.313)
+2026-04-27 19:42:28 [main] INFO  [2639cfdd-fa82-4099-84f3-e7ebc35cf846] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Register attempt username=miguel
+2026-04-27 19:42:28 [main] WARN  [2639cfdd-fa82-4099-84f3-e7ebc35cf846] com.miguel_damasco.DoSafe.common.exception.GlobalExceptionHandler - Application error errorCode=USER_ALREADY_EXISTS message=Username or email already in use
+2026-04-27 19:42:28 [main] INFO  [2639cfdd-fa82-4099-84f3-e7ebc35cf846] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - POST /authentication/register ? 409 (252ms)
+2026-04-27 19:42:28 [main] INFO  [858bf583-9c15-42cc-8803-71ee07bb52bb] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Register attempt username=miguel
+2026-04-27 19:42:28 [main] INFO  [858bf583-9c15-42cc-8803-71ee07bb52bb] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Register successful username=miguel
+2026-04-27 19:42:28 [main] INFO  [858bf583-9c15-42cc-8803-71ee07bb52bb] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - POST /authentication/register ? 201 (18ms)
+2026-04-27 19:42:28 [main] INFO  [3cb9726a-207d-45c4-a973-1fe7fdacdc5c] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Login attempt identifier=miguel
+2026-04-27 19:42:28 [main] INFO  [3cb9726a-207d-45c4-a973-1fe7fdacdc5c] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Login successful identifier=miguel
+2026-04-27 19:42:28 [main] INFO  [3cb9726a-207d-45c4-a973-1fe7fdacdc5c] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - POST /authentication/login ? 200 (10ms)
+2026-04-27 19:50:27 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - Starting DoSafeApplicationTests using Java 17.0.0.1 with PID 13920 (started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
+2026-04-27 19:50:27 [main] DEBUG [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-04-27 19:50:27 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2026-04-27 19:50:33 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Starting AuthenticationControllerTest using Java 17.0.0.1 with PID 13920 (started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
+2026-04-27 19:50:33 [main] DEBUG [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-04-27 19:50:33 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - No active profile set, falling back to 1 default profile: "default"
+2026-04-27 19:50:35 [main] DEBUG [] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - Filter 'correlationIdFilter' configured for use
+2026-04-27 19:50:35 [main] DEBUG [] com.miguel_damasco.DoSafe.security.jwt.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-04-27 19:50:35 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Started AuthenticationControllerTest in 2.275 seconds (process running for 15.226)
+2026-04-27 19:50:35 [main] INFO  [4d055293-0c6e-48a0-b0e3-54e789f96e9c] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Register attempt username=miguel
+2026-04-27 19:50:35 [main] WARN  [4d055293-0c6e-48a0-b0e3-54e789f96e9c] com.miguel_damasco.DoSafe.common.exception.GlobalExceptionHandler - Application error errorCode=USER_ALREADY_EXISTS message=Username or email already in use
+2026-04-27 19:50:36 [main] INFO  [4d055293-0c6e-48a0-b0e3-54e789f96e9c] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - POST /authentication/register ? 409 (229ms)
+2026-04-27 19:50:36 [main] INFO  [6887ce2d-7fb1-485f-8da9-59415dbf81b9] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Register attempt username=miguel
+2026-04-27 19:50:36 [main] INFO  [6887ce2d-7fb1-485f-8da9-59415dbf81b9] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Register successful username=miguel
+2026-04-27 19:50:36 [main] INFO  [6887ce2d-7fb1-485f-8da9-59415dbf81b9] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - POST /authentication/register ? 201 (13ms)
+2026-04-27 19:50:36 [main] INFO  [8c6f34ec-2353-4731-ad12-5af2692fd631] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Login attempt identifier=miguel
+2026-04-27 19:50:36 [main] INFO  [8c6f34ec-2353-4731-ad12-5af2692fd631] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Login successful identifier=miguel
+2026-04-27 19:50:36 [main] INFO  [8c6f34ec-2353-4731-ad12-5af2692fd631] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - POST /authentication/login ? 200 (5ms)
+2026-04-27 19:50:36 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Resend verification skipped email=unknown@email.com (not found or already verified)
+2026-04-27 19:50:36 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Verification email dispatched userId=null
+2026-04-27 19:50:36 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Resend verification skipped email=miguel@email.com (not found or already verified)
+2026-04-27 19:50:36 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Email verified userId=0
+2026-04-27 19:50:36 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Verification email dispatched userId=null
+2026-04-27 19:50:36 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Verification email resent userId=null
+2026-04-27 19:52:22 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - Starting DoSafeApplicationTests using Java 17.0.0.1 with PID 22916 (started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
+2026-04-27 19:52:22 [main] DEBUG [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-04-27 19:52:22 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2026-04-27 19:52:29 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Starting AuthenticationControllerTest using Java 17.0.0.1 with PID 22916 (started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
+2026-04-27 19:52:29 [main] DEBUG [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-04-27 19:52:29 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - No active profile set, falling back to 1 default profile: "default"
+2026-04-27 19:52:31 [main] DEBUG [] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - Filter 'correlationIdFilter' configured for use
+2026-04-27 19:52:31 [main] DEBUG [] com.miguel_damasco.DoSafe.security.jwt.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-04-27 19:52:31 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Started AuthenticationControllerTest in 2.129 seconds (process running for 19.228)
+2026-04-27 19:52:31 [main] INFO  [f04c074e-b00d-43fb-9915-c41e75ef4309] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Register attempt username=miguel
+2026-04-27 19:52:31 [main] WARN  [f04c074e-b00d-43fb-9915-c41e75ef4309] com.miguel_damasco.DoSafe.common.exception.GlobalExceptionHandler - Application error errorCode=USER_ALREADY_EXISTS message=Username or email already in use
+2026-04-27 19:52:31 [main] INFO  [f04c074e-b00d-43fb-9915-c41e75ef4309] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - POST /authentication/register ? 409 (242ms)
+2026-04-27 19:52:31 [main] INFO  [8457dbb9-ed00-4288-99fb-bcaea8617af7] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Register attempt username=miguel
+2026-04-27 19:52:31 [main] INFO  [8457dbb9-ed00-4288-99fb-bcaea8617af7] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Register successful username=miguel
+2026-04-27 19:52:31 [main] INFO  [8457dbb9-ed00-4288-99fb-bcaea8617af7] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - POST /authentication/register ? 201 (15ms)
+2026-04-27 19:52:31 [main] INFO  [bdf68ff4-df6c-4b29-a507-259c48e3ed3e] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Login attempt identifier=miguel
+2026-04-27 19:52:31 [main] INFO  [bdf68ff4-df6c-4b29-a507-259c48e3ed3e] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Login successful identifier=miguel
+2026-04-27 19:52:31 [main] INFO  [bdf68ff4-df6c-4b29-a507-259c48e3ed3e] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - POST /authentication/login ? 200 (12ms)
+2026-04-27 19:52:32 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Resend verification skipped email=unknown@email.com (not found or already verified)
+2026-04-27 19:52:32 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Verification email dispatched userId=null
+2026-04-27 19:52:32 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Resend verification skipped email=miguel@email.com (not found or already verified)
+2026-04-27 19:52:32 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Email verified userId=0
+2026-04-27 19:52:32 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Verification email dispatched userId=null
+2026-04-27 19:52:32 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Verification email resent userId=null
+2026-04-27 19:52:57 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - Starting DoSafeApplicationTests using Java 17.0.0.1 with PID 20408 (started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
+2026-04-27 19:52:57 [main] DEBUG [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-04-27 19:52:57 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2026-04-27 19:53:05 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Starting AuthenticationControllerTest using Java 17.0.0.1 with PID 20408 (started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
+2026-04-27 19:53:05 [main] DEBUG [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-04-27 19:53:05 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - No active profile set, falling back to 1 default profile: "default"
+2026-04-27 19:53:07 [main] DEBUG [] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - Filter 'correlationIdFilter' configured for use
+2026-04-27 19:53:07 [main] DEBUG [] com.miguel_damasco.DoSafe.security.jwt.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-04-27 19:53:07 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Started AuthenticationControllerTest in 2.666 seconds (process running for 20.284)
+2026-04-27 19:53:07 [main] INFO  [07075cd9-178e-4639-be32-ddba94e7c3be] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Register attempt username=miguel
+2026-04-27 19:53:08 [main] WARN  [07075cd9-178e-4639-be32-ddba94e7c3be] com.miguel_damasco.DoSafe.common.exception.GlobalExceptionHandler - Application error errorCode=USER_ALREADY_EXISTS message=Username or email already in use
+2026-04-27 19:53:08 [main] INFO  [07075cd9-178e-4639-be32-ddba94e7c3be] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - POST /authentication/register ? 409 (393ms)
+2026-04-27 19:53:08 [main] INFO  [b6384bc2-30f4-460a-8f07-a9a7eb6ad0e9] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Register attempt username=miguel
+2026-04-27 19:53:08 [main] INFO  [b6384bc2-30f4-460a-8f07-a9a7eb6ad0e9] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Register successful username=miguel
+2026-04-27 19:53:08 [main] INFO  [b6384bc2-30f4-460a-8f07-a9a7eb6ad0e9] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - POST /authentication/register ? 201 (15ms)
+2026-04-27 19:53:08 [main] INFO  [f2c2bdf3-ba73-4973-873d-93d76efeb225] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Login attempt identifier=miguel
+2026-04-27 19:53:08 [main] INFO  [f2c2bdf3-ba73-4973-873d-93d76efeb225] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Login successful identifier=miguel
+2026-04-27 19:53:08 [main] INFO  [f2c2bdf3-ba73-4973-873d-93d76efeb225] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - POST /authentication/login ? 200 (17ms)
+2026-04-27 19:53:09 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Resend verification skipped email=unknown@email.com (not found or already verified)
+2026-04-27 19:53:09 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Verification email dispatched userId=null
+2026-04-27 19:53:09 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Resend verification skipped email=miguel@email.com (not found or already verified)
+2026-04-27 19:53:09 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Email verified userId=0
+2026-04-27 19:53:09 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Verification email dispatched userId=null
+2026-04-27 19:53:09 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Verification email resent userId=null
+2026-04-27 19:57:07 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - Starting DoSafeApplicationTests using Java 17.0.0.1 with PID 21848 (started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
+2026-04-27 19:57:07 [main] DEBUG [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-04-27 19:57:07 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2026-04-27 19:57:17 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Starting AuthenticationControllerTest using Java 17.0.0.1 with PID 21848 (started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
+2026-04-27 19:57:17 [main] DEBUG [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-04-27 19:57:17 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - No active profile set, falling back to 1 default profile: "default"
+2026-04-27 19:57:19 [main] DEBUG [] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - Filter 'correlationIdFilter' configured for use
+2026-04-27 19:57:19 [main] DEBUG [] com.miguel_damasco.DoSafe.security.jwt.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-04-27 19:57:19 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Started AuthenticationControllerTest in 1.85 seconds (process running for 20.292)
+2026-04-27 19:57:19 [main] INFO  [5fab93dd-b2fc-41d7-a786-b58828c3af37] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Register attempt username=miguel
+2026-04-27 19:57:19 [main] WARN  [5fab93dd-b2fc-41d7-a786-b58828c3af37] com.miguel_damasco.DoSafe.common.exception.GlobalExceptionHandler - Application error errorCode=USER_ALREADY_EXISTS message=Username or email already in use
+2026-04-27 19:57:19 [main] INFO  [5fab93dd-b2fc-41d7-a786-b58828c3af37] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - POST /authentication/register ? 409 (457ms)
+2026-04-27 19:57:20 [main] INFO  [4fa09c3f-fe64-4e7d-b2e6-46d9d3309ffa] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Register attempt username=miguel
+2026-04-27 19:57:20 [main] INFO  [4fa09c3f-fe64-4e7d-b2e6-46d9d3309ffa] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Register successful username=miguel
+2026-04-27 19:57:20 [main] INFO  [4fa09c3f-fe64-4e7d-b2e6-46d9d3309ffa] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - POST /authentication/register ? 201 (72ms)
+2026-04-27 19:57:20 [main] INFO  [34099eab-18c9-4cfc-85b6-b5bd6eff8100] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Login attempt identifier=miguel
+2026-04-27 19:57:20 [main] INFO  [34099eab-18c9-4cfc-85b6-b5bd6eff8100] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Login successful identifier=miguel
+2026-04-27 19:57:20 [main] INFO  [34099eab-18c9-4cfc-85b6-b5bd6eff8100] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - POST /authentication/login ? 200 (15ms)
+2026-04-27 19:57:20 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Resend verification skipped email=unknown@email.com (not found or already verified)
+2026-04-27 19:57:20 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Verification email dispatched userId=null
+2026-04-27 19:57:20 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Resend verification skipped email=miguel@email.com (not found or already verified)
+2026-04-27 19:57:20 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Email verified userId=0
+2026-04-27 19:57:20 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Verification email dispatched userId=null
+2026-04-27 19:57:20 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Verification email resent userId=null
+2026-04-27 19:57:48 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - Starting DoSafeApplicationTests using Java 17.0.0.1 with PID 15884 (started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
+2026-04-27 19:57:48 [main] DEBUG [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-04-27 19:57:48 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2026-04-27 19:58:01 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Starting AuthenticationControllerTest using Java 17.0.0.1 with PID 15884 (started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
+2026-04-27 19:58:01 [main] DEBUG [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-04-27 19:58:01 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - No active profile set, falling back to 1 default profile: "default"
+2026-04-27 19:58:04 [main] DEBUG [] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - Filter 'correlationIdFilter' configured for use
+2026-04-27 19:58:04 [main] DEBUG [] com.miguel_damasco.DoSafe.security.jwt.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-04-27 19:58:04 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Started AuthenticationControllerTest in 2.795 seconds (process running for 26.612)
+2026-04-27 19:58:04 [main] INFO  [bfbc3928-61eb-4f85-bb82-3208966a3a0d] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Register attempt username=miguel
+2026-04-27 19:58:04 [main] WARN  [bfbc3928-61eb-4f85-bb82-3208966a3a0d] com.miguel_damasco.DoSafe.common.exception.GlobalExceptionHandler - Application error errorCode=USER_ALREADY_EXISTS message=Username or email already in use
+2026-04-27 19:58:04 [main] INFO  [bfbc3928-61eb-4f85-bb82-3208966a3a0d] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - POST /authentication/register ? 409 (338ms)
+2026-04-27 19:58:04 [main] INFO  [c91354ee-77bf-4a7e-bfb9-61a6999618ad] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Register attempt username=miguel
+2026-04-27 19:58:04 [main] INFO  [c91354ee-77bf-4a7e-bfb9-61a6999618ad] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Register successful username=miguel
+2026-04-27 19:58:04 [main] INFO  [c91354ee-77bf-4a7e-bfb9-61a6999618ad] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - POST /authentication/register ? 201 (21ms)
+2026-04-27 19:58:05 [main] INFO  [a0346941-a7c1-42c1-9ff7-b5f54f395112] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Login attempt identifier=miguel
+2026-04-27 19:58:05 [main] INFO  [a0346941-a7c1-42c1-9ff7-b5f54f395112] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Login successful identifier=miguel
+2026-04-27 19:58:05 [main] INFO  [a0346941-a7c1-42c1-9ff7-b5f54f395112] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - POST /authentication/login ? 200 (8ms)
+2026-04-27 19:58:05 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Resend verification skipped email=unknown@email.com (not found or already verified)
+2026-04-27 19:58:05 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Verification email dispatched userId=null
+2026-04-27 19:58:05 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Resend verification skipped email=miguel@email.com (not found or already verified)
+2026-04-27 19:58:05 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Email verified userId=0
+2026-04-27 19:58:05 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Verification email dispatched userId=null
+2026-04-27 19:58:05 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Verification email resent userId=null
+2026-04-27 19:58:40 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - Starting DoSafeApplicationTests using Java 17.0.0.1 with PID 10128 (started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
+2026-04-27 19:58:40 [main] DEBUG [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-04-27 19:58:40 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2026-04-27 19:59:05 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Starting AuthenticationControllerTest using Java 17.0.0.1 with PID 10128 (started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
+2026-04-27 19:59:05 [main] DEBUG [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-04-27 19:59:05 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - No active profile set, falling back to 1 default profile: "default"
+2026-04-27 19:59:07 [main] DEBUG [] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - Filter 'correlationIdFilter' configured for use
+2026-04-27 19:59:07 [main] DEBUG [] com.miguel_damasco.DoSafe.security.jwt.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-04-27 19:59:08 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Started AuthenticationControllerTest in 2.606 seconds (process running for 36.358)
+2026-04-27 19:59:08 [main] INFO  [c06bc139-0549-4ba1-b909-2179324ef01e] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Register attempt username=miguel
+2026-04-27 19:59:08 [main] WARN  [c06bc139-0549-4ba1-b909-2179324ef01e] com.miguel_damasco.DoSafe.common.exception.GlobalExceptionHandler - Application error errorCode=USER_ALREADY_EXISTS message=Username or email already in use
+2026-04-27 19:59:08 [main] INFO  [c06bc139-0549-4ba1-b909-2179324ef01e] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - POST /authentication/register ? 409 (273ms)
+2026-04-27 19:59:08 [main] INFO  [4cc9cbc7-a742-4fe3-8ab5-d00dd7428b0d] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Register attempt username=miguel
+2026-04-27 19:59:08 [main] INFO  [4cc9cbc7-a742-4fe3-8ab5-d00dd7428b0d] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Register successful username=miguel
+2026-04-27 19:59:08 [main] INFO  [4cc9cbc7-a742-4fe3-8ab5-d00dd7428b0d] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - POST /authentication/register ? 201 (15ms)
+2026-04-27 19:59:08 [main] INFO  [0ac65c79-a9cb-4614-9e28-212881928eeb] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Login attempt identifier=miguel
+2026-04-27 19:59:08 [main] INFO  [0ac65c79-a9cb-4614-9e28-212881928eeb] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Login successful identifier=miguel
+2026-04-27 19:59:08 [main] INFO  [0ac65c79-a9cb-4614-9e28-212881928eeb] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - POST /authentication/login ? 200 (8ms)
+2026-04-27 19:59:09 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Resend verification skipped email=unknown@email.com (not found or already verified)
+2026-04-27 19:59:09 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Verification email dispatched userId=null
+2026-04-27 19:59:09 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Resend verification skipped email=miguel@email.com (not found or already verified)
+2026-04-27 19:59:09 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Email verified userId=0
+2026-04-27 19:59:09 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Verification email dispatched userId=null
+2026-04-27 19:59:09 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Verification email resent userId=null
+2026-04-27 20:01:33 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - Starting DoSafeApplicationTests using Java 17.0.0.1 with PID 14760 (started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
+2026-04-27 20:01:33 [main] DEBUG [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-04-27 20:01:33 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2026-04-27 20:01:46 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - Started DoSafeApplicationTests in 14.026 seconds (process running for 21.113)
+2026-04-27 20:01:46 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-04-27 20:01:58 [scheduling-1] DEBUG [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - No messages in queue
+2026-04-27 20:01:58 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Starting AuthenticationControllerTest using Java 17.0.0.1 with PID 14760 (started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
+2026-04-27 20:01:58 [main] DEBUG [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-04-27 20:01:58 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - No active profile set, falling back to 1 default profile: "default"
+2026-04-27 20:01:59 [main] DEBUG [] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - Filter 'correlationIdFilter' configured for use
+2026-04-27 20:01:59 [main] DEBUG [] com.miguel_damasco.DoSafe.security.jwt.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-04-27 20:01:59 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Started AuthenticationControllerTest in 1.203 seconds (process running for 34.327)
+2026-04-27 20:02:00 [main] INFO  [11768331-3d5f-4034-a3fc-187283dabaa7] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Register attempt username=miguel
+2026-04-27 20:02:00 [main] WARN  [11768331-3d5f-4034-a3fc-187283dabaa7] com.miguel_damasco.DoSafe.common.exception.GlobalExceptionHandler - Application error errorCode=USER_ALREADY_EXISTS message=Username or email already in use
+2026-04-27 20:02:00 [main] INFO  [11768331-3d5f-4034-a3fc-187283dabaa7] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - POST /authentication/register ? 409 (321ms)
+2026-04-27 20:02:00 [main] INFO  [f9fcc2fa-91c1-4e6d-8b6e-4f797c453464] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Register attempt username=miguel
+2026-04-27 20:02:00 [main] INFO  [f9fcc2fa-91c1-4e6d-8b6e-4f797c453464] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Register successful username=miguel
+2026-04-27 20:02:00 [main] INFO  [f9fcc2fa-91c1-4e6d-8b6e-4f797c453464] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - POST /authentication/register ? 201 (25ms)
+2026-04-27 20:02:00 [main] INFO  [743b4939-9398-4a46-a70b-6eed24585ee9] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Login attempt identifier=miguel
+2026-04-27 20:02:00 [main] INFO  [743b4939-9398-4a46-a70b-6eed24585ee9] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Login successful identifier=miguel
+2026-04-27 20:02:00 [main] INFO  [743b4939-9398-4a46-a70b-6eed24585ee9] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - POST /authentication/login ? 200 (5ms)
+2026-04-27 20:02:00 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Resend verification skipped email=unknown@email.com (not found or already verified)
+2026-04-27 20:02:00 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Verification email dispatched userId=null
+2026-04-27 20:02:00 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Resend verification skipped email=miguel@email.com (not found or already verified)
+2026-04-27 20:02:00 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Email verified userId=0
+2026-04-27 20:02:00 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Verification email dispatched userId=null
+2026-04-27 20:02:00 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Verification email resent userId=null
+2026-04-27 20:02:31 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - Starting DoSafeApplicationTests using Java 17.0.0.1 with PID 24480 (started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
+2026-04-27 20:02:31 [main] DEBUG [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-04-27 20:02:31 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2026-04-27 20:02:45 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - Started DoSafeApplicationTests in 15.111 seconds (process running for 22.818)
+2026-04-27 20:02:45 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-04-27 20:02:57 [scheduling-1] DEBUG [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - No messages in queue
+2026-04-27 20:02:57 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Starting AuthenticationControllerTest using Java 17.0.0.1 with PID 24480 (started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
+2026-04-27 20:02:57 [main] DEBUG [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-04-27 20:02:57 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - No active profile set, falling back to 1 default profile: "default"
+2026-04-27 20:02:58 [main] DEBUG [] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - Filter 'correlationIdFilter' configured for use
+2026-04-27 20:02:58 [main] DEBUG [] com.miguel_damasco.DoSafe.security.jwt.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-04-27 20:02:58 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Started AuthenticationControllerTest in 1.311 seconds (process running for 35.916)
+2026-04-27 20:02:58 [main] INFO  [360f2d21-2a34-4059-aa71-3e64af17103e] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Register attempt username=miguel
+2026-04-27 20:02:58 [main] WARN  [360f2d21-2a34-4059-aa71-3e64af17103e] com.miguel_damasco.DoSafe.common.exception.GlobalExceptionHandler - Application error errorCode=USER_ALREADY_EXISTS message=Username or email already in use
+2026-04-27 20:02:58 [main] INFO  [360f2d21-2a34-4059-aa71-3e64af17103e] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - POST /authentication/register ? 409 (243ms)
+2026-04-27 20:02:58 [main] INFO  [6e09b695-8fd5-4657-b2be-a6f7993e236e] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Register attempt username=miguel
+2026-04-27 20:02:58 [main] INFO  [6e09b695-8fd5-4657-b2be-a6f7993e236e] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Register successful username=miguel
+2026-04-27 20:02:58 [main] INFO  [6e09b695-8fd5-4657-b2be-a6f7993e236e] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - POST /authentication/register ? 201 (19ms)
+2026-04-27 20:02:58 [main] INFO  [97be4830-7288-4197-88f4-280dfeec5541] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Login attempt identifier=miguel
+2026-04-27 20:02:58 [main] INFO  [97be4830-7288-4197-88f4-280dfeec5541] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Login successful identifier=miguel
+2026-04-27 20:02:58 [main] INFO  [97be4830-7288-4197-88f4-280dfeec5541] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - POST /authentication/login ? 200 (6ms)
+2026-04-27 20:02:59 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Resend verification skipped email=unknown@email.com (not found or already verified)
+2026-04-27 20:02:59 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Verification email dispatched userId=null
+2026-04-27 20:02:59 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Resend verification skipped email=miguel@email.com (not found or already verified)
+2026-04-27 20:02:59 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Email verified userId=0
+2026-04-27 20:02:59 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Verification email dispatched userId=null
+2026-04-27 20:02:59 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Verification email resent userId=null
+2026-04-27 20:04:04 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - Starting DoSafeApplicationTests using Java 17.0.0.1 with PID 19104 (started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
+2026-04-27 20:04:04 [main] DEBUG [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-04-27 20:04:04 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2026-04-27 20:04:20 [main] INFO  [] com.miguel_damasco.DoSafe.DoSafeApplicationTests - Started DoSafeApplicationTests in 18.531 seconds (process running for 26.95)
+2026-04-27 20:04:20 [scheduling-1] INFO  [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - Starting poll
+2026-04-27 20:04:32 [scheduling-1] DEBUG [] com.miguel_damasco.DoSafe.document.infraestructure.ocr.sqs.TextractQueueConsumer - No messages in queue
+2026-04-27 20:04:32 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Starting AuthenticationControllerTest using Java 17.0.0.1 with PID 19104 (started by User in C:\dosafe\DoSafe\dosafe-backend\DoSafe)
+2026-04-27 20:04:32 [main] DEBUG [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Running with Spring Boot v4.0.2, Spring v7.0.3
+2026-04-27 20:04:32 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - No active profile set, falling back to 1 default profile: "default"
+2026-04-27 20:04:33 [main] DEBUG [] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - Filter 'correlationIdFilter' configured for use
+2026-04-27 20:04:33 [main] DEBUG [] com.miguel_damasco.DoSafe.security.jwt.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-04-27 20:04:33 [main] INFO  [] com.miguel_damasco.DoSafe.user.controller.AuthenticationControllerTest - Started AuthenticationControllerTest in 1.084 seconds (process running for 39.569)
+2026-04-27 20:04:33 [main] INFO  [f4b33592-e805-4c74-a26a-26c93b63b8a2] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Register attempt username=miguel
+2026-04-27 20:04:33 [main] WARN  [f4b33592-e805-4c74-a26a-26c93b63b8a2] com.miguel_damasco.DoSafe.common.exception.GlobalExceptionHandler - Application error errorCode=USER_ALREADY_EXISTS message=Username or email already in use
+2026-04-27 20:04:34 [main] INFO  [f4b33592-e805-4c74-a26a-26c93b63b8a2] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - POST /authentication/register ? 409 (346ms)
+2026-04-27 20:04:34 [main] INFO  [0a3627b6-56d4-41c8-90ff-e8770e6bf22a] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Register attempt username=miguel
+2026-04-27 20:04:34 [main] INFO  [0a3627b6-56d4-41c8-90ff-e8770e6bf22a] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Register successful username=miguel
+2026-04-27 20:04:34 [main] INFO  [0a3627b6-56d4-41c8-90ff-e8770e6bf22a] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - POST /authentication/register ? 201 (21ms)
+2026-04-27 20:04:34 [main] INFO  [b9e56c0f-7b1e-4ccd-8494-d119f40fabc6] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Login attempt identifier=miguel
+2026-04-27 20:04:34 [main] INFO  [b9e56c0f-7b1e-4ccd-8494-d119f40fabc6] com.miguel_damasco.DoSafe.user.controller.AuthenticationController - Login successful identifier=miguel
+2026-04-27 20:04:34 [main] INFO  [b9e56c0f-7b1e-4ccd-8494-d119f40fabc6] com.miguel_damasco.DoSafe.common.correlationId.CorrelationIdFilter - POST /authentication/login ? 200 (5ms)
+2026-04-27 20:04:34 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Resend verification skipped email=unknown@email.com (not found or already verified)
+2026-04-27 20:04:34 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Verification email dispatched userId=null
+2026-04-27 20:04:34 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Resend verification skipped email=miguel@email.com (not found or already verified)
+2026-04-27 20:04:34 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Email verified userId=0
+2026-04-27 20:04:34 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Verification email dispatched userId=null
+2026-04-27 20:04:34 [main] INFO  [] com.miguel_damasco.DoSafe.user.service.EmailVerificationService - Verification email resent userId=null

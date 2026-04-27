@@ -31,6 +31,8 @@ import com.miguel_damasco.DoSafe.document.domain.extraction.ExpirationDateExtrac
 import com.miguel_damasco.DoSafe.document.infraestructure.ocr.textract.TextractClientAdapter;
 import com.miguel_damasco.DoSafe.document.repository.DocumentRepository;
 import com.miguel_damasco.DoSafe.user.domain.UserModel;
+import io.micrometer.core.instrument.MeterRegistry;
+import org.mockito.Answers;
 
 @ExtendWith(MockitoExtension.class)
 class ProcessTextractResultServiceTest {
@@ -46,6 +48,9 @@ class ProcessTextractResultServiceTest {
 
     @Mock
     private ExpirationDateExtractorSelector expirationDateExtractorSelector;
+
+    @Mock(answer = Answers.RETURNS_DEEP_STUBS)
+    private MeterRegistry meterRegistry;
 
     @InjectMocks
     private ProcessTextractResultService processTextractResultService;

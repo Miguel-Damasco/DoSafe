@@ -34,6 +34,8 @@ import com.miguel_damasco.DoSafe.user.dto.request.RegisterRequestDTO;
 import com.miguel_damasco.DoSafe.user.dto.response.LoginResponseDTO;
 import com.miguel_damasco.DoSafe.user.dto.response.RegisterResponseDTO;
 import com.miguel_damasco.DoSafe.user.repository.UserRepository;
+import io.micrometer.core.instrument.MeterRegistry;
+import org.mockito.Answers;
 
 // @ExtendWith activates Mockito. Without this, @Mock and @InjectMocks do nothing.
 // No Spring context is loaded — this test runs in milliseconds.
@@ -59,6 +61,9 @@ class UserServiceTest {
 
     @Mock
     private EmailVerificationService emailVerificationService;
+
+    @Mock(answer = Answers.RETURNS_DEEP_STUBS)
+    private MeterRegistry meterRegistry;
 
     // @InjectMocks creates a real UserService and injects all @Mock fields into it.
     @InjectMocks

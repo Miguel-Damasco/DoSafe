@@ -49,7 +49,7 @@ class EmailVerificationServiceTest {
     // @Value fields are not injected by @InjectMocks — we set them manually.
     @BeforeEach
     void setUp() {
-        ReflectionTestUtils.setField(emailVerificationService, "baseUrl", "http://localhost:8080");
+        ReflectionTestUtils.setField(emailVerificationService, "frontendUrl", "http://localhost:5173");
     }
 
     // -------------------------------------------------------------------------
@@ -138,7 +138,7 @@ class EmailVerificationServiceTest {
         verify(emailService).send(
                 eq("miguel@email.com"),
                 eq("Verify your DoSafe email"),
-                contains("http://localhost:8080/authentication/verify-email?token=")
+                contains("http://localhost:5173/verify-email?token=")
         );
     }
 

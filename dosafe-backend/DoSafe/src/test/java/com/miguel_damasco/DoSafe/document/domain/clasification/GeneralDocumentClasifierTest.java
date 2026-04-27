@@ -58,16 +58,15 @@ class GeneralDocumentClasifierTest {
     }
 
     @Test
-    void classify_shouldReturnNull_whenLinesAreEmpty() {
-        // Given — empty OCR result (Textract found nothing)
+    void classify_shouldReturnOther_whenLinesAreEmpty() {
+        // Given — empty OCR result (Textract found nothing to classify)
         List<String> lines = List.of();
 
         // When
         DocumentTypeEnum result = clasifier.classify(lines);
 
-        // Then — this exposes a bug: the method returns null instead of OTHER.
-        // When this test fails, it means the bug was fixed.
-        assertThat(result).isNull();
+        // Then — unrecognized documents fall back to OTHER, never null
+        assertThat(result).isEqualTo(DocumentTypeEnum.OTHER);
     }
 
     @Test

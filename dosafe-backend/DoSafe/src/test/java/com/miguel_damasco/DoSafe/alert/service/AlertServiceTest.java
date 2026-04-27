@@ -18,7 +18,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.springframework.test.util.ReflectionTestUtils;
+
+import io.micrometer.core.instrument.MeterRegistry;
+import org.mockito.Answers;
 
 import com.miguel_damasco.DoSafe.alert.domain.AlertModel;
 import com.miguel_damasco.DoSafe.alert.repository.AlertRepository;
@@ -30,6 +35,9 @@ import com.miguel_damasco.DoSafe.email.service.EmailService;
 import com.miguel_damasco.DoSafe.user.domain.UserModel;
 
 @ExtendWith(MockitoExtension.class)
+// buildMockAlert() stubs alert.getId() which not every test exercises — lenient
+// avoids UnnecessaryStubbingException without restructuring the shared helper.
+@MockitoSettings(strictness = Strictness.LENIENT)
 class AlertServiceTest {
 
     @Mock
@@ -40,6 +48,9 @@ class AlertServiceTest {
 
     @Mock
     private EmailService emailService;
+
+    @Mock(answer = Answers.RETURNS_DEEP_STUBS)
+    private MeterRegistry meterRegistry;
 
     @InjectMocks
     private AlertService alertService;

@@ -22,9 +22,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Answers;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.springframework.test.util.ReflectionTestUtils;
+
+import io.micrometer.core.instrument.MeterRegistry;
 
 import com.miguel_damasco.DoSafe.common.exception.RateLimitExceededException;
 import com.miguel_damasco.DoSafe.document.domain.DocumentModel;
@@ -37,6 +42,9 @@ import com.miguel_damasco.DoSafe.user.domain.UserModel;
 import com.miguel_damasco.DoSafe.user.service.UserService;
 
 @ExtendWith(MockitoExtension.class)
+// buildUser() stubs getId() which not every test exercises — lenient avoids
+// UnnecessaryStubbingException without restructuring the shared helper.
+@MockitoSettings(strictness = Strictness.LENIENT)
 class DocumentUploadServiceTest {
 
     @Mock
@@ -47,6 +55,9 @@ class DocumentUploadServiceTest {
 
     @Mock
     private DocumentConverter documentConverter;
+
+    @Mock(answer = Answers.RETURNS_DEEP_STUBS)
+    private MeterRegistry meterRegistry;
 
     @Mock
     private UserService userService;
