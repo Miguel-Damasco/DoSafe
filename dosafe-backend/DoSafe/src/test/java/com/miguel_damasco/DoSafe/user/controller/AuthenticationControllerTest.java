@@ -91,7 +91,7 @@ class AuthenticationControllerTest {
     void register_shouldReturn409_whenUsernameIsAlreadyTaken() throws Exception {
         // Given — stub the service to throw UserAlreadyExistsException
         when(userService.register(any(), any()))
-                .thenThrow(new UserAlreadyExistsException("miguel"));
+                .thenThrow(new UserAlreadyExistsException());
 
         // When
         mockMvc.perform(post("/authentication/register")

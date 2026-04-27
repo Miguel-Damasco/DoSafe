@@ -252,6 +252,18 @@ body {
   border-bottom-color: var(--accent);
 }
 
+/* Overrides Chrome/Edge autofill yellow background — box-shadow inset is the
+   only reliable way to beat the browser's autofill styles. */
+.field-group input:-webkit-autofill,
+.field-group input:-webkit-autofill:hover,
+.field-group input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px var(--surface) inset;
+  box-shadow: 0 0 0 1000px var(--surface) inset;
+  -webkit-text-fill-color: var(--text);
+  caret-color: var(--accent);
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 .field-error {
   display: block;
   font-family: 'Share Tech Mono', monospace;

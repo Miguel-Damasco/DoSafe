@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+
+  # ─── Backend: tests + JAR build ──────────────────────────────────────
+  backend:
+    name: Backend — test & build
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: area51
+          MYSQL_DATABASE: dosafe
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Run tests
+        working-directory: dosafe-backend/DoSafe
+        run: mvn -B test
+        env:
+          # Database — matches the MySQL service container above
+          DB_HOST: 127.0.0.1
+          DB_USERNAME: root
+          DB_PASSWORD: area51
+          # AWS — dummy values. The SDK reads these to build its credential chain
+          # but never makes real API calls during tests (services are mocked).
+          AWS_ACCESS_KEY_ID: AKIADUMMYKEYFORTESTING
+          AWS_SECRET_ACCESS_KEY: dummySecretAccessKeyForCITestingPurposesOnly
+          AWS_S3_BUCKET: dosafe-ci
+          AWS_REGION: us-east-2
+          AWS_SES_SENDER_EMAIL: ci@dosafe.com
+
+      - name: Build JAR
+        working-directory: dosafe-backend/DoSafe
+        run: mvn -B package -DskipTests
+
+  # ─── Frontend: install + build ───────────────────────────────────────
+  frontend:
+    name: Frontend — install & build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: dosafe-frontend/dosafe-frontend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: dosafe-frontend/dosafe-frontend
+        run: npm ci
+
+      - name: Build
+        working-directory: dosafe-frontend/dosafe-frontend
+        run: npm run build
